@@ -1,0 +1,24 @@
+{% extends 'base.html' %} {% block title %}Home{% endblock title %}
+<!---->
+{% load static %}
+{% block cssFiles %}
+  <link rel="stylesheet" href="{% static 'posts/css/post.css' %}">
+{% endblock cssFiles %}
+{% block content %}
+
+<div class="container">
+  <div class="row">
+    <div class="popular-posts col-8">
+      {% for post in posts %}
+        {% include 'posts/post.html' %}
+      {% endfor %}
+    </div>
+    <div class="popular-servers">
+        {% for server in servers %}
+            {% comment %} {{server.name}} <br> {% endcomment %}
+        {% endfor %}
+    </div>
+  </div>
+</div>
+
+{% endblock content %}

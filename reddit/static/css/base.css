@@ -1,0 +1,83 @@
+/* colors */
+:root {
+    --orange: #FF3F18;
+    --light-orange: #FF5C0012;
+    --light-gray: #B6B6B6;
+    --light-gray-2: #F3F3F3;
+    --light-gray-3: #F9F9F9;
+    --grey: #646464;
+}
+
+/* fonts  */
+@font-face {
+    font-family: V;
+    src: url(../fonts/Vazir.woff) format("woff");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: Vthin;
+    src: url(../fonts/Vazir-Thin.woff) format("woff");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: Vlight;
+    src: url(../fonts/Vazir-Light.woff) format("woff");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: Vmedium;
+    src: url(../fonts/Vazir-Medium.woff) format("woff");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: Vbold;
+    src: url(../fonts/Vazir-Bold.woff) format("woff");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: nastaliq;
+    src: url(../fonts/IranNastaliq.ttf);
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* remove default */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+a {
+    text-decoration: none;
+}
+
+a:active {
+    color: black;
+}
+
+button {
+    border: none;
+    cursor: pointer;
+}
+
+html {
+
+    /* height: 6000px; */
+}
+
+body,
+button {
+    background: var(--light-gray-2);
+    font-family: Vmedium;
+}

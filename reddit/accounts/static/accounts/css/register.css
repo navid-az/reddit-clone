@@ -1,0 +1,130 @@
+body {
+    background: var(--light-gray-2);
+}
+
+#go-back-btn {
+    position: absolute;
+    top: 1.875rem;
+    left: 1.875rem;
+}
+
+.form {
+    background-color: #ffff;
+    width: 26.25rem;
+    height: 35.5rem;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    border-radius: 0.5rem;
+}
+
+#reddit-logo {
+    position: absolute;
+    right: 0;
+    left: 0;
+    top: -3rem;
+    margin: auto;
+}
+
+h1 {
+    font-family: Vbold;
+    color: var(--orange);
+    text-align: center;
+    font-size: 25px;
+    margin-top: 5rem;
+}
+
+.errorlist {
+    list-style: none;
+}
+
+
+ul>li {
+    color: var(--orange);
+    text-align: end;
+    font-size: 0.9rem;
+}
+
+form {
+    padding: 1.875rem;
+}
+
+.form-field {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-end;
+}
+
+.label {
+    width: 100%;
+    text-align: end;
+    padding-top: 1.09375rem;
+    padding-bottom: 0.5rem;
+
+}
+
+.label:first-of-type {
+    padding-top: 0rem;
+}
+
+form label {
+    font-size: 0.875rem;
+    color: #848484;
+    /* margin-left: 18.5rem; */
+}
+
+form input {
+    background: var(--light-gray-3);
+    width: 100%;
+    height: 2.8125rem;
+    border-radius: 0.5rem;
+    border: none;
+    box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.04);
+    transition: 0.15s ease-in-out;
+    direction: rtl;
+    font-size: 1rem;
+    padding: 0.75rem;
+    font-family: Vmedium;
+    outline: none;
+}
+
+form input:focus {
+    border: 2.2px solid var(--orange);
+    background: var(--light-orange);
+}
+
+/* submit button  */
+form>input:last-of-type {
+    padding: 0;
+    background: var(--orange);
+    box-shadow: none;
+}
+
+#submit {
+    height: 3.75rem;
+    color: #ffff;
+    font-size: 1.5625rem;
+    font-family: Vbold;
+    cursor: pointer;
+    margin-top: 2.5rem;
+}
+
+.go-to-btn {
+    width: 100%;
+    text-align: center;
+    padding: 0.8rem 0;
+}
+
+form a {
+    color: #ff5c007a;
+    font-size: 0.75rem;
+    font-family: Vbold;
+}
+
+form a:hover {
+    text-decoration: underline;
+}

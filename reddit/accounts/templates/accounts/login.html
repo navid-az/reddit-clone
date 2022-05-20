@@ -1,0 +1,23 @@
+{% extends 'base.html' %} {% load static %}
+{% block navbar %}{% endblock navbar %}
+{% block cssFiles %}
+    <link rel="stylesheet" href="{% static 'accounts/css/register.css' %}">
+    <link rel="stylesheet" href="{% static 'accounts/css/login.css' %}">
+{% endblock cssFiles %}
+{% block content %}
+    <a id='go-back-btn' href='{% url 'home:home' %}' id='go-back-btn'><img src="{% static 'accounts/svgs/go-back-btn.svg' %}" alt="home button"></a>
+    <div class="form">
+        <img id='reddit-logo' src="{% static 'accounts/svgs/reddit-logo.svg' %}" alt="reddit logo">
+        <h1>!خوش اومدی</h1>
+        <form action="" method="post" novalidate>
+            {% csrf_token %}
+            {% for field in form %}
+                <div class="label">{{ field.label_tag }}</div>
+                {{ field }}
+                {{ field.errors }}
+            {% endfor %}
+            <input id='submit' type="submit" value='ورود'>
+            <div class='go-to-btn'><a href="{% url 'accounts:register' %}">حضوز حساب نداری؟همین الان عضو شو</a></div>
+        </form>
+    </div>
+{% endblock content %}

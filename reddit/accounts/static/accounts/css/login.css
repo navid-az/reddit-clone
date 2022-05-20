@@ -1,0 +1,13 @@
+form {
+    padding: 1.875rem;
+    margin-top: 1.25rem;
+}
+
+#submit {
+    height: 3.75rem;
+    color: #ffff;
+    font-size: 1.5625rem;
+    font-family: Vbold;
+    cursor: pointer;
+    margin-top: 7.2rem;
+}

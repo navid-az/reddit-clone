@@ -1,0 +1,40 @@
+{% load static %}
+<div class="post">
+  <div class="post-header">
+    <div class="vote">
+      <img class="upvote" src="{% static 'svgs/up-vote.svg' %}" alt="">
+      <p class="vots-counter">{{post.vote_count}}</p>
+      <img class="upvote" src="{% static 'svgs/down-vote.svg' %}" alt="">
+    </div>
+    <div class="server-info">
+      <div class="post-info">
+        <section>
+          <a class="creator-name" href='{% url 'posts:post-page' post.id %}'>u/{{post.creator}} پست شده توسط </a>
+          <a class="server-name" href='{% url 'posts:post-page' post.id %}'>r/{{post.server}}</a>
+        </section>
+        <section>
+          <div class="post-tags">tag</div>
+          <a href='{% url 'posts:post-page' post.id  %}'><h3 class="post-title">{{post.title}}</h3></a>
+        </section>
+      </div>
+      <div class="server-img"><img src="{{post.server_image.url}}" alt=""></div>
+    </div>
+  </div>
+  <div class="post-body">
+    {% if post.image %}
+      <img src="{{post.image.url}}" alt="">
+    {% elif post.video %}
+      <video src="{{post.video}}"></video>
+    {% elif post.text %}
+      <p>{{post.text}}</p>
+    {% endif %}
+  </div>
+  <div class="post-footer">
+    <div class="post-footer-options">
+      <div><img class="comment-btn" src="{% static 'posts/svgs/comment.svg' %}" alt="">{{comments_count}}</div>
+      <img class="share-btn" src="{% static 'posts/svgs/share.svg' %}" alt="">
+      <img class="save-btn" src="{% static 'posts/svgs/save.svg' %}" alt="">
+    </div>
+    <div id="join-btn"><a href="">عضویت</a></div>
+  </div>
+</div>

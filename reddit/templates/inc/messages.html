@@ -1,0 +1,9 @@
+{% load static %}
+{% for message in messages  %}
+    <div class="notification">
+        <p>{{message}}</p>
+        <div class="notification-logo">
+            <img src="{% static 'svgs/notification-logo.svg' %}" alt="notification logo">
+        </div>
+    </div>
+{% endfor %}

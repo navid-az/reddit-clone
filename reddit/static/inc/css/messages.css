@@ -1,0 +1,30 @@
+.notification {
+    position: sticky;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    width: 22.375rem;
+    height: 4.125rem;
+    background: white;
+    position: absolute;
+    right: 1.875rem;
+    bottom: 1.875rem;
+    text-align: center;
+    color: var(--orange);
+    border-radius: 0.5rem;
+}
+
+.notification>p {
+    color: black;
+    padding-right: 0.5rem;
+}
+
+.notification-logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 2.5rem;
+    height: 100%;
+    background: var(--orange);
+    border-radius: 0 0.5rem 0.5rem 0;
+}

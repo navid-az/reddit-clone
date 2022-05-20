@@ -1,0 +1,23 @@
+{% load static %}
+
+<div class='navbar'>
+  <div class="container">
+    <div class="navbar-wrapper">
+      <div class="nav-btns">
+        {% if request.user.is_authenticated %}
+          <a href='{% url 'accounts:logout' %}' id='sing-in-btn'>خروح</a>
+          <a href='{% url 'accounts:profile' request.user.id %}' id='profile-btn'><img src="{% static 'inc/svgs/user.svg' %}" alt="profile"></a>
+        {% else %}
+          <a href='{% url 'accounts:register' %}' id='sing-in-btn'>ثبت نام</a>
+        {% endif %}
+        {% if user.is_authenticated %}
+          <button id='profile-btn'><img src="{% static 'inc/svgs/create-post-btn.svg' %}" alt=""></button>
+          <button id='profile-btn'><img src="{% static 'inc/svgs/chat.svg' %}" alt=""></button>
+        {% endif %}
+      </div>
+      <div id="logo">
+        <img src="{% static 'inc/images/site-logo.jpg' %}" alt="">
+      </div>
+    </div>
+  </div>
+</div>

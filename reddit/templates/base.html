@@ -1,0 +1,27 @@
+<!DOCTYPE html> {% load static %}
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Reddit | {% block title %}{% endblock title %}</title>
+    <!--inc css-->
+    <link rel="stylesheet" href="{% static 'inc/css/navbar.css' %}"/>
+    <link rel="stylesheet" href="{% static 'inc/css/messages.css' %}">
+    <!--post-->
+    <link rel="stylesheet" href="{% static 'posts/css/post.css' %}">
+    <!--css files-->
+    <link rel="stylesheet" href="{% static 'css/base.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/bootstrap-grid.min.css' %}" />
+    {% block cssFiles %}{% endblock cssFiles %}
+  </head>
+  <body>
+    {% include 'inc/messages.html' %}
+    {% block navbar %}
+      {% include 'inc/navbar.html' %}
+    {% endblock %}
+    {% block content %}{% endblock content %}
+    <!--js files-->
+    {% block jsFiles %}{% endblock jsFiles %}
+  </body>
+</html>

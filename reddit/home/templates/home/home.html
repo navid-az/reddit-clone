@@ -14,9 +14,9 @@
       {% endfor %}
     </div>
     <div class="popular-servers">
-        {% for server in servers %}
-            {% comment %} {{server.name}} <br> {% endcomment %}
-        {% endfor %}
+        {% comment %} {% for server in servers %}
+            {{server.name}} <br>
+        {% endfor %} {% endcomment %}
     </div>
   </div>
 </div>

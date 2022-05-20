@@ -9,15 +9,15 @@
     <div class="server-info">
       <div class="post-info">
         <section>
-          <a class="creator-name" href='{% url 'posts:post-page' post.id %}'>u/{{post.creator}} پست شده توسط </a>
-          <a class="server-name" href='{% url 'posts:post-page' post.id %}'>r/{{post.server}}</a>
+          <a class="creator-name" href='{{post.get_absolute_url}}'>u/{{post.creator}} پست شده توسط </a>
+          <a class="server-name" href='{{post.get_absolute_url}}'>r/{{post.server}}</a>
         </section>
         <section>
           <div class="post-tags">tag</div>
-          <a href='{% url 'posts:post-page' post.id  %}'><h3 class="post-title">{{post.title}}</h3></a>
+          <a href='{{post.get_absolute_url}}'><h3 class="post-title">{{post.title}}</h3></a>
         </section>
       </div>
-      <div class="server-img"><img src="{{post.server_image.url}}" alt=""></div>
+      <div class="server-img"><img src="{{post.server.image.url}}" alt=""></div>
     </div>
   </div>
   <div class="post-body">

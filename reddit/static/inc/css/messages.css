@@ -1,5 +1,6 @@
 .notification {
     position: sticky;
+    z-index: 2;
     display: flex;
     justify-content: flex-end;
     align-items: center;

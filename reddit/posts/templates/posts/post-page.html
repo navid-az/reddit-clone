@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block title %}post{% endblock title %}
+{% load static %}
+{% block cssFiles %}
+  <link rel="stylesheet" href="{% static 'posts/inc/css/post.css' %}">
+  <link rel="stylesheet" href="{% static 'posts/css/post-page.css' %}">
+{% endblock cssFiles %}
+{% block content %}
+
+<div class="container">
+  <div class="row">
+    <div class="popular-posts col-12">
+      {% include 'posts/inc/post.html' %}
+    </div>
+  </div>
+</div>
+
+{% endblock content %}

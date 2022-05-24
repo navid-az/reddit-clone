@@ -2,7 +2,7 @@
 <!---->
 {% load static %}
 {% block cssFiles %}
-  <link rel="stylesheet" href="{% static 'posts/css/post.css' %}">
+  <link rel="stylesheet" href="{% static 'posts/inc/css/post.css' %}">
 {% endblock cssFiles %}
 {% block content %}
 
@@ -10,7 +10,7 @@
   <div class="row">
     <div class="popular-posts col-8">
       {% for post in posts %}
-        {% include 'posts/post.html' %}
+        {% include 'posts/inc/post.html' %}
       {% endfor %}
     </div>
     <div class="popular-servers">

@@ -62,8 +62,3 @@ class UserLogout(LoginRequiredMixin, View):
         logout(request)
         messages.error(request, '!خروج از پروفایل انجام شد') 
         return redirect('home:home')
-
-class UserProfile(LoginRequiredMixin, View):
-    def get(self, request, pk):
-        user = User.objects.get(id=pk)
-        return render(request, 'accounts/profile.html', {'user':user})

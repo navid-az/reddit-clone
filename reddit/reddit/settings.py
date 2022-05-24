@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
 from pathlib import Path
+from tarfile import DEFAULT_FORMAT
+from tkinter import E
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -39,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # apps
     'home.apps.HomeConfig',
+    'user.apps.UserConfig',
     'posts.apps.PostsConfig',
     'servers.apps.ServersConfig',
     'accounts.apps.AccountsConfig',
@@ -124,9 +127,21 @@ STATICFILES_DIRS = [
     BASE_DIR / 'static'
 ]
 MEDIA_URL = "/media/"
-MEDIA_ROOT = BASE_DIR / "media"
+MEDIA_ROOT = BASE_DIR / "media/"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+# AUTH_USER_MODEL = 'accounts.CustomUser'
+
+
+# google account 
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'navidazimi1380@gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_PASSWORD = 'srzidnqqvdlhbggb'
+EMAIL_USE_TLS = True
+DEFAULT_FROM_USER = 'reddit clone'

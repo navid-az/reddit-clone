@@ -1,8 +1,11 @@
 from django.urls import path
-from .views import PostPage
+from .views import DeletePostView, PostPageView, UpdatePostView, CreatePostView
 
 app_name = 'posts'
 
 urlpatterns = [
-    path('<str:pk>/', PostPage.as_view(), name='post-page'),
+    path('<int:pk>/', PostPageView.as_view(), name='post-page'),
+    path('create/<int:pk>', CreatePostView.as_view(), name='create-post'),
+    path('update/<int:pk>', UpdatePostView.as_view(), name='update-post'),
+    path('delete/<int:pk>', DeletePostView.as_view(), name='delete-post'),
 ]

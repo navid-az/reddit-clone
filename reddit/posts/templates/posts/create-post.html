@@ -1,0 +1,22 @@
+{% extends 'base.html' %}{% load static %}
+{% block title %}create post page{% endblock title %}
+{% block cssFiles %}
+<link rel="stylesheet" href="{% static 'posts/css/create-post.css' %}">
+{% endblock cssFiles %}
+{% block content %}
+<button onclick='postType(0)'>text</button>
+<button onclick='postType(1)'>image</button>
+<button onclick='postType(2)'>video</button>
+<form action="" method='post' enctype="multipart/form-data">
+    {% csrf_token %}
+    <div>{{form.title}}</div>
+    <div class="field">{{form.text}}</div> 
+    <div class="field">{{form.image}}</div> 
+    <div class="field">{{form.video}}</div> 
+    <input type="submit">
+</form>
+
+{% endblock content %}
+{% block jsFiles %}
+<script src="{% static 'posts/js/create-post.js' %}"></script>
+{% endblock jsFiles %}

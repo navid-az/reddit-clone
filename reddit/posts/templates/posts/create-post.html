@@ -1,22 +1,51 @@
 {% extends 'base.html' %}{% load static %}
 {% block title %}create post page{% endblock title %}
-{% block cssFiles %}
-<link rel="stylesheet" href="{% static 'posts/css/create-post.css' %}">
-{% endblock cssFiles %}
-{% block content %}
-<button onclick='postType(0)'>text</button>
-<button onclick='postType(1)'>image</button>
-<button onclick='postType(2)'>video</button>
-<form action="" method='post' enctype="multipart/form-data">
-    {% csrf_token %}
-    <div>{{form.title}}</div>
-    <div class="field">{{form.text}}</div> 
-    <div class="field">{{form.image}}</div> 
-    <div class="field">{{form.video}}</div> 
-    <input type="submit">
-</form>
+{% block cssFiles %}<link rel="stylesheet" href="{% static 'posts/css/create-post.css' %}">{% endblock cssFiles %}
+{% block jsFiles %}<script src="{% static 'posts/js/create-post.js' %}"></script>{% endblock jsFiles %}
 
+{% block content %}
+  <div class="container">
+    <div class="row">
+      <div class="create-post-form-wrapper col-8">
+        <form action="" method='post' enctype="multipart/form-data">
+          <div class="form-header">
+            <div class="form-types">
+              <button onclick='postType(0)'>
+                <p>متن</p>
+                <img src="{% static 'posts/svgs/file.svg' %}" alt="">
+              </button>
+              <button onclick='postType(1)'>
+                <p>عکس</p>
+                <img src="{% static 'posts/svgs/image.svg' %}" alt="">
+              </button>
+              <button onclick='postType(2)'>
+                <p>فیلم</p>
+                <img src="{% static 'posts/svgs/video.svg' %}" alt="">
+              </button>
+              <button onclick='postType(2)'>
+                <p>لینک</p>
+                <img src="{% static 'posts/svgs/link.svg' %}" alt="">
+              </button>
+            </div>
+          </div>
+          {% csrf_token %}
+          <div class="form-body">
+            <div id='title-field'>{{form.title}}</div>
+            <div class="field">{{form.text}}</div> 
+            <div class="field">{{form.image}}</div> 
+            <div class="field">{{form.video}}</div> 
+            <div class="form-footer">
+              <input id='submit' type="submit" value='ارسال'>
+            </div>
+          </div>
+        </form>
+        <form action="upload/" class='dropzone'></form>
+      </div>
+      <div id="popular-servers">
+          {% comment %} {% for server in servers %}
+              {{server.name}} <br>
+          {% endfor %} {% endcomment %}
+      </div>
+    </div>
+  </div>
 {% endblock content %}
-{% block jsFiles %}
-<script src="{% static 'posts/js/create-post.js' %}"></script>
-{% endblock jsFiles %}

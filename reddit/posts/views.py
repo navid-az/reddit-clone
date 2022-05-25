@@ -1,3 +1,4 @@
+from django.http import JsonResponse
 from django.shortcuts import redirect, render, get_object_or_404, get_list_or_404
 from django.views import View
 from .forms import UpdateCreatePostForm
@@ -38,6 +39,9 @@ class CreatePostView(LoginRequiredMixin, View):
             messages.success(request, 'پست شما باموفقیت ایجاد شد')
             return redirect('home:home')
         return render(request, 'posts/create-post.html', {'form':form})
+
+def post_tab(request):
+        return JsonResponse({"text":"niggaass"})
 
 
 class UpdatePostView(LoginRequiredMixin, View):

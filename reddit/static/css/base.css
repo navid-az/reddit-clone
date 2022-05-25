@@ -67,6 +67,11 @@ a {
     text-decoration: none;
 }
 
+input,
+textarea {
+    font-family: Vbold;
+}
+
 a:active {
     color: black;
 }

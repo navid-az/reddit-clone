@@ -1,8 +1,7 @@
-from django.http import JsonResponse
 from django.shortcuts import redirect, render, get_object_or_404, get_list_or_404
 from django.views import View
-from .forms import UpdateCreatePostForm
-from .models import Post, Comment
+from .forms import UpdatePostForm, CreatePostForm
+from .models import Post
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 from django.contrib.auth.models import User
@@ -12,41 +11,41 @@ from django.contrib.auth.models import User
 class PostPageView(View):
     def get(self, request, pk):
         post = get_object_or_404(Post, id = pk)
-        # comments_count = len(Comment.objects.filter(post = post))
-        comments = Comment.objects.filter(post=post)
+        comments = post.post_comments.filter(is_reply=False)
         return render(request, 'posts/post-page.html',{'post':post, 'comments':comments})
        
 class CreatePostView(LoginRequiredMixin, View):
-    form_class = UpdateCreatePostForm
+    form_class = CreatePostForm
+    # server_form = ChooseServerForm
 
     def dispatch(self, request, *args, **kwargs):
         user = User.objects.get(id=kwargs['pk'])
         if not user.id == request.user.id:
-            messages.error(request, 'تو کی هستی دیگه شومبول؟')
-            return redirect('home:hoem')
+            messages.error(request, 'شما نمیتوانید پست ایجاد کنید')
+            return redirect('home:home')
         return super().dispatch(request, *args, **kwargs)
 
     def get(self, request, pk):
         form = self.form_class()
+        # servers = self.server_form()
         return render(request, 'posts/create-post.html', {'form':form})
 
     def post(self, request, pk):
         form = self.form_class(request.POST, request.FILES)
-        if form.is_valid:
+        # servers = self.server_form(request.POST)
+        if form.is_valid():
             saved_form = form.save(commit=False)
             saved_form.creator = request.user
             saved_form.save()
+            # servers.save()
             messages.success(request, 'پست شما باموفقیت ایجاد شد')
             return redirect('home:home')
         return render(request, 'posts/create-post.html', {'form':form})
 
-def post_tab(request):
-        return JsonResponse({"text":"niggaass"})
-
 
 class UpdatePostView(LoginRequiredMixin, View):
 
-    form_class = UpdateCreatePostForm
+    form_class = UpdatePostForm
 
     def dispatch(self, request, *args, **kwargs):
         post = get_object_or_404(Post, pk=kwargs['pk'])
@@ -80,3 +79,5 @@ class DeletePostView(LoginRequiredMixin ,View):
         else:
             messages.error('شما نمیتوانید پست دیگران را حذف کنید')
         return redirect('user:profile', request.user.id)
+
+# comment section

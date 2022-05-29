@@ -35,7 +35,7 @@
 
   <div class="post-footer">
     <div class="post-items">
-      <div><img class="comment-btn" src="{% static 'posts/svgs/comment.svg' %}" alt="">{{comments_count}}</div>
+      <div><img class="comment-btn" src="{% static 'posts/svgs/comment.svg' %}" alt="">{{post.post_comments.count}}</div>
       <img class="share-btn" src="{% static 'posts/svgs/share.svg' %}" alt="">
       <img class="save-btn" src="{% static 'posts/svgs/save.svg' %}" alt="">
     </div>

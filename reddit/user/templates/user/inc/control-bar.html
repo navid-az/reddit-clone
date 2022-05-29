@@ -1,0 +1,20 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'user/inc/css/control-bar.css' %}">
+
+<div class="control-bar-wrapper">
+    <div class="container">
+        <div class="row">
+            <div class="control-bar col-12">
+                <div class="saved-hidden">
+                    <a href="{% url 'home:home' %}"><img src="{% static 'posts/svgs/go-back-btn.svg' %}" alt="go to home page"></a>
+                    <a href="/"><img src="{% static 'posts/svgs/bookmark.svg' %}" alt="save"></a>
+                    <a href="/"><img src="{% static 'posts/svgs/hidden.svg' %}" alt="hidden posts"></a>
+                </div>
+                <div class="posts-controls">
+                    <a href="" class="show-posts">پست ها</a>
+                    <a href="" class="show-comments">کامنت ها</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -45,6 +45,8 @@ INSTALLED_APPS = [
     'posts.apps.PostsConfig',
     'servers.apps.ServersConfig',
     'accounts.apps.AccountsConfig',
+    # humanize 
+    'django.contrib.humanize'
 ]
 
 MIDDLEWARE = [
@@ -111,7 +113,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'fa'
 
 TIME_ZONE = 'UTC'
 
@@ -144,4 +146,4 @@ EMAIL_HOST_USER = 'navidazimi1380@gmail.com'
 EMAIL_PORT = 587
 EMAIL_HOST_PASSWORD = 'srzidnqqvdlhbggb'
 EMAIL_USE_TLS = True
-DEFAULT_FROM_USER = 'reddit clone'
+DEFAULT_FROM_EMAIL = 'Reddit Clone'

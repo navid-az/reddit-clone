@@ -3,8 +3,10 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
+from django.urls import reverse_lazy
 from .forms import LoginForm, RegisterForm
 from django.views import View
+from django.contrib.auth import views as auth_views
 
 # Create your views here.
 class UserRegister(View):
@@ -62,3 +64,22 @@ class UserLogout(LoginRequiredMixin, View):
         logout(request)
         messages.error(request, '!خروج از پروفایل انجام شد') 
         return redirect('home:home')
+
+
+
+# reset pass
+class UserPasswordResetView(auth_views.PasswordResetView):
+    template_name = 'accounts/password_reset_form.html'
+    email_template_name = 'accounts/password_reset_email.html'
+    success_url = reverse_lazy('accounts:password_reset_success')
+
+class UserPasswordResetSuccessView(auth_views.PasswordResetDoneView):
+    template_name = 'accounts/password_reset_done.html'
+
+class UserPasswordResetConfirmView(auth_views.PasswordResetConfirmView):
+    template_name = 'accounts/password_reset_confirm.html'
+    success_url = reverse_lazy('accounts:password_reset_complete')
+
+class UserPasswordResetCompleteView(auth_views.PasswordResetCompleteView):
+    template_name = 'accounts/password_reset_compete.html'
+    

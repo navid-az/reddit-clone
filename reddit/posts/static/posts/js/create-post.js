@@ -1,23 +1,20 @@
-let postTypeBtn = document.querySelectorAll("button");
-let postInputs = document.querySelectorAll(".field");
+let postTypeBtn = document.querySelectorAll(".form-header button");
+let fields = document.querySelectorAll(".field");
+let postForm = document.getElementById("post-form");
 
 // choose between post type options
 function postType(i) {
-  postInputs.forEach((input) => {
-    input.style.display = "none";
+  fields.forEach((field) => {
+    field.style.display = "none";
   });
-  postInputs[i].style.display = "block";
+  postTypeBtn.forEach((btn) => {
+    btn.style.background = "#3B3B3B";
+  });
+  fields[i].style.display = "block";
+  postTypeBtn[i].style.background = "#FF3F18";
+  console.log(i);
 }
 postType(0);
-
-// create post tab will open up
-// $.ajax({
-//   type: "GET",
-//   url: "posts/post-tab/",
-//   success: function (response) {
-//     console.log("success", response);
-//   },
-//   error: function (error) {
-//     console.log("error:", error);
-//   },
-// });
+function submitBtn() {
+  postForm.submit();
+}

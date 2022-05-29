@@ -1,23 +1,35 @@
 {% extends 'base.html' %} {% load static %}
 {% block title %}Home{% endblock title %}
 {% block jsFiles %}
-<script src="{% static 'home/js/home.js' %}"></script>
+  <script src="{% static 'home/js/home.js' %}"></script>
 {% endblock jsFiles %}
-  
-  
 <!---->
 {% load static %}
 {% block cssFiles %}
   <link rel="stylesheet" href="{% static 'posts/inc/css/post.css' %}">
+  <link rel="stylesheet" href="{% static 'home/css/home.css' %}">
 {% endblock cssFiles %}
 {% block content %}
 
 <div class="container">
   <div class="row">
     <div class="popular-posts col-8">
-      {% for post in posts %}
-        {% include 'posts/inc/post.html' %}
-      {% endfor %}
+      <div id="filters-bar">
+        <div class="show-options">
+          <img src="{% static 'home/svgs/slides.svg' %}" alt="show posts in slides">
+          <img src="{% static 'home/svgs/windows.svg' %}" alt="show posts in windows">
+        </div>
+        <div class="post-filters">
+          <a class="post-filters-buttons">برترین های</a>
+          <a href='{% url 'home:new_posts' %}' class="post-filters-buttons">جدید</a>
+          <a class="post-filters-buttons">داغ</a>
+        </div>
+      </div>
+      <div id="posts-wrapper">
+        {% for post in posts %}
+          {% include 'posts/inc/post.html' %}
+        {% endfor %}
+      </div>
     </div>
     <div id="popular-servers">
         {% comment %} {% for server in servers %}

@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% block title %}post{% endblock title %}
-{% load static %}
+{% load static %} {% load humanize %}
 {% block cssFiles %}
   <link rel="stylesheet" href="{% static 'posts/inc/css/post.css' %}">
   <link rel="stylesheet" href="{% static 'posts/css/post-page.css' %}">
@@ -9,8 +9,33 @@
 
 <div class="container">
   <div class="row">
-    <div class="popular-posts col-12">
+    <div class="popular-posts col-8" style='margin-top:3rem'>
       {% include 'posts/inc/post.html' %}
+      <div class="comment-section">
+        {% for comment in comments  %}
+          <div class="comment">
+            <div class="creator-info">
+              <div class="creator-img">
+                <img src="https://cdn.wccftech.com/wp-content/uploads/2017/03/reddit-alien-red-2060x1030.jpg" alt="">
+              </div>
+              <div class="created-creator">
+                <a href="{% url 'user:profile' comment.creator.id %}" class="creator-name">u/{{comment.creator}}</a>
+                <p class='created-at'>{{comment.created|naturaltime}}</p>
+              </div>
+            </div>
+            <div class="comment-body">
+              <p>{{comment.body}}</p>
+              <div class="comment-vote">
+                <img src="{% static 'posts/svgs/comment-up-vote.svg' %}" alt="comment up vote">
+                <p class="vote-counter">{{post.vote_count}}</p>
+                <img src="{% static 'posts/svgs/comment-down-vote.svg' %}" alt="comment down vote">
+              </div>
+            </div>
+          </div>
+        {% empty %}
+          <p>هنوز هیچ پیامی ارسال نشده</p>
+        {% endfor %}
+      </div>
     </div>
   </div>
 </div>

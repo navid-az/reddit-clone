@@ -1,0 +1,42 @@
+.navbar {
+  margin-bottom: 3rem !important;
+}
+
+#filters-bar {
+  height: 4.625rem;
+  width: 100%;
+  background: #ffff;
+  border-radius: 0.5rem;
+  padding: 0.875rem;
+  margin-bottom: 1rem;
+}
+
+#filters-bar,
+.post-filters,
+.show-options,
+.post-filters>a,
+.show-options {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.post-filters {
+  gap: 0.5rem;
+}
+
+.post-filters>a,
+.show-options {
+  height: 2.375rem;
+  border-radius: 0.5rem;
+  background: #3B3B3B;
+  color: white;
+  font-size: 1.125rem;
+  padding: 0.4375rem 1.5625rem;
+  transition: 0.25s ease-in-out;
+  font-size: 1rem;
+}
+
+.post-filters>a:hover {
+  background: var(--orange);
+}

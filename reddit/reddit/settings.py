@@ -46,7 +46,9 @@ INSTALLED_APPS = [
     'servers.apps.ServersConfig',
     'accounts.apps.AccountsConfig',
     # humanize 
-    'django.contrib.humanize'
+    'django.contrib.humanize',
+    #MPTT
+    'mptt',
 ]
 
 MIDDLEWARE = [

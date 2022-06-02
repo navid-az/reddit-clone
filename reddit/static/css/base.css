@@ -81,9 +81,7 @@ button {
     cursor: pointer;
 }
 
-html {
-    height: 6000px;
-}
+html {}
 
 body,
 button {

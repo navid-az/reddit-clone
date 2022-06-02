@@ -1,43 +1,158 @@
-{% extends 'base.html' %}
-{% block title %}post{% endblock title %}
-{% load static %} {% load humanize %}
-{% block cssFiles %}
-  <link rel="stylesheet" href="{% static 'posts/inc/css/post.css' %}">
-  <link rel="stylesheet" href="{% static 'posts/css/post-page.css' %}">
-{% endblock cssFiles %}
-{% block content %}
-
+{% extends 'base.html' %} {% block title %}post{% endblock title %} 
+{% load static %} {% load humanize %} {% load mptt_tags %} {% block cssFiles %}
+<link rel="stylesheet" href="{% static 'posts/inc/css/post.css' %}" />
+<link rel="stylesheet" href="{% static 'posts/css/post-page.css' %}" />
+{% endblock cssFiles %} {% block jsFiles %}
+<script src="{% static 'posts/js/post-page.js' %}"></script>
+{% endblock jsFiles %} {% block content %}
 <div class="container">
   <div class="row">
-    <div class="popular-posts col-8" style='margin-top:3rem'>
+    <div class="popular-posts col-8" style="margin-top: 3rem">
       {% include 'posts/inc/post.html' %}
       <div class="comment-section">
-        {% for comment in comments  %}
-          <div class="comment">
-            <div class="creator-info">
-              <div class="creator-img">
-                <img src="https://cdn.wccftech.com/wp-content/uploads/2017/03/reddit-alien-red-2060x1030.jpg" alt="">
-              </div>
-              <div class="created-creator">
-                <a href="{% url 'user:profile' comment.creator.id %}" class="creator-name">u/{{comment.creator}}</a>
-                <p class='created-at'>{{comment.created|naturaltime}}</p>
-              </div>
+        {% if request.user.is_authenticated %}
+        <div class="comment-form-wrapper">
+          <form action="" method="post" novalidate>
+            {% csrf_token %} {{form.body}}
+            <button id="comment-submit-btn" type="submit">ارسال نظر</button>
+          </form>
+        </div>
+        {% else %}
+        <div class="comment-form-wrapper">
+          <form style="pointer-events: none" action="" method="post" novalidate>
+            {% csrf_token %} {{form.body}}
+            <button id="comment-submit-btn" type="submit">ارسال نظر</button>
+          </form>
+          <div class="not-auth-form-pm">
+            <p>برای ارسال پیام باید وارد حساب خود شوید</p>
+            <a href="{% url 'accounts:login' %}">ورود</a>
+          </div>
+        </div>
+        {% endif %} {% recursetree comments %}
+        <div class="comment">
+          <div class="creator-info">
+            <div class="creator-img">
+              <img
+                src="https://cdn.wccftech.com/wp-content/uploads/2017/03/reddit-alien-red-2060x1030.jpg"
+                alt=""
+              />
             </div>
-            <div class="comment-body">
-              <p>{{comment.body}}</p>
-              <div class="comment-vote">
-                <img src="{% static 'posts/svgs/comment-up-vote.svg' %}" alt="comment up vote">
-                <p class="vote-counter">{{post.vote_count}}</p>
-                <img src="{% static 'posts/svgs/comment-down-vote.svg' %}" alt="comment down vote">
-              </div>
+            <div class="created-creator">
+              <a
+                href="{% url 'user:profile' node.creator.id %}"
+                class="creator-name"
+                >u/{{node.creator}}</a
+              >
+              <p class="created-at">{{node.created|naturaltime}}</p>
             </div>
           </div>
+          <div class="comment-body">
+            <p>{{node.body}}</p>
+            <div class="comment-options">
+              <div class="comment-vote">
+                <img
+                  src="{% static 'posts/svgs/comment-up-vote.svg' %}"
+                  alt="comment up vote"
+                />
+                <p class="vote-counter">{{post.vote_count}}</p>
+                <img
+                  src="{% static 'posts/svgs/comment-down-vote.svg' %}"
+                  alt="comment down vote"
+                />
+              </div>
+              <button class='reply-btn' onclick="openReplyForm({{node.id}})">
+                <p>پاسخ</p>
+                <img src="{% static 'posts/svgs/reply.svg' %}" alt="">
+              </button>
+            </div>
+            <form
+              action="{% url 'posts:comment-reply' post.id node.id %}"
+              method="post"
+              id="reply-to-{{node.id}}"
+              class='reply-form'
+            >
+              {% csrf_token %} 
+              {{form.body}}
+              <input class='reply-submit-btn' type="submit" value='ارسال نظر' />
+            </form>
+            {% if not node.is_leaf_node %}
+              <div class="reply">{{children}}</div>
+            {% endif %}
+          </div>
+        </div>
+        {% endrecursetree %} {% comment %} {% for comment in comments %}
+        <div class="comment">
+          <div class="creator-info">
+            <div class="creator-img">
+              <img
+                src="https://cdn.wccftech.com/wp-content/uploads/2017/03/reddit-alien-red-2060x1030.jpg"
+                alt=""
+              />
+            </div>
+            <div class="created-creator">
+              <a
+                href="{% url 'user:profile' comment.creator.id %}"
+                class="creator-name"
+                >u/{{comment.creator}}</a
+              >
+              <p class="created-at">{{comment.created|naturaltime}}</p>
+            </div>
+          </div>
+          <div class="comment-body">
+            <p>{{comment.body}}</p>
+            <div class="comment-vote">
+              <img
+                src="{% static 'posts/svgs/comment-up-vote.svg' %}"
+                alt="comment up vote"
+              />
+              <p class="vote-counter">{{post.vote_count}}</p>
+              <img
+                src="{% static 'posts/svgs/comment-down-vote.svg' %}"
+                alt="comment down vote"
+              />
+            </div>
+            <!--reply-->
+            {% with replies=comment.replies.all %} {% for reply in replies %}
+            <div class="reply">
+              <div class="creator-info">
+                <div class="creator-img">
+                  <img
+                    src="https://cdn.wccftech.com/wp-content/uploads/2017/03/reddit-alien-red-2060x1030.jpg"
+                    alt=""
+                  />
+                </div>
+                <div class="created-creator">
+                  <a
+                    href="{% url 'user:profile' comment.creator.id %}"
+                    class="creator-name"
+                    >u/{{reply.creator}}</a
+                  >
+                  <p class="created-at">{{reply.created|naturaltime}}</p>
+                </div>
+              </div>
+              <div class="comment-body">
+                <p>{{reply.body}}</p>
+                <div class="comment-vote">
+                  <img
+                    src="{% static 'posts/svgs/comment-up-vote.svg' %}"
+                    alt="comment up vote"
+                  />
+                  <p class="vote-counter">{{post.vote_count}}</p>
+                  <img
+                    src="{% static 'posts/svgs/comment-down-vote.svg' %}"
+                    alt="comment down vote"
+                  />
+                </div>
+              </div>
+            </div>
+            {% endfor %} {% endwith %}
+          </div>
+        </div>
         {% empty %}
-          <p>هنوز هیچ پیامی ارسال نشده</p>
-        {% endfor %}
+        <p>هنوز هیچ پیامی ارسال نشده</p>
+        {% endfor %} {% endcomment %}
       </div>
     </div>
   </div>
 </div>
-
 {% endblock content %}

@@ -10,14 +10,14 @@
       <div class="post-info">
         <section>
           <a class="creator-name" href='{{post.get_profile_page}}'>u/{{post.creator}} پست شده توسط </a>
-          <a class="server-name" href='{{post.get_absolute_url}}'>r/{{post.server}}</a>
+          <a class="server-name" href='{% url 'servers:server' post.server.tag %}'>r/{{post.server.tag}}</a>
         </section>
         <section>
           <div class="post-tags"></div>
           <a href='{{post.get_absolute_url}}'><h3 class="post-title">{{post.title}}</h3></a>
         </section>
       </div>
-      <div class="server-img"><img src="{{post.server.image.url}}" alt=""></div>
+      <div class="server-img"><img src="{{post.server.image.url}}" alt="server image"></div>
     </div>
   </div>
   <div class="post-body">

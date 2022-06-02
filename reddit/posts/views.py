@@ -1,18 +1,64 @@
+from xml.etree.ElementTree import Comment
 from django.shortcuts import redirect, render, get_object_or_404, get_list_or_404
 from django.views import View
-from .forms import UpdatePostForm, CreatePostForm
-from .models import Post
+from .forms import UpdatePostForm, CreatePostForm, CreateCommentReplyForm
+from .models import Post, Comment
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
+
 
 # Create your views here.
 
 class PostPageView(View):
-    def get(self, request, pk):
-        post = get_object_or_404(Post, id = pk)
-        comments = post.post_comments.filter(is_reply=False)
-        return render(request, 'posts/post-page.html',{'post':post, 'comments':comments})
+    form_class = CreateCommentReplyForm
+
+    def setup(self, request, *args, **kwargs):
+        self.post_instance = get_object_or_404(Post, id=kwargs['post_id'])
+        return super().setup(request, *args, **kwargs)
+
+    def get(self, request, *args, **kwargs):
+        form = self.form_class()
+        comments = self.post_instance.post_comments.filter(is_reply=False)
+        return render(request, 'posts/post-page.html',{'post':self.post_instance, 'comments':comments, 'form':form})
+
+    @method_decorator(login_required)
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(request.POST)
+        if form.is_valid():
+            new_comment = form.save(commit=False)
+            new_comment.creator = request.user
+            new_comment.post = self.post_instance
+            new_comment.save()
+            messages.success(request, 'پیام شما با موفقیت ثبت شد')
+            return redirect('posts:post-page', self.post_instance.id)
+
+class CreateReplyView(LoginRequiredMixin, View):
+    form_class = CreateCommentReplyForm
+
+    def setup(self, request, *args, **kwargs):
+        self.post_instance = get_object_or_404(Post, id=kwargs['post_id'])
+        self.comment_instance = get_object_or_404(Comment, id=kwargs['comment_id'])
+        return super().setup(request, *args, **kwargs)
+
+    def get(self, request, *args, **kwargs):
+        form = self.form_class()
+        return render(request, 'posts/post-page.html', {'form':form})
+
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(request.POST)
+        if form.is_valid():
+            reply = form.save(commit=False)
+            reply.creator = request.user
+            reply.post = self.post_instance
+            reply.parent = self.comment_instance
+            reply.save()
+            messages.success(request, 'your reply to a reply has been saved!')
+            return redirect('posts:post-page', self.post_instance.id)
+
+
        
 class CreatePostView(LoginRequiredMixin, View):
     form_class = CreatePostForm

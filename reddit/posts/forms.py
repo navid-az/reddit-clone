@@ -1,6 +1,6 @@
-from django.forms import ModelForm
+from django.forms import ModelForm, Textarea
 from django import forms
-from .models import Post
+from .models import Post, Comment
 from django.core.exceptions import ValidationError
 
 
@@ -23,7 +23,10 @@ class CreatePostForm(ModelForm):
         if (text != '' and video is not None) or (text != '' and image is not None) or (video is not None and image is not None) :
             raise ValidationError('فقط یک نوع پست قابل قبول است')
 
-# class ChooseServerForm(ModelForm):
-#     class Meta:
-#         model = Post
-#         fields = ['server']
+class CreateCommentReplyForm(ModelForm):
+    class Meta:
+        model = Comment
+        fields = ['body']
+        widgets = {'body': Textarea(attrs={'id':'comment-form'})}
+
+    

@@ -2,17 +2,22 @@ from django.db import models
 from servers.models import Server
 from django.contrib.auth.models import User
 from django.urls import reverse
+from mptt.models import MPTTModel, TreeForeignKey
 
-# Create your models here.
 # if you put the child model on top of the parent model-
 # -(comment is a child to the post because of the foreignkey) you need to put Post inside quotation marks to make it work 
-class Comment(models.Model):
+class Comment(MPTTModel):
     body = models.TextField(max_length=800)
     created = models.DateTimeField(auto_now=True)
+    parent = TreeForeignKey('self', on_delete=models.CASCADE, related_name='replies', blank=True, null=True)
     post = models.ForeignKey('Post', on_delete=models.CASCADE, default=1, related_name='post_comments')
     creator = models.ForeignKey(User, on_delete=models.CASCADE, default=1, related_name='user_comments')
-    reply = models.ForeignKey('self', on_delete=models.CASCADE, related_name='replies', blank=True, null=True)
     is_reply = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f'comment by {self.id} {self.creator}'
+    class MPTTMeta:
+        order_insertion_by = ['created']
 
 class Post(models.Model):
     post_type_choices = [('text', 'text'), ('video', 'video'), ('image', 'image'), ('link','link')]
@@ -29,8 +34,8 @@ class Post(models.Model):
     created = models.DateTimeField(auto_now=True)
     type = models.CharField(max_length=5, choices=post_type_choices, default='text')
     vote_count = models.IntegerField(default=0)
-    upvote = models.ManyToManyField(User, related_name='upvote')
-    downvote = models.ManyToManyField(User, related_name='downvote')
+    upvote = models.ManyToManyField(User, blank=True, null=True, related_name='upvote')
+    downvote = models.ManyToManyField(User, blank=True, null=True, related_name='downvote')
 
     def get_absolute_url(self):
         return reverse("posts:post-page", args={self.id})

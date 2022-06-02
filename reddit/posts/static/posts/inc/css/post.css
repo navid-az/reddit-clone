@@ -7,9 +7,6 @@
     margin-bottom: 2rem;
 }
 
-
-
-
 .post-header {
     display: flex;
     justify-content: space-between;
@@ -81,6 +78,7 @@
 .post-body>video,
 .post-body>img {
     width: auto;
+    max-width: 100%;
     max-height: 500px;
     border-radius: 8px;
 }

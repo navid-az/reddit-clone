@@ -1,12 +1,59 @@
 {% extends 'base.html' %} {% block title %}post{% endblock title %} 
-{% load static %} {% load humanize %} {% load mptt_tags %} {% block cssFiles %}
-<link rel="stylesheet" href="{% static 'posts/inc/css/post.css' %}" />
-<link rel="stylesheet" href="{% static 'posts/css/post-page.css' %}" />
+{% load static %} {% load humanize %} {% load mptt_tags %} 
+{% block cssFiles %}
+  <link rel="stylesheet" href="{% static 'posts/inc/css/post.css' %}" />
+  <link rel="stylesheet" href="{% static 'posts/css/post-page.css' %}" />
+  <link rel="stylesheet" href="{% static 'servers/css/server.css' %}" />
 {% endblock cssFiles %} {% block jsFiles %}
-<script src="{% static 'posts/js/post-page.js' %}"></script>
+  <script src="{% static 'posts/js/post-page.js' %}"></script>
 {% endblock jsFiles %} {% block content %}
 <div class="container">
   <div class="row">
+    <div class="server-details-wrapper col-4" style='margin-top:3rem'>
+      <div class="server-details">
+        <div class="server-details-header">
+          <img
+            class="server-header-img"
+            src="{{post.server.header_image.url}}"
+            alt="server header image"
+          />
+          <img
+            class="server-img"
+            src="{{post.server.image.url}}"
+            alt="server header image"
+          />
+          <div class="server-tag">r/{{post.server.tag}}</div>
+        </div>
+        <div class="server-details-info">
+          <div class="about-server">
+            <h3>درباره این سرور</h3>
+            <p>{{post.server.about}}</p>
+          </div>
+          <div class="server-numbers-wrapper">
+            <div class="server-numbers">
+              <div class="followers">
+                <p>{{post.server.followers.count}}</p>
+                <p>دنبال کننده</p>
+              </div>
+              <div class="online_users">
+                <p>0</p>
+                <p>آنلاین</p>
+              </div>
+            </div>
+            <div class="server-score">
+              <h2>#۸۷</h2>
+            </div>
+          </div>
+          <div class="server-created-at">
+            <span>
+              <img src="{% static 'servers/svgs/gift.svg' %}" alt="" />
+              <h3>ساخته شده در تاریخ</h3>
+            </span>
+            <p>{{post.server.created}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="popular-posts col-8" style="margin-top: 3rem">
       {% include 'posts/inc/post.html' %}
       <div class="comment-section">
@@ -60,97 +107,26 @@
                   alt="comment down vote"
                 />
               </div>
-              <button class='reply-btn' onclick="openReplyForm({{node.id}})">
+              <button class="reply-btn" onclick="openReplyForm({{node.id}})">
                 <p>پاسخ</p>
-                <img src="{% static 'posts/svgs/reply.svg' %}" alt="">
+                <img src="{% static 'posts/svgs/reply.svg' %}" alt="" />
               </button>
             </div>
             <form
               action="{% url 'posts:comment-reply' post.id node.id %}"
               method="post"
               id="reply-to-{{node.id}}"
-              class='reply-form'
+              class="reply-form"
             >
-              {% csrf_token %} 
-              {{form.body}}
-              <input class='reply-submit-btn' type="submit" value='ارسال نظر' />
+              {% csrf_token %} {{form.body}}
+              <input class="reply-submit-btn" type="submit" value="ارسال نظر" />
             </form>
             {% if not node.is_leaf_node %}
-              <div class="reply">{{children}}</div>
+            <div class="reply">{{children}}</div>
             {% endif %}
           </div>
         </div>
-        {% endrecursetree %} {% comment %} {% for comment in comments %}
-        <div class="comment">
-          <div class="creator-info">
-            <div class="creator-img">
-              <img
-                src="https://cdn.wccftech.com/wp-content/uploads/2017/03/reddit-alien-red-2060x1030.jpg"
-                alt=""
-              />
-            </div>
-            <div class="created-creator">
-              <a
-                href="{% url 'user:profile' comment.creator.id %}"
-                class="creator-name"
-                >u/{{comment.creator}}</a
-              >
-              <p class="created-at">{{comment.created|naturaltime}}</p>
-            </div>
-          </div>
-          <div class="comment-body">
-            <p>{{comment.body}}</p>
-            <div class="comment-vote">
-              <img
-                src="{% static 'posts/svgs/comment-up-vote.svg' %}"
-                alt="comment up vote"
-              />
-              <p class="vote-counter">{{post.vote_count}}</p>
-              <img
-                src="{% static 'posts/svgs/comment-down-vote.svg' %}"
-                alt="comment down vote"
-              />
-            </div>
-            <!--reply-->
-            {% with replies=comment.replies.all %} {% for reply in replies %}
-            <div class="reply">
-              <div class="creator-info">
-                <div class="creator-img">
-                  <img
-                    src="https://cdn.wccftech.com/wp-content/uploads/2017/03/reddit-alien-red-2060x1030.jpg"
-                    alt=""
-                  />
-                </div>
-                <div class="created-creator">
-                  <a
-                    href="{% url 'user:profile' comment.creator.id %}"
-                    class="creator-name"
-                    >u/{{reply.creator}}</a
-                  >
-                  <p class="created-at">{{reply.created|naturaltime}}</p>
-                </div>
-              </div>
-              <div class="comment-body">
-                <p>{{reply.body}}</p>
-                <div class="comment-vote">
-                  <img
-                    src="{% static 'posts/svgs/comment-up-vote.svg' %}"
-                    alt="comment up vote"
-                  />
-                  <p class="vote-counter">{{post.vote_count}}</p>
-                  <img
-                    src="{% static 'posts/svgs/comment-down-vote.svg' %}"
-                    alt="comment down vote"
-                  />
-                </div>
-              </div>
-            </div>
-            {% endfor %} {% endwith %}
-          </div>
-        </div>
-        {% empty %}
-        <p>هنوز هیچ پیامی ارسال نشده</p>
-        {% endfor %} {% endcomment %}
+        {% endrecursetree %}
       </div>
     </div>
   </div>

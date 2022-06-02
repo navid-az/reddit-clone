@@ -80,8 +80,35 @@
   direction: rtl;
   background: #ffff;
   border-radius: 0.5rem;
+  height: auto;
+}
+
+.server-details-header {
+  position: relative;
+  border-radius: 0.5rem;
+}
+
+.server-header-img {
+  border-radius: 0.5rem 0.5rem 0 0;
+  width: 100%;
+  height: 5.75rem;
+}
+
+.server-details-header>.server-img {
+  position: absolute;
+  right: 0.875rem;
+  bottom: 0;
+  border: 4px solid white;
+}
+
+.server-tag {
+  padding-right: 6rem;
+  font-family: Vbold;
+  font-size: 1rem;
+}
+
+.server-details-info {
   padding: 0.875rem;
-  height: 30.375rem;
 }
 
 .about-server>h3,

@@ -1,78 +1,107 @@
 {% extends 'base.html' %} {% load static %} 
 {% block cssFiles %}
-  <link rel="stylesheet" href="{% static 'servers/server.css' %}" />
-{% endblock cssFiles %} 
+  <link rel="stylesheet" href="{% static 'servers/css/server.css' %}" />
+{% endblock cssFiles %}
 
 {% block content %}
-  <div class="server-header">
-    <img src="{{server.header_image.url}}" alt="server header image" />
-  </div>
-  <div class="server-header-bar">
-    <div class="container">
-      <div class="server-info">
-        <div class="server-name">
-          <div>
-            <div class="join-server-btn">
-              <a href="">عضویت</a>
-            </div>
-            <h2>{{server.name}}</h2>
-          </div>
-          <p>r/{{server.tag}}</p>
-        </div>
-        <div class="server-main-img">
-          <img src="{{server.image.url}}" alt="server image" />
-        </div>
-      </div>
-    </div>
-  </div>
+<div class="server-header">
+  <img src="{{server.header_image.url}}" alt="server header image" />
+</div>
+<div class="server-header-bar">
   <div class="container">
-    <div class="row">
-      <div class="server-details col-4">
-        <div class="about-server">
-          <h3>درباره این سرور</h3>
-          <p>یک FPS علمی تخیلی 1 تا 4 نفره است که شامل کوتوله‌های فضایی خفن، محیط‌های 100% تخریب‌پذیر، غارهای رویه‌ای و انبوهی از هیولاهای بیگانه است. اکنون به طور کامل منتشر شده است!</p>
-        </div>
-        <div class="server-numbers-wrapper">
-          <div class="server-numbers">
-            <div class="followers">
-              <p>0</p>
-              <p>دنبال کننده</p>
-            </div>
-          <div class="online_users">
-            <p>0</p>
-            <p>آنلاین</p>
+    <div class="server-info">
+      <div class="server-name">
+        <div>
+          {% if is_following %}
+          <div class="join-server-btn">
+            <a href="{% url 'servers:follow' server.tag %}">خروج</a>
           </div>
+          {% else %}
+          <div class="join-server-btn">
+            <a href="{% url 'servers:follow' server.tag %}">عضویت</a>
           </div>
-          <div class="server-score">
-            <h2>#۸۷</h2>
-          </div>
+          {% endif %}
+          <h2>{{server.name}}</h2>
         </div>
-        <div class="server-created-at">
-          <span>
-            <img src="{% static 'servers/svgs/gift.svg' %}" alt="">
-            <h3>درباره این سرور</h3>
-          </span>
-          <p>{{server.created}}</p>
-        </div>
+        <p>r/{{server.tag}}</p>
       </div>
-      <div class="popular-posts col-8">
-        <div id="filters-bar">
-          <div class="show-options">
-            <img src="{% static 'home/svgs/slides.svg' %}" alt="show posts in slides">
-            <img src="{% static 'home/svgs/windows.svg' %}" alt="show posts in windows">
-          </div>
-          <div class="post-filters">
-            <a class="post-filters-buttons">برترین های</a>
-            <a href='{% url 'home:new_posts' %}' class="post-filters-buttons">جدید</a>
-            <a class="post-filters-buttons">داغ</a>
-          </div>
-        </div>
-        <div id="posts-wrapper">
-          {% for post in posts %}
-            {% include 'posts/inc/post.html' %}
-          {% endfor %}
-        </div>
+      <div class="server-main-img">
+        <img src="{{server.image.url}}" alt="server image" />
       </div>
     </div>
   </div>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="server-details-wrapper col-4">
+      <div class="server-details">
+        <div class="server-details-header d-none">
+          <img
+            class="server-header-img"
+            src="{{post.server.header_image.url}}"
+            alt="server header image"
+          />
+          <img
+            class="server-img"
+            src="{{post.server.image.url}}"
+            alt="server header image"
+          />
+          <div class="server-tag">r/{{post.server.tag}}</div>
+        </div>
+        <div class="server-details-info">
+          <div class="about-server">
+            <h3>درباره این سرور</h3>
+            <p>{{server.about}}</p>
+          </div>
+          <div class="server-numbers-wrapper">
+            <div class="server-numbers">
+              <div class="followers">
+                <p>{{server.followers.count}}</p>
+                <p>دنبال کننده</p>
+              </div>
+              <div class="online_users">
+                <p>0</p>
+                <p>آنلاین</p>
+              </div>
+            </div>
+            <div class="server-score">
+              <h2>#۸۷</h2>
+            </div>
+          </div>
+          <div class="server-created-at">
+            <span>
+              <img src="{% static 'servers/svgs/gift.svg' %}" alt="" />
+              <h3>ساخته شده در تاریخ</h3>
+            </span>
+            <p>{{server.created}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="popular-posts col-8">
+      <div id="filters-bar">
+        <div class="show-options">
+          <img
+            src="{% static 'home/svgs/slides.svg' %}"
+            alt="show posts in slides"
+          />
+          <img
+            src="{% static 'home/svgs/windows.svg' %}"
+            alt="show posts in windows"
+          />
+        </div>
+        <div class="post-filters">
+          <a class="post-filters-buttons">برترین های</a>
+          <a href='{% url "home:new_posts" %}' class="post-filters-buttons"
+            >جدید</a
+          >
+          <a class="post-filters-buttons">داغ</a>
+        </div>
+      </div>
+      <div id="posts-wrapper">
+        {% for post in posts %} {% include 'posts/inc/post.html' %} {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
 {% endblock content %}

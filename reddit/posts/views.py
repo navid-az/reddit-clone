@@ -2,13 +2,13 @@ from xml.etree.ElementTree import Comment
 from django.shortcuts import redirect, render, get_object_or_404, get_list_or_404
 from django.views import View
 from .forms import UpdatePostForm, CreatePostForm, CreateCommentReplyForm
-from .models import Post, Comment
+from .models import Post, Comment, Vote
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
-
+from django.db.models import F
 
 # Create your views here.
 
@@ -20,6 +20,11 @@ class PostPageView(View):
         return super().setup(request, *args, **kwargs)
 
     def get(self, request, *args, **kwargs):
+        # upvote = Vote.objects.filter(choice='up').count()
+        # downvote = Vote.objects.filter(choice='down').count()
+        # vote_count = upvote - downvote
+        # post = Post(id=kwargs['post_id'] ,votes_count=vote_count)
+        # post.save()
         form = self.form_class()
         comments = self.post_instance.post_comments.filter(is_reply=False)
         return render(request, 'posts/post-page.html',{'post':self.post_instance, 'comments':comments, 'form':form})
@@ -58,8 +63,6 @@ class CreateReplyView(LoginRequiredMixin, View):
             messages.success(request, 'your reply to a reply has been saved!')
             return redirect('posts:post-page', self.post_instance.id)
 
-
-       
 class CreatePostView(LoginRequiredMixin, View):
     form_class = CreatePostForm
     # server_form = ChooseServerForm
@@ -126,4 +129,51 @@ class DeletePostView(LoginRequiredMixin ,View):
             messages.error('شما نمیتوانید پست دیگران را حذف کنید')
         return redirect('user:profile', request.user.id)
 
-# comment section
+class UpVotePostView(LoginRequiredMixin, View):
+    def get(self, request, post_id):
+        post = get_object_or_404(Post, id=post_id)
+        upvote = Vote.objects.filter(post=post, user=request.user, choice='up')
+        downvote = Vote.objects.filter(post=post, user=request.user, choice='down')
+        if upvote.exists():
+            post.votes_count = F('votes_count') - 1
+            post.save()
+            upvote.delete()
+            messages.warning(request, 'you have already upvoted this post')
+            return redirect('posts:post-page', post_id)
+        elif downvote.exists():
+            post.votes_count = F('votes_count') + 2
+            post.save()
+            downvote.delete()
+            Vote(post=post, user=request.user, choice='up').save()
+            return redirect('posts:post-page', post_id)
+        elif not upvote.exists() and not downvote.exists():
+            post.votes_count = F('votes_count') + 1
+            post.save()
+            Vote(post=post, user=request.user, choice='up').save()
+            return redirect('posts:post-page', post_id)
+
+            
+class DownVotePostView(LoginRequiredMixin, View):
+    def get(self, request, post_id):
+        post = get_object_or_404(Post, id=post_id)
+        upvote = Vote.objects.filter(post=post, user=request.user, choice='up')
+        downvote = Vote.objects.filter(post=post, user=request.user, choice='down')
+        if upvote.exists():
+            post.votes_count = F('votes_count') - 2
+            post.save()
+            upvote.delete()
+            Vote(post=post, user=request.user, choice='down').save()
+            return redirect('posts:post-page', post_id)
+        elif downvote.exists():
+            post.votes_count = F('votes_count') + 1
+            post.save()
+            downvote.delete()
+            messages.warning(request, 'you have already downvoted this post')
+            return redirect('posts:post-page', post_id)
+        elif not upvote.exists() and not downvote.exists():
+            post.votes_count = F('votes_count') - 1
+            post.save()
+            Vote(post=post, user=request.user, choice='down').save()
+            return redirect('posts:post-page', post_id)
+
+            

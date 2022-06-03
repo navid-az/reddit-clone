@@ -2,9 +2,9 @@
 <div class="post">
   <div class="post-header">
     <div class="vote">
-      <img class="upvote" src="{% static 'svgs/up-vote.svg' %}" alt="">
-      <p class="vots-counter">{{post.vote_count}}</p>
-      <img class="upvote" src="{% static 'svgs/down-vote.svg' %}" alt="">
+      <a href="{% url 'posts:upvote' post.id %}"><img class="upvote" src="{% static 'svgs/up-vote.svg' %}" alt=""></a>
+      <p class="vots-counter">{{post.votes_count}}</p>
+      <a href="{% url 'posts:downvote' post.id %}"><img class="upvote" src="{% static 'svgs/down-vote.svg' %}" alt=""></a>
     </div>
     <div class="server-info">
       <div class="post-info">

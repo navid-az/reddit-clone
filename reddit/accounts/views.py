@@ -37,6 +37,10 @@ class UserLogin(View):
     form_class = LoginForm
     template_name = 'accounts/login.html'
 
+    def setup(self, request, *args, **kwargs):
+        self.next = request.GET.get('next')
+        return super().setup(request, *args, **kwargs)
+
     def dispatch(self, request, *args, **kwargs):
         if request.user.is_authenticated:
             messages.warning(request, 'شما از قبل وارد شدید')
@@ -51,6 +55,8 @@ class UserLogin(View):
             if user is not None:
                 login(request, user)
                 messages.success(request, '!به ردیت خوش اومدی')
+                if self.next:
+                    return redirect(self.next)
                 return redirect('home:home')
             messages.error(request, '!رمز یا نام کاربریت اشتباهه')
         return render(request, self.template_name, {'form':form}) 

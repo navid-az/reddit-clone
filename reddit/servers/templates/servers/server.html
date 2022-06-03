@@ -13,13 +13,13 @@
       <div class="server-name">
         <div>
           {% if is_following %}
-          <div class="join-server-btn">
-            <a href="{% url 'servers:follow' server.tag %}">خروج</a>
-          </div>
+            <div class="join-server-btn">
+              <a href="{% url 'servers:follow' server.tag %}">خروج</a>
+            </div>
           {% else %}
-          <div class="join-server-btn">
-            <a href="{% url 'servers:follow' server.tag %}">عضویت</a>
-          </div>
+            <div class="join-server-btn">
+              <a href="{% url 'servers:follow' server.tag %}">عضویت</a>
+            </div>
           {% endif %}
           <h2>{{server.name}}</h2>
         </div>

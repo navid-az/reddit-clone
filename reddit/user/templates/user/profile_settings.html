@@ -1,0 +1,75 @@
+{% extends 'base.html' %} {% load static %} {% block cssFiles %}
+<link rel="stylesheet" href="{% static 'user/css/profile-settings.css' %}" />
+{% endblock cssFiles %} {% block content %}
+<div class="container">
+  <div class="row">
+    <div class="col-5">
+      <div class="account">
+        <div class="settings-header">
+          <img
+            src="{% static 'user/svgs/settings-header-icon.svg' %}"
+            alt="settings header svg"
+          />
+          <p>حساب کاربری</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-7">
+      <div class="profile">
+        <div class="settings-header">
+          <img
+            src="{% static 'user/svgs/settings-header-icon.svg' %}"
+            alt="settings header svg"
+          />
+          <p>پروفایل</p>
+        </div>
+        <form action="" method="post">
+          {% csrf_token %}
+          <input type="submit">
+          <div class="field-wrapper">
+            <p class="filed-title">نام کاربری (دلخواه)</p>
+            <p class="field-info">
+              اسمی برای نمایش در پروفایل (این اسم نام کاربری را تغییر نمیدهد)
+            </p>
+            {{form.name}}
+          </div>
+          <div class="field-wrapper">
+            <p class="filed-title">درباره تو (دلخواه)</p>
+            <p class="field-info">یه توضیح مختصر از خودت بده</p>
+            {{form.bio}}
+          </div>
+          <div class="field-wrapper">
+            <p class="filed-title">عکس ها</p>
+            <p class="field-info">عکس ها باید در فرمت png. یا jpg. باشد</p>
+            <div class="row">
+              <div class="profile-image col-3">
+                <img src="{{user.profile.image.url}}" alt="user image" />
+                {{form.image}}
+                <img
+                  class="upload-btn-icon"
+                  src="{% static 'user/svgs/camera.svg' %}"
+                  alt=""
+                />
+              </div>
+              <div class="profile-image col-6">
+                <img
+                  src="{{user.profile.header_image.url}}"
+                  alt="user header image"
+                />
+                {{form.header_image}}
+                <div class="upload-btn-icon-wrapper">
+                  <img
+                    class="upload-btn-icon"
+                    src="{% static 'user/svgs/camera.svg' %}"
+                    alt=""
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}

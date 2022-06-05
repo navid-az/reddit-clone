@@ -39,7 +39,7 @@ class Post(models.Model):
         return reverse("posts:post-page", args={self.id})
 
     def get_profile_page(self):
-        return reverse("user:profile", args={self.creator.id})
+        return reverse("user:profile", args={self.creator.username})
     
     def __str__(self):
         return f"{self.title} - {self.creator}"

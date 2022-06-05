@@ -6,7 +6,7 @@
       <div class="nav-btns">
         {% if request.user.is_authenticated %}
         <a href='{% url 'accounts:logout' %}' id='sing-in-btn'>خروج</a>
-          <a href='{% url 'user:profile' request.user.id %}' id='profile-btn'><img src="{% static 'inc/svgs/user.svg' %}" alt="profile"></a>
+          <a href='{% url 'user:profile' request.user.username %}' id='profile-btn'><img src="{% static 'inc/svgs/user.svg' %}" alt="profile"></a>
         {% else %}
           <a href='{% url 'accounts:register' %}' id='sing-in-btn'>ثبت نام</a>
         {% endif %}

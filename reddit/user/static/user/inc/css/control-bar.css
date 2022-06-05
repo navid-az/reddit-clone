@@ -1,6 +1,7 @@
 .control-bar-wrapper {
   background: var(--dark-grey);
   margin-bottom: 3rem;
+  margin-top: -3rem;
 }
 
 .control-bar {

@@ -1,10 +1,10 @@
-from xml.etree.ElementTree import Comment
 from django.shortcuts import redirect, render, get_object_or_404, get_list_or_404
 from django.views import View
 from .forms import UpdatePostForm, CreatePostForm, CreateCommentReplyForm
 from .models import Post, Comment, Vote
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
+from servers.models import Server
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
@@ -20,11 +20,6 @@ class PostPageView(View):
         return super().setup(request, *args, **kwargs)
 
     def get(self, request, *args, **kwargs):
-        # upvote = Vote.objects.filter(choice='up').count()
-        # downvote = Vote.objects.filter(choice='down').count()
-        # vote_count = upvote - downvote
-        # post = Post(id=kwargs['post_id'] ,votes_count=vote_count)
-        # post.save()
         form = self.form_class()
         comments = self.post_instance.post_comments.filter(is_reply=False)
         return render(request, 'posts/post-page.html',{'post':self.post_instance, 'comments':comments, 'form':form})
@@ -75,9 +70,10 @@ class CreatePostView(LoginRequiredMixin, View):
         return super().dispatch(request, *args, **kwargs)
 
     def get(self, request, pk):
+        servers = Server.objects.all()
         form = self.form_class()
         # servers = self.server_form()
-        return render(request, 'posts/create-post.html', {'form':form})
+        return render(request, 'posts/create-post.html', {'form':form, 'servers':servers})
 
     def post(self, request, pk):
         form = self.form_class(request.POST, request.FILES)
@@ -121,13 +117,13 @@ class UpdatePostView(LoginRequiredMixin, View):
             return redirect('home:home')
 class DeletePostView(LoginRequiredMixin ,View):
     def get(self, request, pk):
-        post = get_object_or_404(Post ,pk=pk)
+        post = Post.objects.get(pk=pk)
         if post.creator.id == request.user.id:
             post.delete()
             messages.success(request, '!پست با موفقیت حذف شد')
         else:
             messages.error('شما نمیتوانید پست دیگران را حذف کنید')
-        return redirect('user:profile', request.user.id)
+        return redirect('user:profile', request.user.username)
 
 class UpVotePostView(LoginRequiredMixin, View):
     def get(self, request, post_id):

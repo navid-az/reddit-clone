@@ -1,33 +1,17 @@
-{% extends 'base.html' %}{% load static %} {% block title %}create post page{% endblock title %} 
-{% block cssFiles %}<link rel="stylesheet" href="{% static 'posts/css/create-post.css' %}"/>{% endblock cssFiles %}
+{% extends 'base.html' %}{% load static %} 
+{% block title %}create post page{% endblock title %} 
+{% block cssFiles %}
+  <link rel="stylesheet" href="{% static 'posts/css/create-post.css' %}"/>
+{% endblock cssFiles %} 
 {% block jsFiles %}
-<script src="{% static 'posts/js/create-post.js' %}"></script>
-{% endblock jsFiles %} {% block content %} 
+  <script src="{% static 'posts/js/create-post.js' %}"></script>
+{% endblock jsFiles %} 
+{% block content %} 
 {% include 'user/inc/control-bar.html' %}
 
 <div class="container">
   <div class="row">
     <div class="create-post-form-wrapper col-8">
-      <div class="form-header">
-        <div class="form-types">
-          <button onclick="postType(0)">
-            <p>متن</p>
-            <img src="{% static 'posts/svgs/file.svg' %}" alt="" />
-          </button>
-          <button onclick="postType(1)">
-            <p>عکس</p>
-            <img src="{% static 'posts/svgs/image.svg' %}" alt="" />
-          </button>
-          <button onclick="postType(2)">
-            <p>فیلم</p>
-            <img src="{% static 'posts/svgs/video.svg' %}" alt="" />
-          </button>
-          <button onclick="postType(2)">
-            <p>لینک</p>
-            <img src="{% static 'posts/svgs/link.svg' %}" alt="" />
-          </button>
-        </div>
-      </div>
       <div class="form-wrapper">
         <form
           id="post-form"
@@ -37,38 +21,73 @@
           novalidate
         >
           {% csrf_token %}
+          <div class="form-header">
+            <div class="servers">
+              <div id="server-search-bar">
+                <img
+                  src="{% static 'posts/svgs/search.svg' %}"
+                  alt="search icon"
+                />
+                <div id="selected-server">
+                  <img
+                    id="selected-server-img"
+                    src="{{servers.0.image.url}}"
+                    alt="server image"
+                  />
+                  <input id='selected-server-name' type='textarea' value='r/{{servers.0.tag}}'>
+                </div>
+                <img
+                  id='arrow-icon'
+                  src="{% static 'posts/svgs/arrow.svg' %}"
+                  alt="arrow icon"
+                />
+              </div>
+              <!--this is hidden -->
+              {{form.server}}
+
+              <div id="servers-tab">
+                {% for server in servers %} 
+                  <div class='server'>
+                    <img src="{{server.image.url}}" alt="">
+                    <div class="server-info">
+                      <p>r/{{server.tag}}</p>
+                      <p>عضو {{server.followers.count}}</p>
+                    </div>
+                  </div> 
+                {% endfor %}
+              </div>
+            </div>
+            <div class="form-types">
+              <button type="button" onclick="postType(0)">
+                <p>متن</p>
+                <img src="{% static 'posts/svgs/file.svg' %}" alt="" />
+              </button>
+              <button type="button" onclick="postType(1)">
+                <p>عکس</p>
+                <img src="{% static 'posts/svgs/image.svg' %}" alt="" />
+              </button>
+              <button type="button" onclick="postType(2)">
+                <p>فیلم</p>
+                <img src="{% static 'posts/svgs/video.svg' %}" alt="" />
+              </button>
+              <button type="button" onclick="postType(2)">
+                <p>لینک</p>
+                <img src="{% static 'posts/svgs/link.svg' %}" alt="" />
+              </button>
+            </div>
+          </div>
           <div class="form-body">
             {{ form.non_field_errors }}
-            <div id="title-field">
-              {{form.title}}
-              {{ form.title.errors }}
-            </div>
-            <div id="server-field">
-              {{form.server}}
-              {{ form.server.errors }}
-            </div>
-            <div class="field">
-              {{form.text}}
-              {{ form.text.errors }}
-            </div>
-            <div class="field">
-              {{form.image}}
-              {{ form.image.errors }}
-            </div>
-            <div class="field">
-              {{form.video}}
-              {{ form.video.errors }}
-            </div>
+            <div id="title-field">{{form.title}} {{ form.title.errors }}</div>
+            <div class="field">{{form.text}} {{ form.text.errors }}</div>
+            <div class="field">{{form.image}} {{ form.image.errors }}</div>
+            <div class="field">{{form.video}} {{ form.video.errors }}</div>
           </div>
         </form>
         <div class="form-footer">
           <button id="submit" onclick="submitBtn()">ارسال</button>
         </div>
       </div>
-    </div>
-    <div id="popular-servers">
-      {% comment %} {% for server in servers %} {{server.name}} <br />
-      {% endfor %} {% endcomment %}
     </div>
   </div>
 </div>

@@ -1,3 +1,4 @@
+from email.policy import default
 from django.forms import ModelForm, Textarea
 from django import forms
 from .models import Post, Comment
@@ -13,7 +14,7 @@ class CreatePostForm(ModelForm):
     class Meta:
         model = Post
         fields = ['title','video','image','text','server']
-        widgets ={'title':forms.TextInput({'placeholder':'تیتر'}), 'text':forms.Textarea({'placeholder':'متن'})}    
+        widgets ={'title':forms.TextInput({'placeholder':'تیتر'}), 'text':forms.Textarea({'placeholder':'متن'}), 'server':forms.Select({'id':'server-field'})}    
     
     def clean(self, text = None,video=None):
         cleaned_data = super().clean()

@@ -7,7 +7,7 @@
             <div class="control-bar col-12">
                 <div class="saved-hidden">
                     <a href="{% url 'home:home' %}"><img src="{% static 'posts/svgs/go-back-btn.svg' %}" alt="go to home page"></a>
-                    <a href="/"><img src="{% static 'posts/svgs/bookmark.svg' %}" alt="save"></a>
+                    <a href="{% url 'user:saved-posts' request.user.username %}"><img src="{% static 'posts/svgs/bookmark.svg' %}" alt="save"></a>
                     <a href="/"><img src="{% static 'posts/svgs/hidden.svg' %}" alt="hidden posts"></a>
                 </div>
                 <div class="posts-controls">

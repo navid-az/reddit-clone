@@ -13,15 +13,9 @@
   <div class="row">
     <div class="create-post-form-wrapper col-8">
       <div class="form-wrapper">
-        <form
-          id="post-form"
-          action=""
-          method="post"
-          enctype="multipart/form-data"
-          novalidate
-        >
+        <form id="post-form" action="" method="post" enctype="multipart/form-data" novalidate>
           {% csrf_token %}
-          <div class="form-header">
+          <section class="form-header">
             <div class="servers">
               <div id="server-search-bar">
                 <img
@@ -75,18 +69,20 @@
                 <img src="{% static 'posts/svgs/link.svg' %}" alt="" />
               </button>
             </div>
-          </div>
-          <div class="form-body">
+          </section>
+          <section class="form-body">
             {{ form.non_field_errors }}
             <div id="title-field">{{form.title}} {{ form.title.errors }}</div>
             <div class="field">{{form.text}} {{ form.text.errors }}</div>
             <div class="field">{{form.image}} {{ form.image.errors }}</div>
             <div class="field">{{form.video}} {{ form.video.errors }}</div>
+          </section>
+          <div class='form-footer-wrapper'>
+            <section class="form-footer">
+              <button id="submit" onclick="submitBtn()">ارسال</button>
+            </section>
           </div>
         </form>
-        <div class="form-footer">
-          <button id="submit" onclick="submitBtn()">ارسال</button>
-        </div>
       </div>
     </div>
   </div>

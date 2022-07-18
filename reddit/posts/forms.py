@@ -1,4 +1,3 @@
-from email.policy import default
 from django.forms import ModelForm, Textarea
 from django import forms
 from .models import Post, Comment

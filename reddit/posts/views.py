@@ -1,7 +1,7 @@
 from django.shortcuts import redirect, render, get_object_or_404, get_list_or_404
 from django.views import View
 from .forms import UpdatePostForm, CreatePostForm, CreateCommentReplyForm
-from .models import Post, Comment, Vote
+from .models import Post, Comment, Vote, Save
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 from servers.models import Server
@@ -172,4 +172,13 @@ class DownVotePostView(LoginRequiredMixin, View):
             Vote(post=post, user=request.user, choice='down').save()
             return redirect('posts:post-page', post_id)
 
-            
+class SavePostView(LoginRequiredMixin ,View):
+    def get(self, request, post_id):
+        post = Post.objects.get(id=post_id)
+        saved_post = Save.objects.filter(post=post, user=request.user)
+        if saved_post.exists():
+            saved_post.delete()
+            return redirect('posts:post-page', post_id)
+        Save(post=post, user=request.user).save()
+        messages.success(request, '!پست مورد نظر با موفقیت ذخیره شد')
+        return redirect('posts:post-page', post_id)

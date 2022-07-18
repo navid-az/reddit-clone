@@ -2,6 +2,7 @@ from django.db import models
 from servers.models import Server
 from django.contrib.auth.models import User
 from django.urls import reverse
+from servers.models import ServerTag
 from mptt.models import MPTTModel, TreeForeignKey
 
 # if you put the child model on top of the parent model-
@@ -22,7 +23,7 @@ class Comment(MPTTModel):
 class Post(models.Model):
     post_type_choices = [('text', 'text'), ('video', 'video'), ('image', 'image'), ('link','link')]
     title = models.CharField(max_length=200)
-    slug = models.SlugField(max_length=50, default='nigag')
+    slug = models.SlugField(max_length=50, default='slug')
     text = models.TextField(null=True, blank=True)
     text_allowed = models.BooleanField(default=True)
     image = models.ImageField(upload_to='posts/images/', null=True, blank=True)
@@ -34,6 +35,7 @@ class Post(models.Model):
     created = models.DateTimeField(auto_now=True)
     type = models.CharField(max_length=5, choices=post_type_choices, default='text')
     votes_count = models.IntegerField(default=0)
+    tag = models.ForeignKey(ServerTag, on_delete=models.CASCADE , default=1)
 
     def get_absolute_url(self):
         return reverse("posts:post-page", args={self.id})
@@ -53,3 +55,12 @@ class Vote(models.Model):
 
     def __str__(self):
         return f"{self.user} {self.choice}voted post {self.post.id}"
+
+class Save(models.Model):
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='saved')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user_saves')
+    created = models.DateTimeField(auto_now='True')
+
+    def __str__(self):
+        return f'{self.user} saved {self.post}'
+    

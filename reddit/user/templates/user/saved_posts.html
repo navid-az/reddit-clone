@@ -1,0 +1,91 @@
+{% extends 'base.html' %} {% load static %} {% load humanize %}
+{% block title %}r/{{user.username}} saves {% endblock title %} 
+{% block cssFiles %}
+  <link rel="stylesheet" href="{% static 'user/css/profile.css' %}" />
+  <link rel="stylesheet" href="{% static 'user/css/saved_posts.css' %}" />
+{% endblock cssFiles %} 
+{% block content %}
+{% include 'user/inc/control-bar.html' %}
+<div class="container">
+  <div class="row">
+    <section class="col-4">
+      <div class="user-info">
+        <div class="profile-image-wrapper">
+          <img
+            class="profile-img"
+            src="{{user.profile.image.url}}"
+            alt="user profile image"
+          />
+          <div class="user-tag">u/{{user.username}}</div>
+        </div>
+        <div class="user-details">
+          <div class="karma">1.5 کارما .</div>
+          <div class="active-for">4 سال</div>
+        </div>
+        <div class="profile-more-info">
+         <div class="user-date-settings">
+            <div class="settings-btn">
+            <a href="{% url 'user:profile-settings' request.user.username %}"><img src="{% static 'user/svgs/settings.svg' %}" alt="user settings" /></a>
+          </div>
+          <div class="info">
+            <div class="cake-day">
+              <h3>روز کیک</h3>
+              <p>{{user.date_joined|naturaltime}}</p>
+            </div>
+            <div class="followers">
+              <h3>دنبال کننده ها</h3>
+              <p></p>
+            </div>
+          </div>
+         </div>
+          <div class="btns">
+            <button type='button'>دنبال کردن</button>
+            <button type='button'>پیام</button>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class='col-8'>
+      <div class="saved-posts-wrapper">
+        {% for i in saved_posts %}
+          <div class="saved-post">
+            <div class="saved-post-img">
+              {% if i.post.image %}
+                <img id='saved-post-img' src="{{i.post.image.url}}" alt="saved post image">
+              {% elif i.post.video %}
+                <img src="{% static 'user/svgs/film-icon.svg' %}" alt="film icon">
+              {% else %}
+                <img src="{% static 'user/svgs/file-icon.svg' %}" alt="file icon">
+              {% endif %}
+            </div>
+            <div class="post-info">
+              <div class="vote">
+                <a href="{% url 'posts:upvote' i.post.id %}"><img class="upvote" src="{% static 'svgs/up-vote.svg' %}" alt=""></a>
+                <p class="vots-counter">{{i.post.votes_count}}</p>
+                <a href="{% url 'posts:downvote' i.post.id %}"><img class="upvote" src="{% static 'svgs/down-vote.svg' %}" alt=""></a>
+              </div>
+              <section>
+                <div class="info">
+                  <section>
+                    <div class="post-tags"></div>
+                    <a href="{% url 'posts:post-page' i.post.id %}"><h3 class="post-title">{{i.post.title}}</h3></a>
+                  </section>
+                  <section>
+                    <a class="creator-name" href='{% url 'user:profile' i.post.creator.username %}'>u/{{i.post.creator}} پست شده توسط </a>
+                    <a class="server-name" href='{% url 'servers:server' i.post.server.tag %}'>r/{{i.post.server.tag}}</a>
+                  </section>
+                </div>
+                <div class="post-items">
+                  <div><img class="comment-btn" src="{% static 'posts/svgs/comment.svg' %}" alt="comment button">{{i.post.post_comments.count}}</div>
+                  <a href=""><img class="share-btn" src="{% static 'posts/svgs/share.svg' %}" alt="share button"></a>
+                  <a href="{% url 'posts:save-post' i.post.id %}"><img class="save-btn" src="{% static 'posts/svgs/save.svg' %}" alt="save button"></a>
+                </div>
+              </section>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </section>
+  </div>
+</div>
+{% endblock content %}

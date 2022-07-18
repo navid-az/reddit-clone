@@ -47,8 +47,9 @@ INSTALLED_APPS = [
     'accounts.apps.AccountsConfig',
     # humanize 
     'django.contrib.humanize',
-    #MPTT
+    # 3rd party apps
     'mptt',
+    'colorfield',
 ]
 
 MIDDLEWARE = [

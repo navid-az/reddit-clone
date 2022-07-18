@@ -1,6 +1,98 @@
 .user-info {
+    display: flex;
+    flex-direction: column;
     background: #ffff;
     margin-bottom: 3rem;
     border-radius: 0.5rem;
     padding: var(--p14);
+    height: 486px;
+}
+
+.profile-image-wrapper,
+.user-details {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.profile-img {
+    width: 8.125rem;
+    height: 8.125rem;
+    border-radius: 40rem;
+}
+
+.user-tag {
+    margin-top: 1.125rem;
+    font-size: 1.25rem;
+}
+
+.user-details {
+    flex-direction: row;
+}
+
+.karma,
+.active-for {
+    font-size: 0.875rem;
+}
+
+.profile-more-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background: #F9F9F9;
+    border: 1px solid #E3E3E3;
+    margin-top: 1.125rem;
+    border-radius: 1rem;
+    padding: var(--p14);
+    height: 100%;
+}
+
+.user-date-settings {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.settings-btn>a {
+    cursor: pointer;
+    transition: 0.2s ease-in-out;
+    display: block;
+}
+
+.settings-btn>a:hover {
+    transform: scale(1.1);
+}
+
+.info {
+    text-align: end;
+}
+
+.cake-day>p,
+.followers>p {
+    color: #7C7C7C;
+    margin-top: 0.3125rem;
+}
+
+.followers {
+    margin-top: 0.875rem;
+}
+
+.btns {
+    display: flex;
+    justify-content: space-between;
+}
+
+.btns>button {
+    background: #3B3B3B;
+    color: white;
+    padding: 0.5rem 0;
+    width: 48%;
+    border-radius: 20rem;
+    font-size: 1rem;
+    transition: 0.25s ease-in-out;
+}
+
+.btns>button:hover {
+    background: var(--orange);
 }

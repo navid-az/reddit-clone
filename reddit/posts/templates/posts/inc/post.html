@@ -37,7 +37,12 @@
     <div class="post-items">
       <div><img class="comment-btn" src="{% static 'posts/svgs/comment.svg' %}" alt="">{{post.post_comments.count}}</div>
       <img class="share-btn" src="{% static 'posts/svgs/share.svg' %}" alt="">
-      <img class="save-btn" src="{% static 'posts/svgs/save.svg' %}" alt="">
+      {{post.saved}}
+      {% if request.user.user_saves %}
+        <a href="{% url 'posts:save-post' post.id %}"><img class="save-btn" src="{% static 'posts/svgs/saved.svg' %}" alt="save post button"></a>
+      {% else %}
+        <a href="{% url 'posts:save-post' post.id %}"><img class="save-btn" src="{% static 'posts/svgs/save.svg' %}" alt="save post button"></a>
+      {% endif %}
     </div>
     <div class="post-options">
       {% if request.user.id == post.creator.id %}

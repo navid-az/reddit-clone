@@ -1,20 +1,50 @@
-{% extends 'base.html' %} {% load static %}
-{% block title %} r/{{user.username}} profile {% endblock title %}
+{% extends 'base.html' %} {% load static %} {% load humanize %}
+{% block title %}r/{{user.username}} profile {% endblock title %} 
 {% block cssFiles %}
-  <link rel="stylesheet" href="{% static 'user/css/profile.css' %}">
-{% endblock cssFiles %}
-
-{% block content %}
-{% include 'user/inc/control-bar.html' %}
+  <link rel="stylesheet" href="{% static 'user/css/profile.css' %}" />
+{% endblock cssFiles %} 
+{% block content %} {% include 'user/inc/control-bar.html' %}
 <div class="container">
   <div class="row">
+    <section class="col-4">
+      <div class="user-info">
+        <div class="profile-image-wrapper">
+          <img
+            class="profile-img"
+            src="{{user.profile.image.url}}"
+            alt="user profile image"
+          />
+          <div class="user-tag">u/{{user.username}}</div>
+        </div>
+        <div class="user-details">
+          <div class="karma">1.5 کارما .</div>
+          <div class="active-for">4 سال</div>
+        </div>
+        <div class="profile-more-info">
+         <div class="user-date-settings">
+            <div class="settings-btn">
+            <a href="{% url 'user:profile-settings' request.user.username %}"><img src="{% static 'user/svgs/settings.svg' %}" alt="user settings" /></a>
+          </div>
+          <div class="info">
+            <div class="cake-day">
+              <h3>روز کیک</h3>
+              <p>{{user.date_joined|naturaltime}}</p>
+            </div>
+            <div class="followers">
+              <h3>دنبال کننده ها</h3>
+              <p></p>
+            </div>
+          </div>
+         </div>
+          <div class="btns">
+            <button type='button'>دنبال کردن</button>
+            <button type='button'>پیام</button>
+          </div>
+        </div>
+      </div>
+    </section>
     <div class="popular-posts col-8">
-        {% for post in posts  %}
-            {% include 'posts/inc/post.html' %}
-        {% endfor %}
-    </div>
-    <div class="user-info col-4">
-        <img src="" alt="">
+      {% for post in posts %} {% include 'posts/inc/post.html' %} {% endfor %}
     </div>
   </div>
 </div>

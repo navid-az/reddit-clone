@@ -10,8 +10,6 @@ from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.db.models import F
 
-# Create your views here.
-
 class PostPageView(View):
     form_class = CreateCommentReplyForm
 
@@ -21,8 +19,9 @@ class PostPageView(View):
 
     def get(self, request, *args, **kwargs):
         form = self.form_class()
+        is_saved = Save.objects.filter(post=self.post_instance, user=request.user.id)
         comments = self.post_instance.post_comments.filter(is_reply=False)
-        return render(request, 'posts/post-page.html',{'post':self.post_instance, 'comments':comments, 'form':form})
+        return render(request, 'posts/post-page.html',{'post':self.post_instance, 'comments':comments, 'form':form, 'is_saved':is_saved})
 
     @method_decorator(login_required)
     def post(self, request, *args, **kwargs):

@@ -76,9 +76,9 @@
                   </section>
                 </div>
                 <div class="post-items">
-                  <div><img class="comment-btn" src="{% static 'posts/svgs/comment.svg' %}" alt="comment button">{{i.post.post_comments.count}}</div>
+                  <a href="{% url 'posts:post-page' i.post.id %}"><img class="comment-btn" src="{% static 'posts/svgs/comment.svg' %}" alt="comment button">{{i.post.post_comments.count}}</a>
                   <a href=""><img class="share-btn" src="{% static 'posts/svgs/share.svg' %}" alt="share button"></a>
-                  <a href="{% url 'posts:save-post' i.post.id %}"><img class="save-btn" src="{% static 'posts/svgs/save.svg' %}" alt="save button"></a>
+                  <a href="{% url 'posts:save-post' i.post.id %}"><img class="save-btn" src="{% static 'posts/svgs/saved.svg' %}" alt="save post button"></a>
                 </div>
               </section>
             </div>

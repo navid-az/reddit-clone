@@ -166,3 +166,31 @@
 .post-items>div {
     cursor: pointer;
 }
+
+
+.post-items {
+    height: 2.625rem;
+    background: var(--light-gray-3);
+    border-radius: 1.875rem;
+}
+
+.post-items>* {
+    height: 100%;
+    width: 33.33%;
+    border-radius: 1.875rem;
+    transition: 0.25s ease-in-out;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem;
+}
+
+.post-items>*:hover {
+    background: #eae9e9;
+}
+
+.post-items>*:nth-child(1) {
+    padding: 0.5rem 0.9rem;
+    gap: 0.2rem;
+    color: #000;
+}

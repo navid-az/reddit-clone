@@ -35,10 +35,9 @@
 
   <div class="post-footer">
     <div class="post-items">
-      <div><img class="comment-btn" src="{% static 'posts/svgs/comment.svg' %}" alt="">{{post.post_comments.count}}</div>
-      <img class="share-btn" src="{% static 'posts/svgs/share.svg' %}" alt="">
-      {{post.saved}}
-      {% if request.user.user_saves %}
+      <a href="{% url 'posts:post-page' post.id %}"><img class="comment-btn" src="{% static 'posts/svgs/comment.svg' %}" alt="comment button">{{post.post_comments.count}}</a>
+      <a href=""><img class="share-btn" src="{% static 'posts/svgs/share.svg' %}" alt="share button"></a>
+      {% if is_saved %}
         <a href="{% url 'posts:save-post' post.id %}"><img class="save-btn" src="{% static 'posts/svgs/saved.svg' %}" alt="save post button"></a>
       {% else %}
         <a href="{% url 'posts:save-post' post.id %}"><img class="save-btn" src="{% static 'posts/svgs/save.svg' %}" alt="save post button"></a>

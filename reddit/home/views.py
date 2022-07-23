@@ -10,8 +10,12 @@ class Home(View):
     def get(self, request):
         posts = Post.objects.all()
         servers = Server.objects.all()
-        is_saved = Save.objects.filter(user=request.user.id)
-        return render(request, 'home/home.html',{'servers':servers, 'posts':posts, 'is_saved':is_saved})
+        if request.user.is_authenticated:
+            is_saved = Save.objects.filter(user=request.user.id)
+            return render(request, 'home/home.html',{'servers':servers, 'posts':posts, 'is_saved':is_saved})
+        else:
+            return render(request, 'home/home.html',{'servers':servers, 'posts':posts})
+            
 
 class NewPosts(View):
     def get(self, request):

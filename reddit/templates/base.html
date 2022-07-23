@@ -1,4 +1,5 @@
-<!DOCTYPE html> {% load static %}
+{% load static %}
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -17,6 +18,34 @@
     {% block cssFiles %}{% endblock cssFiles %}
   </head>
   <body>
+    <div id='gray-layer'>
+      <form action="{% url 'servers:create' %}" method="post" id='create-server-tab' novalidate>
+        {% csrf_token %}
+        <div id='create-server-title'>
+          <img onclick='createServerTabFunc()' src="{% static 'svgs/x.svg' %}" alt="close tab">
+          <h2>ایجاد سرور</h2>
+        </div>
+        <section class='create-server-name'>
+          <div class="title">
+            <p>نام سرور</p>
+            <p>اسمی برای نمایش در پروفایل (این اسم نام کاربری را تغییر نمیدهد)</p>
+          </div>
+          <div class="input">
+            {{create_server_form.tag}}
+          </div>
+        </section>
+        <section class='create-server-type'>
+          <div class="title">
+            <p>وضعیت سرور</p>
+            <p>وضعیت سرور در صفحه تنظیمات سرور قابل تغییر خواهد بود</p>
+          </div>
+          <div class="input">
+            {{create_server_form.server_type}}
+          </div>
+        </section>
+        <button type='submit'>ایجاد سرور</button>
+      </form>
+    </div>
     {% include 'inc/messages.html' %}
     {% block navbar %}
       {% include 'inc/navbar.html' %}
@@ -24,6 +53,7 @@
     {% block content %}{% endblock content %}
     <!--jquery-->
       <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+      <script src="{% static 'inc/js/navbar.js' %}"></script>
     <!--js files-->
     {% block jsFiles %}{% endblock jsFiles %}
   </body>

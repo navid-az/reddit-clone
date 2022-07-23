@@ -1,9 +1,12 @@
+from urllib import request
 from django.shortcuts import redirect, render
 from django.views import View
 from .models import Server, ServerFollow
+from .forms import CreateServerForm
 from posts.models import Vote
 from django.contrib.auth.mixins import LoginRequiredMixin
-
+from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 class ServerView(View):
     def get(self, request, server_tag):
         server = Server.objects.get(tag=server_tag)
@@ -28,3 +31,21 @@ class ServerFollowView(LoginRequiredMixin, View):
         else:
             ServerFollow(server=server, user=request.user).save()
         return redirect('servers:server', server.tag)
+
+class CreateServerView(LoginRequiredMixin, View):
+    form_class = CreateServerForm
+
+    def post(self, request):
+        create_form = self.form_class(request.POST)
+        if create_form.is_valid():
+            saved_form = create_form.save(commit=False)
+            saved_form.creator = request.user
+            saved_form.save()
+            return render(request, 'servers/create-server.html')
+        messages.error(request, 'wtf')
+        return render(request, 'servers/create-server.html', {'create_form':create_form})
+
+
+class ServerModeratingView(LoginRequiredMixin, View):
+    def get(self, request):
+        return render(request, 'servers/moderating-page.html')

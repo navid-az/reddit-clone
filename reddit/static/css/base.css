@@ -13,6 +13,90 @@
     --p30: 1.875rem;
 }
 
+#gray-layer {
+    position: fixed;
+    display: none;
+    width: 100%;
+    height: 100vh;
+    background: rgba(43, 43, 43, 0.676);
+    z-index: 1;
+    opacity: 0;
+    transition: 0.25s ease-in-out;
+}
+
+#create-server-tab {
+    background: #ffff;
+    width: 442px;
+    height: 29.6875rem;
+    border-radius: 0.5rem;
+    padding: var(--p14);
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+}
+
+#create-server-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: var(--p14);
+    border-bottom: 1px solid #b6b6b64f;
+}
+
+#create-server-title>img {
+    cursor: pointer;
+}
+
+#create-server-title>h2 {
+    font-size: 1.25rem;
+}
+
+.create-server-name>.title,
+.create-server-type>.title {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    margin-top: var(--p30);
+    gap: 0.3125rem;
+}
+
+.create-server-name>.title>p:nth-child(1),
+.create-server-type>.title>p:nth-child(1) {
+    font-weight: 700;
+}
+
+.create-server-name>.title>p:nth-child(2),
+.create-server-type>.title>p:nth-child(2) {
+    color: #646464;
+    font-size: 0.75rem;
+    font-weight: 400;
+}
+
+.create-server-name>.input>input {
+    position: relative;
+    background: #F9F9F9;
+    margin-top: var(--p14);
+    padding: var(--p14);
+    border: 1px solid rgba(0, 0, 0, 0.09);
+    transition: 0.15s ease-in-out;
+    outline: none;
+    height: 2.5rem;
+    border-radius: 0.5rem;
+    width: 100%;
+}
+
+.create-server-type>.input {
+    direction: rtl;
+    margin-top: var(--p14);
+}
+
+/* .server-type-button>div>label:nth-child(2) {
+    display: none;
+} */
+
 /* fonts  */
 @font-face {
     font-family: V;
@@ -80,8 +164,6 @@ button {
     border: none;
     cursor: pointer;
 }
-
-html {}
 
 body,
 button {

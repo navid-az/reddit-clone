@@ -5,14 +5,19 @@
     <div class="navbar-wrapper">
       <div class="nav-btns">
         {% if request.user.is_authenticated %}
-        <a href='{% url 'accounts:logout' %}' id='sing-in-btn'>خروج</a>
+          <a href='{% url 'accounts:logout' %}' id='sing-in-btn'>خروج</a>
           <a href='{% url 'user:profile' request.user.username %}' id='profile-btn'><img src="{% static 'inc/svgs/user.svg' %}" alt="profile"></a>
         {% else %}
           <a href='{% url 'accounts:register' %}' id='sing-in-btn'>ثبت نام</a>
         {% endif %}
         {% if user.is_authenticated %}
-          <a href='{% url 'posts:create-post' request.user.id %}' id='profile-btn'><img src="{% static 'inc/svgs/create-post-btn.svg' %}" alt=""></a>
-          <button id='profile-btn'><img src="{% static 'inc/svgs/chat.svg' %}" alt=""></button>
+          <a href='{% url 'posts:create-post' request.user.id %}' id='profile-btn'><img src="{% static 'inc/svgs/create-post-btn.svg' %}" alt="create post"></a>
+          <button id='profile-btn'><img src="{% static 'inc/svgs/chat.svg' %}" alt="chat"></button>
+          {% if is_moderator %}
+            <a href='{% url 'servers:moderating-page' %}' id='profile-btn'><img src="{% static 'inc/svgs/create-server.svg' %}" alt="create server"></a>
+          {% else %}
+            <button type="button" onclick='createServerTabFunc()' id='profile-btn'><img src="{% static 'inc/svgs/create-server.svg' %}" alt="create server"></button>
+          {% endif %}
         {% endif %}
       </div>
       <div id="logo">

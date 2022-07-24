@@ -41,7 +41,7 @@
 
               <div id="servers-tab">
                 {% for server in servers %} 
-                  <div class='server'>
+                  <div id='{{server.id}}' class='server'>
                     <img src="{{server.image.url}}" alt="">
                     <div class="server-info">
                       <p>r/{{server.tag}}</p>

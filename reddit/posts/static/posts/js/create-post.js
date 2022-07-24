@@ -47,6 +47,7 @@ let selectedServerImg = document.getElementById("selected-server-img");
 let selectedServerName = document.getElementById("selected-server-name");
 
 server.forEach((server, i) => {
+  serverField.value = 1;
   let serverTag = document.querySelectorAll(
     ".server>.server-info>p:nth-child(1)"
   );
@@ -58,7 +59,8 @@ server.forEach((server, i) => {
     // console.log(serverImg[i].src);
     selectedServerImg.src = serverImg[i].src;
     // console.log(serverTag[i].innerHTML);
-    serverField.value = i + 1;
+    serverField.value = server.id;
+    // console.log(serverField.value);
     serversTab.style.display = "none";
     serverSearchBar.style.borderRadius = "0.5rem";
   });

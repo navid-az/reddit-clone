@@ -1,5 +1,13 @@
-{% extends 'base.html' %}
+{% extends 'base.html' %} {% load static %}
+{% block cssFiles %}
+  <link rel="stylesheet" href="{% static 'servers/css/moderating-page.css' %}">
+{% endblock cssFiles %}
 
 {% block content %}
-this is the moderating page
+<div class='container-fluid' id="moderation-page-wrapper">
+  <div class="row">
+    <div class='col-6' id="server-tab-control-bar">fasd</div>
+    <div class='col-6' id="server-tab-control-bar">fasd</div>
+  </div>
+</div>
 {% endblock content %}

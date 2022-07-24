@@ -1,5 +1,5 @@
 .control-bar-wrapper {
-  background: var(--dark-grey);
+  background: var(--dark-gray);
   margin-bottom: 3rem;
   margin-top: -3rem;
 }
@@ -10,7 +10,7 @@
   align-items: center;
   height: 4.25rem;
   width: 100%;
-  background: var(--dark-grey);
+  background: var(--dark-gray);
   color: #ffff;
 }
 
@@ -40,6 +40,6 @@
 }
 
 .posts-controls>a:hover {
-  background: var(--dark-grey-2);
+  background: var(--dark-gray-2);
   font-family: Vbold;
 }

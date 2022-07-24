@@ -61,7 +61,7 @@
   width: 7.125rem;
   height: 2.375rem;
   border-radius: 20rem;
-  background: #3B3B3B;
+  background: var(--gray);
   color: #ffff;
   transition: 0.25s ease-in-out;
   cursor: pointer;
@@ -120,7 +120,7 @@
 
 .created-at {
   font-size: 0.75rem;
-  color: var(--grey);
+  color: var(--gray);
 }
 
 .comment-body {
@@ -159,7 +159,7 @@
 }
 
 .reply-btn:hover {
-  background: #3B3B3B;
+  background: var(--gray);
 }
 
 .vote-counter {

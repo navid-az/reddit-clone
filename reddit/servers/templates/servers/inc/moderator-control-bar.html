@@ -1,0 +1,31 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'servers/inc/css/moderator-control-bar.css' %}">
+
+<section id="moderator-control-bar">
+  <ul>
+    <li>
+      <a href="{% url 'servers:server-tags-and-flairs' %}">
+        <p>تگ ها و پسوند ها</p>
+        <img src="{% static 'servers/svgs/tag.svg' %}" alt="tags and flairs">
+      </a>
+    </li>
+    <li>
+      <a href="{% url 'servers:server-rules' %}">
+        <p>قوانین و مقررات</p>
+        <img src="{% static 'servers/svgs/rule.svg' %}" alt="tags and flairs">
+      </a>
+    </li>
+    <li>
+      <a href="{% url 'servers:server-moderator-settings' %}">
+        <p>تنظیمات مدیریت</p>
+        <img src="{% static 'servers/svgs/users.svg' %}" alt="tags and flairs">
+      </a>
+    </li>
+    <li>
+      <a href="{% url 'servers:server-user-settings' %}">
+        <p>تنظیمات کاربر</p>
+        <img src="{% static 'servers/svgs/user.svg' %}" alt="tags and flairs">
+      </a>
+    </li>
+  </ul>
+</section>

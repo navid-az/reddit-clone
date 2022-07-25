@@ -1,4 +1,11 @@
-#server-tab-control-bar {
-  padding: 0;
-  background: var(--dark-gray);
+.navbar {
+  margin-bottom: 0rem;
+}
+
+#moderation-page-wrapper {
+  display: flex;
+}
+
+#server-tab {
+  width: 100%;
 }

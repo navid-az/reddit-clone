@@ -1,0 +1,27 @@
+{% extends 'base.html' %} {% load static %}
+{% block cssFiles %}
+  <link rel="stylesheet" href="{% static 'servers/css/moderating-page.css' %}">
+  <link rel="stylesheet" href="{% static 'servers/css/tags-flairs.css' %}">
+{% endblock cssFiles %}
+
+{% block content %}
+<div id="moderation-page-wrapper">
+  <section id="moderator-display">
+      <div class="flairs-wrapper">
+        <div id="create-server-title">
+          <h2>لیست تگ ها</h2>
+          <div class="create-flair-btn">
+            <img src="{% static 'servers/svgs/plus.svg' %}" alt="">
+          </div>
+        </div>
+      </div>
+      <div class="tags-wrapper">
+        <div id="create-server-title">
+          <h2>لیست پسوند ها</h2>
+          <img src="{% static 'servers/svgs/plus.svg' %}" alt="">
+        </div>
+      </div>
+  </section>
+  {% include 'servers/inc/moderator-control-bar.html' %}
+</div>
+{% endblock content %}

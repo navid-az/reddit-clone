@@ -19,7 +19,7 @@
   </head>
   <body>
     <div id='gray-layer'>
-      <form action="{% url 'servers:create' %}" method="post" id='create-server-tab' novalidate>
+      <form action="{% url 'servers:server-create' %}" method="post" id='create-server-tab' novalidate>
         {% csrf_token %}
         <div id='create-server-title'>
           <img onclick='createServerTabFunc()' src="{% static 'svgs/x.svg' %}" alt="close tab">

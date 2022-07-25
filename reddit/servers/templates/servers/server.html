@@ -14,11 +14,11 @@
         <div>
           {% if is_following %}
             <div class="join-server-btn">
-              <a href="{% url 'servers:follow' server.tag %}">خروج</a>
+              <a href="{% url 'servers:server-follow' server.tag %}">خروج</a>
             </div>
           {% else %}
             <div class="join-server-btn">
-              <a href="{% url 'servers:follow' server.tag %}">عضویت</a>
+              <a href="{% url 'servers:server-follow' server.tag %}">عضویت</a>
             </div>
           {% endif %}
           <h2>{{server.name}}</h2>

@@ -1,0 +1,36 @@
+#moderator-control-bar {
+  width: 15rem;
+  background: var(--gray);
+  height: calc(100vh - 5.88rem);
+}
+
+#moderator-control-bar>ul {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: var(--p14) 0;
+  width: 100%;
+  gap: 0.5rem;
+}
+
+#moderator-control-bar>ul>li {
+  list-style: none;
+}
+
+#moderator-control-bar>ul>li>a {
+  margin: 0 0.5rem;
+  justify-content: flex-end;
+  width: calc(100% - 0.875rem);
+  border-radius: 0.5rem;
+  display: flex;
+  color: #FFFF;
+  list-style: var(--p14);
+  gap: 0.5rem;
+  padding: var(--p14);
+  cursor: pointer;
+  transition: 0.25s ease;
+}
+
+#moderator-control-bar>ul>li>a:hover {
+  background: var(--orange);
+}

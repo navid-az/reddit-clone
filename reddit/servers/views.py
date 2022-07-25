@@ -49,3 +49,19 @@ class CreateServerView(LoginRequiredMixin, View):
 class ServerModeratingView(LoginRequiredMixin, View):
     def get(self, request):
         return render(request, 'servers/moderating-page.html')
+
+class TagsAndFlairsView(LoginRequiredMixin, View):
+    def get(self, request):
+        return render(request, 'servers/tags-flairs.html')
+
+class RulesView(LoginRequiredMixin, View):
+    def get(self, request):
+        return render(request, 'servers/rules.html')
+
+class ModeratorSettingsView(LoginRequiredMixin, View):
+    def get(self, request):
+        return render(request, 'servers/moderator-settings.html')
+        
+class UserSettingsView(LoginRequiredMixin, View):
+    def get(self, request):
+        return render(request, 'servers/user-settings.html')

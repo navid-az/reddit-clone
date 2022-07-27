@@ -8,7 +8,7 @@ class Server(models.Model):
         ('pri', 'عمومی'),
         ('pub', 'شخصی'),
     )
-    creator = models.ForeignKey(User , on_delete=models.CASCADE)
+    creator = models.ForeignKey(User , on_delete=models.CASCADE, related_name='user_servers')
     created = models.DateTimeField(auto_now=True)
     name = models.CharField(max_length=50)
     about = models.TextField(default='about')

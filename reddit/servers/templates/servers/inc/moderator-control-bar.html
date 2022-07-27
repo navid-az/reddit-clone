@@ -1,31 +1,50 @@
 {% load static %}
-<link rel="stylesheet" href="{% static 'servers/inc/css/moderator-control-bar.css' %}">
-
-<section id="moderator-control-bar">
-  <ul>
-    <li>
-      <a href="{% url 'servers:server-tags-and-flairs' %}">
-        <p>تگ ها و پسوند ها</p>
-        <img src="{% static 'servers/svgs/tag.svg' %}" alt="tags and flairs">
-      </a>
-    </li>
-    <li>
-      <a href="{% url 'servers:server-rules' %}">
-        <p>قوانین و مقررات</p>
-        <img src="{% static 'servers/svgs/rule.svg' %}" alt="tags and flairs">
-      </a>
-    </li>
-    <li>
-      <a href="{% url 'servers:server-moderator-settings' %}">
-        <p>تنظیمات مدیریت</p>
-        <img src="{% static 'servers/svgs/users.svg' %}" alt="tags and flairs">
-      </a>
-    </li>
-    <li>
-      <a href="{% url 'servers:server-user-settings' %}">
-        <p>تنظیمات کاربر</p>
-        <img src="{% static 'servers/svgs/user.svg' %}" alt="tags and flairs">
-      </a>
-    </li>
-  </ul>
-</section>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="{% static 'servers/inc/css/moderator-control-bar.css' %}"> 
+</head>
+<body>
+  <section id="moderator-control-bar">
+    <ul>
+      <li id='choose-server-wrapper'>
+        <div id='choose-server-btn' onclick='openChooseServerList()'>
+          <img src="{% static 'inc/svgs/create-server.svg' %}" alt="server icon">
+          <p>r/{{server.tag}}</p>
+        </div>
+        <section id='server-list'></section>
+      </li>
+      <li>
+        <a href="{% url 'servers:server-tags-and-flairs' server.tag %}">
+          <p>تگ ها و پسوند ها</p>
+          <img src="{% static 'servers/svgs/tag.svg' %}" alt="tags and flairs">
+        </a>
+      </li>
+      <li>
+        <a href="{% url 'servers:server-rules' server.tag %}">
+          <p>قوانین و مقررات</p>
+          <img src="{% static 'servers/svgs/rule.svg' %}" alt="tags and flairs">
+        </a>
+      </li>
+      <li>
+        <a href="{% url 'servers:server-moderator-settings' %}">
+          <p>تنظیمات مدیریت</p>
+          <img src="{% static 'servers/svgs/users.svg' %}" alt="tags and flairs">
+        </a>
+      </li>
+      <li>
+        <a href="{% url 'servers:server-user-settings' %}">
+          <p>تنظیمات کاربر</p>
+          <img src="{% static 'servers/svgs/user.svg' %}" alt="tags and flairs">
+        </a>
+      </li>
+    </ul>
+  </section>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script src="{% static 'servers/inc/js/moderator-control-bar.js' %}"></script>
+</body>
+</html>

@@ -26,6 +26,14 @@
     gap: 0.875rem;
 }
 
+.nav-btns>* {
+    transition: 0.25s ease-in-out;
+}
+
+.nav-btns>*:hover {
+    background: #ee2800 !important;
+}
+
 #sing-in-btn,
 #profile-btn {
     background: var(--orange);

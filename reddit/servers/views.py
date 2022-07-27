@@ -1,9 +1,9 @@
-from urllib import request
 from django.shortcuts import redirect, render
 from django.views import View
 from .models import Server, ServerFollow
 from .forms import CreateServerForm
 from posts.models import Vote
+from django.http import JsonResponse
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -47,16 +47,21 @@ class CreateServerView(LoginRequiredMixin, View):
 
 
 class ServerModeratingView(LoginRequiredMixin, View):
-    def get(self, request):
-        return render(request, 'servers/moderating-page.html')
-
+    def get(self, request, server_tag):
+        server = Server.objects.get(tag=server_tag, creator=request.user)
+        server_tags = server.tags.all()
+        return render(request, 'servers/moderating-page.html', {"server":server, "server_tags":server_tags})
 class TagsAndFlairsView(LoginRequiredMixin, View):
-    def get(self, request):
-        return render(request, 'servers/tags-flairs.html')
+    def get(self, request, server_tag):
+        server = Server.objects.get(tag=server_tag, creator=request.user)
+        server_tags = server.tags.all()
+        return render(request, 'servers/tags-flairs.html', {"server":server, "server_tags":server_tags})
 
 class RulesView(LoginRequiredMixin, View):
-    def get(self, request):
-        return render(request, 'servers/rules.html')
+    def get(self, request, server_tag):
+        server = Server.objects.get(tag=server_tag, creator=request.user)
+        server_tags = server.tags.all()
+        return render(request, 'servers/rules.html', {"server":server, "server_tags":server_tags})
 
 class ModeratorSettingsView(LoginRequiredMixin, View):
     def get(self, request):
@@ -65,3 +70,17 @@ class ModeratorSettingsView(LoginRequiredMixin, View):
 class UserSettingsView(LoginRequiredMixin, View):
     def get(self, request):
         return render(request, 'servers/user-settings.html')
+ 
+class ChooseServerAjaxView(View):
+    def get(self, request):
+        servers = Server.objects.filter(creator=request.user)
+        data = []
+        for i in servers:
+            item ={
+            'tag':i.tag,
+            'name':i.name,
+            'about':i.about,
+            'server_type':i.server_type
+            }
+            data.append(item)
+        return JsonResponse({'data':data})

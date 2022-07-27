@@ -29,3 +29,24 @@
   width: 31px;
   height: 31px;
 }
+
+#post-flairs-list {
+  margin-top: var(--p30);
+  display: flex;
+}
+
+.tag {
+  width: auto;
+  border-radius: 20rem;
+  padding: 0.2rem 1.125rem;
+  font-size: 1.125rem;
+  font-weight: 700;
+  cursor: pointer;
+  margin-left: 0.5rem;
+  transition: 0.25s ease-in-out;
+}
+
+.tag:hover {
+  transform: scale(1.02);
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.116);
+}

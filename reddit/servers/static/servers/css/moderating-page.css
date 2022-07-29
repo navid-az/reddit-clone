@@ -6,6 +6,36 @@
   display: flex;
 }
 
+#moderator-display {
+  display: flex;
+  justify-content: space-between;
+  width: 80%;
+  margin: 0 auto;
+  margin-top: 3rem;
+}
+
 #server-tab {
   width: 100%;
+}
+
+.wrapper {
+  background: #FFFF;
+  border-radius: 0.5rem;
+  padding: var(--p14);
+  direction: rtl;
+}
+
+.create-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 0.5rem;
+  background: var(--gray);
+  width: 31px;
+  height: 31px;
+}
+
+#list {
+  margin-top: var(--p30);
+  display: flex;
 }

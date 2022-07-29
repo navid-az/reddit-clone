@@ -1,0 +1,48 @@
+{% extends 'base.html' %} {% load static %}
+{% block cssFiles %}
+  <link rel="stylesheet" href="{% static 'servers/css/moderating-page.css' %}">
+  <link rel="stylesheet" href="{% static 'servers/css/rules.css' %}">
+{% endblock cssFiles %}
+{% block jsFiles %}
+<script src="{% static 'servers/js/rules.js' %}"></script>
+{% endblock jsFiles %}
+
+{% block content %}
+<div id="moderation-page-wrapper">
+  <section id="moderator-display">
+      <div class="wrapper rules-wrapper">
+        <div id="create-server-title">
+          <h2>لیست قوانین سرور</h2>
+          <div class="create-btn">
+            <img src="{% static 'servers/svgs/plus.svg' %}" alt="add flair">
+          </div>
+        </div>
+        <section id='list'>
+          {% for rule in server_rules %}
+          <div class="rule">
+              <div class="rule-title-wrapper">
+                <div class="rule-title">
+                {{ forloop.counter }}
+                <p>{{rule.title}}</p>
+                </div>
+                <div class="rule-options">
+                  <button class='delete-rule-btn'>
+                    <img src="{% static 'servers/svgs/trash.svg' %}" alt="delete rule">
+                  </button>
+                  <button class='edit-rule-btn'>
+                    <img src="{% static 'posts/svgs/edit.svg' %}" alt="edit rule">
+                  </button>
+                  <button onclick='openRuleDetails({{ forloop.counter0 }})' class='rule-detail-btn'>
+                    <img src="{% static 'svgs/maximize.svg' %}" alt="delete rule">
+                  </button>
+                </div>
+              </div>
+              <div class="rule-body">{{rule.body}}</div>
+            </div>
+          {% endfor %}
+        </section>
+      </div>
+  </section>
+  {% include 'servers/inc/moderator-control-bar.html' %}
+</div>
+{% endblock content %}

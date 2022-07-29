@@ -7,21 +7,21 @@
 {% block content %}
 <div id="moderation-page-wrapper">
   <section id="moderator-display">
-      <div class="flairs-wrapper">
+      <div class="wrapper flairs-wrapper">
         <div id="create-server-title">
           <h2>لیست تگ ها</h2>
-          <div class="create-flair-btn">
+          <div class="create-btn">
             <img src="{% static 'servers/svgs/plus.svg' %}" alt="add flair">
           </div>
         </div>
-        <section id='post-flairs-list'>
+        <section id='list'>
           {% for tag in server_tags  %}
             <div class="tag" style='background:{{tag.primary_color}}; border:3.5px solid {{tag.secondary_color}}; color:{{tag.secondary_color}}'>{{tag.name}}</div>
             <br>
           {% endfor %}
         </section>
       </div>
-      <div class="tags-wrapper">
+      <div class="wrapper tags-wrapper">
         <div id="create-server-title">
           <h2>لیست پسوند ها</h2>
           <img src="{% static 'servers/svgs/plus.svg' %}" alt="">

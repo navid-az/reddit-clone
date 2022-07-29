@@ -1,15 +1,16 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.forms import CharField
 from colorfield.fields import ColorField
 
 # Create your models here.
 class Server(models.Model):
     SERVER_CHOICES = (
-        ('pri', 'عمومی'),
-        ('pub', 'شخصی'),
+        ('pub', 'عمومی'),
+        ('pri', 'شخصی'),
     )
     creator = models.ForeignKey(User , on_delete=models.CASCADE, related_name='user_servers')
-    created = models.DateTimeField(auto_now=True)
+    created = models.DateTimeField(auto_now_add=True)
     name = models.CharField(max_length=50)
     about = models.TextField(default='about')
     tag = models.CharField(max_length=50, unique=True)
@@ -27,7 +28,7 @@ class Server(models.Model):
 class ServerFollow(models.Model):
     server = models.ForeignKey(Server ,on_delete=models.CASCADE, related_name='followers')
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='following_server')
-    created = models.DateTimeField(auto_now=True)
+    created = models.DateTimeField(auto_now_add=True)
 
 class ServerTag(models.Model):
     server = models.ForeignKey(Server, on_delete=models.CASCADE, related_name='tags')
@@ -38,3 +39,9 @@ class ServerTag(models.Model):
 
     def __str__(self) -> str:
         return f'{self.name} --> r/{self.server}'
+
+class ServerRule(models.Model):
+    server = models.ForeignKey(Server, on_delete=models.CASCADE, related_name='rules')
+    title = models.CharField(max_length=100)
+    body = models.TextField()
+    created = models.DateTimeField(auto_now_add=True)

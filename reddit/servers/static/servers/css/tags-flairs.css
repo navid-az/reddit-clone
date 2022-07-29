@@ -1,38 +1,8 @@
 .tags-wrapper,
 .flairs-wrapper {
-  background: #FFFF;
-  border-radius: 0.5rem;
-  padding: var(--p14);
-  direction: rtl;
+
   width: 49%;
   max-height: 23.8125rem;
-}
-
-#moderator-display {
-  display: flex;
-  justify-content: space-between;
-  width: 80%;
-  margin: 0 auto;
-  margin-top: 3rem;
-}
-
-#moderation-page-wrapper {
-  display: flex;
-}
-
-.create-flair-btn {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 0.5rem;
-  background: var(--gray);
-  width: 31px;
-  height: 31px;
-}
-
-#post-flairs-list {
-  margin-top: var(--p30);
-  display: flex;
 }
 
 .tag {

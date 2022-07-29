@@ -1,7 +1,8 @@
 from django.contrib import admin
-from .models import Server, ServerFollow, ServerTag
+from .models import Server, ServerFollow, ServerTag, ServerRule
 
-# Register your models here.
 admin.site.register(Server) 
 admin.site.register(ServerFollow)
+#moderating page
 admin.site.register(ServerTag)
+admin.site.register(ServerRule)

@@ -12,8 +12,8 @@ class UpdatePostForm(ModelForm):
 class CreatePostForm(ModelForm):
     class Meta:
         model = Post
-        fields = ['title','video','image','text','server']
-        widgets ={'title':forms.TextInput({'placeholder':'تیتر'}), 'text':forms.Textarea({'placeholder':'متن'}), 'server':forms.Select({'id':'server-field'})}    
+        fields = ['title','video','image','text','server','tag']
+        widgets ={'title':forms.TextInput({'placeholder':'تیتر'}), 'text':forms.Textarea({'placeholder':'متن'}), 'server':forms.Select({'id':'server-field'}), 'tag':forms.Select({'id':'tag-field'})}    
     
     def clean(self, text = None,video=None):
         cleaned_data = super().clean()

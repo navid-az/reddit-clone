@@ -9,6 +9,7 @@
     <div class="server-info">
       <div class="post-info">
         <section>
+          <span>{{post.tag}}</span>
           <a class="creator-name" href='{{post.get_profile_page}}'>u/{{post.creator}} پست شده توسط </a>
           <a class="server-name" href='{% url 'servers:server' post.server.tag %}'>r/{{post.server.tag}}</a>
         </section>

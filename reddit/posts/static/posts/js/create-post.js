@@ -19,7 +19,6 @@ function submitBtn() {
 }
 
 //server tab display
-
 let serverSearchBar = document.getElementById("server-search-bar");
 let serversTab = document.getElementById("servers-tab");
 let is_closed = true;
@@ -30,6 +29,7 @@ serverSearchBar.addEventListener("click", () => {
     serversTab.style.display = "flex";
     serverSearchBar.style.borderRadius = "0.5rem 0.5rem 0 0";
     is_closed = false;
+
     // server search bar arrow animation
     arrowIcon.style.transform = "rotate(90deg)";
   } else {
@@ -42,26 +42,59 @@ serverSearchBar.addEventListener("click", () => {
 
 //server names click
 let server = document.querySelectorAll(".server");
+let tag = document.querySelectorAll(".tag");
+let serverImg = document.querySelectorAll(".server>img");
 let serverField = document.getElementById("server-field");
+let tagField = document.getElementById("tag-field");
 let selectedServerImg = document.getElementById("selected-server-img");
 let selectedServerName = document.getElementById("selected-server-name");
 
+let serverTag = document.querySelectorAll(
+  ".server>.server-info>p:nth-child(1)"
+);
+let serverTags = document.getElementById("server-tags");
+
+const showServerTags = (serverTag) => {
+  $.ajax({
+    type: "GET",
+    url: `/posts/create/${serverTag}/info`,
+    success: function (response) {
+      const data = response.data;
+      if (data.length == 0) {
+        serverTags.innerHTML = "";
+      } else {
+        serverTags.innerHTML = "";
+        data.forEach((x) => {
+          serverTags.innerHTML += `<div id='${x.id}' onclick='nigga(${x.id})' class="tag" style='background:${x.primary_color}; border:3.5px solid ${x.secondary_color}; color:${x.secondary_color}'>${x.name}</div> <br>`;
+        });
+      }
+    },
+    error: function (error) {
+      console.log("error:", error);
+    },
+  });
+};
+
+const nigga = (Tag) => {
+  console.log(Tag);
+  tagField.value = Tag;
+};
+
 server.forEach((server, i) => {
   serverField.value = 1;
-  let serverTag = document.querySelectorAll(
-    ".server>.server-info>p:nth-child(1)"
-  );
-  let serverImg = document.querySelectorAll(".server>img");
-
   server.addEventListener("click", () => {
+    // server information request
+    showServerTags(serverTag[i].innerHTML);
+
+    // server search bar arrow animation
     arrowIcon.style.transform = "rotate(0deg)";
+
     selectedServerName.value = serverTag[i].innerHTML;
-    // console.log(serverImg[i].src);
     selectedServerImg.src = serverImg[i].src;
-    // console.log(serverTag[i].innerHTML);
     serverField.value = server.id;
-    // console.log(serverField.value);
     serversTab.style.display = "none";
     serverSearchBar.style.borderRadius = "0.5rem";
   });
 });
+
+showServerTags(selectedServerName.value);

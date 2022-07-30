@@ -35,7 +35,7 @@ class Post(models.Model):
     created = models.DateTimeField(auto_now=True)
     type = models.CharField(max_length=5, choices=post_type_choices, default='text')
     votes_count = models.IntegerField(default=0)
-    tag = models.ForeignKey(ServerTag, on_delete=models.CASCADE , default=1)
+    tag = models.ForeignKey(ServerTag, on_delete=models.CASCADE, null=True, blank=True)
 
     def get_absolute_url(self):
         return reverse("posts:post-page", args={self.id})

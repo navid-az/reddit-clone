@@ -78,7 +78,9 @@
             <div class="field">{{form.video}} {{ form.video.errors }}</div>
           </section>
           <div class='form-footer-wrapper'>
-            <section class="form-footer">
+            <section id="form-footer">
+              {{form.tag}} {{ form.tag.errors }}
+              <section id='server-tags'></section>
               <button id="submit" onclick="submitBtn()">ارسال</button>
             </section>
           </div>

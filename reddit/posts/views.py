@@ -9,6 +9,8 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.db.models import F
+from django.http import JsonResponse
+from django.core import serializers
 
 class PostPageView(View):
     form_class = CreateCommentReplyForm
@@ -86,7 +88,22 @@ class CreatePostView(LoginRequiredMixin, View):
             return redirect('home:home')
         return render(request, 'posts/create-post.html', {'form':form})
 
-
+class CreatePostAjaxView(View):
+    def get(self, request, server_tag):
+        server = Server.objects.get(tag=server_tag)
+        server_tag = server.tags.all()
+        print(server_tag, '$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$')
+        serialized_server = serializers.serialize("json", [server])
+        data = []
+        for i in server_tag:
+            item ={
+            'id':i.id,
+            'name':i.name,
+            'primary_color':i.primary_color,
+            'secondary_color':i.secondary_color
+            }
+            data.append(item)
+        return JsonResponse({'data':data})
 class UpdatePostView(LoginRequiredMixin, View):
 
     form_class = UpdatePostForm

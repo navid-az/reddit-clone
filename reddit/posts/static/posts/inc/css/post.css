@@ -40,11 +40,10 @@
     display: flex;
     justify-content: flex-end;
     align-items: center;
-
 }
 
 .post-info,
-.post-info>section>a:nth-child(1) {
+.post-info>section:nth-child(1)>a:nth-child(1) {
     padding-right: 0.75rem;
 }
 
@@ -52,7 +51,7 @@
     color: black;
 }
 
-.post-info>section>a:nth-child(1) {
+.post-info>section:nth-child(1)>a:nth-child(1) {
     font-family: Vlight;
 }
 
@@ -64,6 +63,12 @@
 
 .post-title:hover {
     color: var(--orange);
+}
+
+.post-tag {
+    border-radius: 20rem;
+    padding: 0.2rem 0.5rem;
+    margin-right: 0.5rem;
 }
 
 .post-body {

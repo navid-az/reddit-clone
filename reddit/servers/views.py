@@ -62,8 +62,7 @@ class RulesView(LoginRequiredMixin, View):
     def get(self, request, server_tag):
         server = Server.objects.get(tag=server_tag, creator=request.user)
         server_rules = server.rules.all()
-        num = 0
-        return render(request, 'servers/rules.html', {"server":server, "server_rules":server_rules, 'num':num})
+        return render(request, 'servers/rules.html', {"server":server, "server_rules":server_rules})
 
 class ModeratorSettingsView(LoginRequiredMixin, View):
     def get(self, request):

@@ -21,16 +21,16 @@ function submitBtn() {
 //server tab display
 let serverSearchBar = document.getElementById("server-search-bar");
 let serversTab = document.getElementById("servers-tab");
-let is_closed = true;
 let arrowIcon = document.getElementById("arrow-icon");
+let is_closed = true;
 
+// server search bar arrow animation
 serverSearchBar.addEventListener("click", () => {
   if (is_closed == true) {
     serversTab.style.display = "flex";
     serverSearchBar.style.borderRadius = "0.5rem 0.5rem 0 0";
     is_closed = false;
 
-    // server search bar arrow animation
     arrowIcon.style.transform = "rotate(90deg)";
   } else {
     serversTab.style.display = "none";
@@ -67,11 +67,10 @@ const showServerTags = (serverTag) => {
       } else {
         serverTags.innerHTML = "";
         tagData.forEach((x) => {
-          serverTags.innerHTML += `<div id='${x.id}' onclick='nigga(${x.id})' class="tag" style='background:${x.primary_color}; border:3.5px solid ${x.secondary_color}; color:${x.secondary_color}'>${x.name}</div> <br>`;
+          serverTags.innerHTML += `<div id='${x.id}' onclick='choosePostTag(${x.id})' class="tag" style='background:${x.primary_color}; border:3.5px solid ${x.secondary_color}; color:${x.secondary_color}'>${x.name}</div> <br>`;
         });
       }
       ali = serverData[0].fields;
-      console.log(ali.about);
       // server information
       serverDetailsWrapper.innerHTML = `
         <div class="server-details">
@@ -125,7 +124,7 @@ const showServerTags = (serverTag) => {
   });
 };
 
-const nigga = (Tag) => {
+const choosePostTag = (Tag) => {
   console.log(Tag);
   tagField.value = Tag;
 };

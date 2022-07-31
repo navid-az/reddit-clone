@@ -78,6 +78,7 @@ class CreatePostView(LoginRequiredMixin, View):
 
     def post(self, request, pk):
         form = self.form_class(request.POST, request.FILES)
+        servers = Server.objects.all()
         # servers = self.server_form(request.POST)
         if form.is_valid():
             saved_form = form.save(commit=False)
@@ -86,7 +87,7 @@ class CreatePostView(LoginRequiredMixin, View):
             # servers.save()
             messages.success(request, 'پست شما باموفقیت ایجاد شد')
             return redirect('home:home')
-        return render(request, 'posts/create-post.html', {'form':form})
+        return render(request, 'posts/create-post.html', {'form':form, 'servers':servers})
 
 class CreatePostAjaxView(View):
     def get(self, request, server_tag):
@@ -102,14 +103,6 @@ class CreatePostAjaxView(View):
             'secondary_color':i.secondary_color
             }
             data.append(item)
-
-        # serv = serializers.serialize('python', [server])
-        # print(serv,'$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$')
-        # for j in serv:
-        #     thing ={
-        #         'tag':j.name
-        #     }
-        #     data.append(thing)
         return JsonResponse({'data':data})
 class UpdatePostView(LoginRequiredMixin, View):
 

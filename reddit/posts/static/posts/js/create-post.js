@@ -41,61 +41,79 @@ serverSearchBar.addEventListener("click", () => {
 });
 
 //server names click
-let server = document.querySelectorAll(".server");
-let tag = document.querySelectorAll(".tag");
-let serverImg = document.querySelectorAll(".server>img");
+
+// hidden inputs
 let serverField = document.getElementById("server-field");
 let tagField = document.getElementById("tag-field");
-let selectedServerImg = document.getElementById("selected-server-img");
+
+let tags = document.querySelectorAll(".tags");
+let server = document.querySelectorAll(".server");
+let serverImg = document.querySelectorAll(".server>img");
+
 let selectedServerName = document.getElementById("selected-server-name");
+let selectedServerImg = document.getElementById("selected-server-img");
 
 let serverTag = document.querySelectorAll(
   ".server>.server-info>p:nth-child(1)"
 );
 let serverTags = document.getElementById("server-tags");
-let serverDetailsWrapper = document.getElementById("server-details-wrapper");
+let serverDetails = document.getElementById("server-details");
+let rulesWrapper = document.getElementById("rules-wrapper");
 
-const showServerTags = (serverTag) => {
+const showData = (serverTag) => {
   $.ajax({
     type: "GET",
     url: `/posts/create/${serverTag}/info`,
     success: function (response) {
-      const tagData = response.data.slice(1);
+      const ruleData = [];
+      const tagData = [];
       const serverData = response.data.shift();
+
+      // checking for tags and rules and separating them
+      for (let i = 0; i < response.data.length; i++) {
+        const object = response.data[i];
+        if ("title" in object) {
+          ruleData.push(object);
+        } else {
+          tagData.push(object);
+        }
+      }
+
+      // inserting tags into DOM
       if (tagData.length == 0) {
         serverTags.innerHTML = "";
       } else {
         serverTags.innerHTML = "";
         tagData.forEach((x) => {
-          serverTags.innerHTML += `<div id='${x.id}' onclick='choosePostTag(${x.id})' class="tag" style='background:${x.primary_color}; border:3.5px solid ${x.secondary_color}; color:${x.secondary_color}'>${x.name}</div> <br>`;
+          serverTags.innerHTML += `<div id='${x.id}' onclick='choosePostTag(${x.id})' class="tags" style='background:${x.primary_color}; border:3.5px solid ${x.secondary_color}; color:${x.secondary_color}'>${x.name}</div> <br>`;
         });
       }
-      ali = serverData[0].fields;
+
+      var server = serverData[0].fields;
       // server information
-      serverDetailsWrapper.innerHTML = `
-        <div class="server-details">
+      serverDetails.innerHTML = `
         <div class="server-details-header">
           <img
             class="server-header-img"
-            src="/media/${ali.header_image}"
+            src="/media/${server.header_image}"
             alt="server header image"
           />
           <img
             class="server-img"
-            src="/media/${ali.image}"
+            src="/media/${server.image}"
             alt="server header image"
           />
-          <div class="server-tag">r/${ali.tag}</div>
+          <div class="server-tag">r/${server.tag}</div>
         </div>
         <div class="server-details-info">
           <div class="about-server">
             <h3>درباره این سرور</h3>
-            <p>${ali.about}</p>
+            <p>${server.about}</p>
           </div>
           <div class="server-numbers-wrapper">
             <div class="server-numbers">
               <div class="followers">
-                <p>${ali.followers}</p>
+                <p>${server.followers}</p>
                 <p>دنبال کننده</p>
               </div>
               <div class="online_users">
@@ -112,20 +130,46 @@ const showServerTags = (serverTag) => {
               <img src="{% static 'servers/svgs/gift.svg' %}" alt="" />
               <h3>ساخته شده در تاریخ</h3>
             </span>
-            <p>${ali.created.slice(0, 10)}</p>
+            <p>${server.created.slice(0, 10)}</p>
           </div>
         </div>
-      </div>
         `;
+
+      // rules information
+      rulesWrapper.innerHTML = "";
+      ruleData.forEach((rule, i) => {
+        rulesWrapper.innerHTML += `
+        <div class='rule'>
+          <div id='rule-title' class='rule-title' onclick='showRuleDetail(${
+            i + 1
+          })'>
+            <div>
+              <p>${i + 1}.</p>
+              <p>${rule.title}</p>
+            </div>
+            <svg width="20" height="21" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12.5 5.5L7.5 10.5L12.5 15.5" stroke="#1E1E20" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div class='rule-body'>
+            <p>${rule.body}</p>
+          </div>
+        </div>
+      `;
+      });
     },
     error: function (error) {
       console.log("error:", error);
     },
   });
 };
+let ruleBody = document.querySelectorAll(".rule-body");
+// let ruleTitle;
+// const showRuleDetail = (counter) => {
+//   ruleBody[counter].style.display = "flex";
+// };
 
 const choosePostTag = (Tag) => {
-  console.log(Tag);
   tagField.value = Tag;
 };
 
@@ -133,7 +177,7 @@ server.forEach((server, i) => {
   serverField.value = 1;
   server.addEventListener("click", () => {
     // server information request
-    showServerTags(serverTag[i].innerHTML);
+    showData(serverTag[i].innerHTML);
 
     // server search bar arrow animation
     arrowIcon.style.transform = "rotate(0deg)";
@@ -146,4 +190,4 @@ server.forEach((server, i) => {
   });
 });
 
-showServerTags(selectedServerName.value);
+showData(selectedServerName.value);

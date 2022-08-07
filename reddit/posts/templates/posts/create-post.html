@@ -4,13 +4,23 @@
   <link rel="stylesheet" href="{% static 'posts/css/create-post.css' %}"/>
 {% endblock cssFiles %} 
 {% block jsFiles %}
-  <script src="{% static 'posts/js/create-post.js' %}"></script>
+  <script src="{% static 'posts/js/create-post.js' %}" defer></script>
 {% endblock jsFiles %} 
 {% block content %} 
 {% include 'user/inc/control-bar.html' %}
 
 <div class="container">
   <div class="row">
+    <div id="server-wrapper" class='server-details-wrapper col-4'>
+      <div id="server-details">
+      </div>
+      <div id="server-rules">
+        <h3>قوانین سرور</h3>
+        <div id="rules-wrapper">
+          
+        </div>
+      </div>
+    </div>
     <div class="create-post-form-wrapper col-8">
       <div class="form-wrapper">
         <form id="post-form" action="" method="post" enctype="multipart/form-data" novalidate>
@@ -87,8 +97,7 @@
         </form>
       </div>
     </div>
-    <div id="server-details-wrapper" class='server-details-wrapper col-4'>
-    </div>
+    
   </div>
 </div>
 {% endblock content %}

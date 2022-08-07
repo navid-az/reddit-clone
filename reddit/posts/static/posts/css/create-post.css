@@ -33,20 +33,24 @@
     color: #FFFF;
 }
 
-.tag {
+.tags {
     width: auto;
     border-radius: 20rem;
     padding: 0.2rem 1.125rem;
     font-size: 1.125rem;
     font-weight: 700;
     cursor: pointer;
-    margin-left: 0.5rem;
+    margin-right: 0.5rem;
     transition: 0.25s ease-in-out;
 }
 
-.tag:hover {
+.tags:hover {
     transform: scale(1.02);
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.116);
+}
+
+.tags:active {
+    transform: scale(0.9);
 }
 
 
@@ -262,12 +266,13 @@
 
 
 /* server details  */
-.server-details {
+#server-details,
+#server-rules {
     direction: rtl;
     background: #ffff;
     border-radius: 0.5rem;
-    min-height: 510px;
     height: auto;
+    margin-bottom: var(--p30);
 }
 
 .server-details-header {
@@ -296,7 +301,8 @@
     font-size: 1rem;
 }
 
-.server-details-info {
+.server-details-info,
+.sidebar-title {
     padding: 0.875rem;
 }
 
@@ -343,4 +349,44 @@
 .server-score {
     color: var(--orange);
     padding-top: 0.4rem;
+}
+
+
+/* rules */
+#server-rules {
+    height: auto;
+    padding: var(--p14);
+}
+
+#server-rules>h3 {
+    margin-bottom: var(--p14);
+}
+
+.rule {
+    font-weight: 600;
+    font-size: var(--p14);
+    color: var(--dark-gray);
+}
+
+.rule-title>div {
+    margin-top: 0.5rem;
+    display: flex;
+}
+
+.rule-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.rule-title>div>p:nth-child(1) {
+    margin-left: 0.5rem;
+}
+
+.rule-body {
+    margin-top: 0.3125rem;
+    margin-right: calc(12px + 0.5rem);
+    font-weight: 400;
+    color: #4B4B4B;
+    /* display: none; */
 }

@@ -92,17 +92,24 @@ class CreatePostView(LoginRequiredMixin, View):
 class CreatePostAjaxView(View):
     def get(self, request, server_tag):
         server = Server.objects.get(tag=server_tag)
-        server_tag = server.tags.all()
+        server_tags = server.tags.all()
+        server_rules = server.rules.all()
         serialized_server = serializers.serialize("python", {server})
         data = [serialized_server]
-        for i in server_tag:
-            item ={
+        for i in server_tags:
+            tags={
             'id':i.id,
             'name':i.name,
             'primary_color':i.primary_color,
             'secondary_color':i.secondary_color
             }
-            data.append(item)
+            data.append(tags)
+        for j in server_rules:
+            rules={
+            'title':j.title,
+            'body':j.body,
+            }
+            data.append(rules)
         return JsonResponse({'data':data})
 class UpdatePostView(LoginRequiredMixin, View):
 

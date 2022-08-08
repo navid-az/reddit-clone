@@ -1,8 +1,7 @@
-import json
 from django.shortcuts import redirect, render
 from django.views import View
 from .models import Server, ServerFollow
-from .forms import CreateServerForm
+from .forms import CreateServerForm, CreatePostTagForm
 from posts.models import Vote
 from django.http import JsonResponse
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -43,7 +42,7 @@ class CreateServerView(LoginRequiredMixin, View):
             saved_form.creator = request.user
             saved_form.save()
             return render(request, 'servers/create-server.html')
-        messages.error(request, 'wtf')
+        messages.error(request, 'This is wrong')
         return render(request, 'servers/create-server.html', {'create_form':create_form})
 
 
@@ -53,10 +52,28 @@ class ServerModeratingView(LoginRequiredMixin, View):
         server_tags = server.tags.all()
         return render(request, 'servers/moderating-page.html', {"server":server, "server_tags":server_tags})
 class TagsAndFlairsView(LoginRequiredMixin, View):
+    form_class = CreatePostTagForm
+
     def get(self, request, server_tag):
+        create_post_tag_form = self.form_class()
+        
         server = Server.objects.get(tag=server_tag, creator=request.user)
         server_tags = server.tags.all()
-        return render(request, 'servers/tags-flairs.html', {"server":server, "server_tags":server_tags})
+        return render(request, 'servers/tags-flairs.html', {"server":server, "server_tags":server_tags, "create_post_tag_form":create_post_tag_form})
+
+    def post(self, request, server_tag):
+        create_post_tag_form = self.form_class(request.POST)
+
+        server = Server.objects.get(tag=server_tag, creator=request.user)
+        server_tags = server.tags.all()
+        if create_post_tag_form.is_valid():
+            created_post_tag = create_post_tag_form.save(commit=False)
+            created_post_tag.server = server
+            created_post_tag.save()
+            return redirect('servers:server-tags-and-flairs', server_tag)
+        messages.error(request, 'this tag is wrong')
+        return render(request, 'servers/tags-flairs.html', {"server":server, "server_tags":server_tags, "create_post_tag_form":create_post_tag_form})
+
 
 class RulesView(LoginRequiredMixin, View):
     def get(self, request, server_tag):

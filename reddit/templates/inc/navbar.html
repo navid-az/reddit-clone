@@ -16,7 +16,7 @@
           {% if is_moderator %}
             <a href='{% url "servers:server-moderating-page" request.user.user_servers.all.0.tag %}' id='profile-btn'><img src="{% static 'inc/svgs/create-server.svg' %}" alt="create server"></a>
           {% else %}
-            <button type="button" onclick='createServerTabFunc()' id='profile-btn'><img src="{% static 'inc/svgs/create-server.svg' %}" alt="create server"></button>
+            <button type="button" onclick="createServerTabFunc('gray-layer')" id='profile-btn'><img src="{% static 'inc/svgs/create-server.svg' %}" alt="create server"></button>
           {% endif %}
         {% endif %}
       </div>

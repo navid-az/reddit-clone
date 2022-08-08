@@ -3,14 +3,59 @@
   <link rel="stylesheet" href="{% static 'servers/css/moderating-page.css' %}">
   <link rel="stylesheet" href="{% static 'servers/css/tags-flairs.css' %}">
 {% endblock cssFiles %}
+{% block jsFiles %}
+  <script src="{% static 'servers/js/tags-flairs.js' %}"></script>
+{% endblock jsFiles %}
+{% block form_popup %}
+  <div class='form-popup' id='create-post-tag'>
+    <form action="" method="post" id='create-server-tab'>
+      {% csrf_token %}
+      <div id='create-server-title'>
+        <img onclick="createServerTabFunc('create-post-tag')" src="{% static 'svgs/x.svg' %}" alt="close tab">
+        <h2>ایجاد تگ پست</h2>
+      </div>
+      <section class='create-server-name'>
+        <div class="title">
+          <p>نام تگ</p>
+          <span>
+            <p>کوتاه و مختصر بودن تگ به راحتی جستوجو آن کمک میکند</p>
+            <img src="{% static 'svgs/info.svg' %}" alt="info icon">
+          </span>
+        </div>
+        <div class="input">
+          {{create_post_tag_form.name}}
+          <span class='d-none'>
+            {{create_post_tag_form.primary_color}}
+            {{create_post_tag_form.secondary_color}}
+          </span>
+        </div>
+      </section>
+      <section class='create-server-type'>
+        <div class="title">
+          <p>رنگ تگ</p>
+        </div>
+        <div class="input tag-color-options">
+          <div class="tag-color-option" style='background:#FFD80C; border:4px solid #4E1705'></div>
+          <div class="tag-color-option" style='background:#00DBC1; border:4px solid #047C6E'></div>
+          <div class="tag-color-option" style='background:#4BFF2E; border:4px solid #013A04'></div>
+          <div class="tag-color-option" style='background:#A50277; border:4px solid #FFB8EB'></div>
+          <div id='choose-tag-color-btn' class="tag-color-option" style='background:#323232; border:4px solid #D0D0D0'>
+            <img src="{% static 'servers/svgs/gray-plus.svg' %}" alt="">
+          </div>
+        </div>
+      </section>
+      <button id='form_popup_btn' type='submit'>ایجاد تگ</button>
+    </form>
+  </div>
+{% endblock form_popup %}
 
 {% block content %}
 <div id="moderation-page-wrapper">
-  <section id="moderator-display">
+  <section id="moderator-display"> 
       <div class="wrapper flairs-wrapper">
         <div id="create-server-title">
           <h2>لیست تگ ها</h2>
-          <div class="create-btn">
+          <div onclick="createServerTabFunc('create-post-tag')" class="create-btn">
             <img src="{% static 'servers/svgs/plus.svg' %}" alt="add flair">
           </div>
         </div>

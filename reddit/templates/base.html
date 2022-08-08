@@ -18,11 +18,11 @@
     {% block cssFiles %}{% endblock cssFiles %}
   </head>
   <body>
-    <div id='gray-layer'>
+    <div class='form-popup' id='gray-layer'>
       <form action="{% url 'servers:server-create' %}" method="post" id='create-server-tab' novalidate>
         {% csrf_token %}
         <div id='create-server-title'>
-          <img onclick='createServerTabFunc()' src="{% static 'svgs/x.svg' %}" alt="close tab">
+          <img onclick="createServerTabFunc('gray-layer')" src="{% static 'svgs/x.svg' %}" alt="close tab">
           <h2>ایجاد سرور</h2>
         </div>
         <section class='create-server-name'>
@@ -43,9 +43,11 @@
             {{create_server_form.server_type}}
           </div>
         </section>
-        <button type='submit'>ایجاد سرور</button>
+        <button id='form_popup_btn' type='submit'>ایجاد سرور</button>
       </form>
     </div>
+    {% block form_popup %}
+    {% endblock form_popup %}
     {% include 'inc/messages.html' %}
     {% block navbar %}
       {% include 'inc/navbar.html' %}

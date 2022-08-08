@@ -13,7 +13,7 @@
     --p30: 1.875rem;
 }
 
-#gray-layer {
+.form-popup {
     position: fixed;
     display: none;
     width: 100%;
@@ -24,13 +24,23 @@
     transition: 0.25s ease-in-out;
 }
 
+#form_popup_btn {
+    bottom: 0;
+    background: var(--orange);
+    color: #FFFF;
+    width: 100%;
+    border-radius: 0.5rem;
+    margin-top: var(--p30);
+    height: 2.75rem;
+    font-size: 1rem;
+}
+
 #create-server-tab {
     background: #ffff;
     width: 442px;
-    height: 29.6875rem;
     border-radius: 0.5rem;
     padding: var(--p14);
-    position: absolute;
+    position: relative;
     top: 0;
     bottom: 0;
     left: 0;
@@ -69,10 +79,16 @@
 }
 
 .create-server-name>.title>p:nth-child(2),
-.create-server-type>.title>p:nth-child(2) {
+.create-server-type>.title>p:nth-child(2),
+.create-server-name>.title>span {
+    display: flex;
     color: #646464;
     font-size: 0.75rem;
     font-weight: 400;
+}
+
+.create-server-name>.title>span>img {
+    margin-left: 0.3rem;
 }
 
 .create-server-name>.input>input {

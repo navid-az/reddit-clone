@@ -33,8 +33,8 @@ class ServerFollow(models.Model):
 class ServerTag(models.Model):
     server = models.ForeignKey(Server, on_delete=models.CASCADE, related_name='tags')
     name = models.CharField(max_length=20)
-    primary_color = ColorField(default = '#ffff')
-    secondary_color = ColorField(default = '#ffff')
+    primary_color = ColorField(default = '#A50277')
+    secondary_color = ColorField(default = '#FFB8EB')
     is_allowed = models.BooleanField(default=True)
 
     def __str__(self) -> str:

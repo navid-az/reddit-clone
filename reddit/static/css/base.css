@@ -91,7 +91,8 @@
     margin-left: 0.3rem;
 }
 
-.create-server-name>.input>input {
+.input>input,
+.input>textarea {
     position: relative;
     background: #F9F9F9;
     margin-top: var(--p14);
@@ -108,10 +109,6 @@
     direction: rtl;
     margin-top: var(--p14);
 }
-
-/* .server-type-button>div>label:nth-child(2) {
-    display: none;
-} */
 
 /* fonts  */
 @font-face {

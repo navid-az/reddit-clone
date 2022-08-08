@@ -1,7 +1,7 @@
 from django.shortcuts import redirect, render
 from django.views import View
-from .models import Server, ServerFollow
-from .forms import CreateServerForm, CreatePostTagForm
+from .models import Server, ServerFollow, ServerRule
+from .forms import CreateServerForm, CreatePostTagForm, CreateRuleForm
 from posts.models import Vote
 from django.http import JsonResponse
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -74,12 +74,34 @@ class TagsAndFlairsView(LoginRequiredMixin, View):
         messages.error(request, 'this tag is wrong')
         return render(request, 'servers/tags-flairs.html', {"server":server, "server_tags":server_tags, "create_post_tag_form":create_post_tag_form})
 
-
 class RulesView(LoginRequiredMixin, View):
+    class_form = CreateRuleForm
+
     def get(self, request, server_tag):
+        create_rule_form = self.class_form()
+
         server = Server.objects.get(tag=server_tag, creator=request.user)
         server_rules = server.rules.all()
-        return render(request, 'servers/rules.html', {"server":server, "server_rules":server_rules})
+        return render(request, 'servers/rules.html', {"server":server, "server_rules":server_rules, "create_rule_form":create_rule_form})
+
+    def post(self, request, server_tag):
+        create_rule_form = self.class_form(request.POST)
+
+        server = Server.objects.get(tag=server_tag, creator=request.user)
+        server_rules = server.rules.all()
+        if create_rule_form.is_valid():
+            new_rule = create_rule_form.save(commit=False)
+            new_rule.server = server
+            new_rule.save()
+            return redirect('servers:server-rules', server_tag)
+        return render(request, 'servers/rules.html', {"server":server, "server_rules":server_rules, "create_rule_form":create_rule_form})
+
+class DeleteRulesView(View):
+    def get(self, server_tag, rule_id):
+        rule = ServerRule.objects.get(pk=rule_id)
+        rule.delete()
+        return redirect('servers:server-rules', server_tag)
+
 
 class ModeratorSettingsView(LoginRequiredMixin, View):
     def get(self, request):

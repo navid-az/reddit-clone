@@ -4,8 +4,41 @@
   <link rel="stylesheet" href="{% static 'servers/css/rules.css' %}">
 {% endblock cssFiles %}
 {% block jsFiles %}
-<script src="{% static 'servers/js/rules.js' %}"></script>
+  <script src="{% static 'servers/js/rules.js' %}"></script>
 {% endblock jsFiles %}
+
+{% block form_popup %}
+  <div class='form-popup' id='create-post-tag'>
+    <form action="" method="post" id='create-server-tab'>
+      {% csrf_token %}
+      <div id='create-server-title'>
+        <img onclick="createServerTabFunc('create-post-tag')" src="{% static 'svgs/x.svg' %}" alt="close tab">
+        <h2>ایجاد قانون</h2>
+      </div>
+      <section class='create-server-name'>
+        <div class="title">
+          <p>قانون</p>
+          <span>
+            <p>کوتاه و مختصر بودن تگ به راحتی جستوجو آن کمک میکند</p>
+            <img src="{% static 'svgs/info.svg' %}" alt="info icon">
+          </span>
+        </div>
+        <div class="input">
+          {{create_rule_form.title}}
+        </div>
+      </section>
+      <section class='create-server-type'>
+        <div class="title">
+          <p>توضیحات تکمیلی</p>
+        </div>
+        <div class="input">
+          {{create_rule_form.body}}
+        </div>
+      </section>
+      <button id='form_popup_btn' type='submit'>ایجاد تگ</button>
+    </form>
+  </div>
+{% endblock form_popup %}
 
 {% block content %}
 <div id="moderation-page-wrapper">
@@ -13,7 +46,7 @@
       <div class="wrapper rules-wrapper">
         <div id="create-server-title">
           <h2>لیست قوانین سرور</h2>
-          <div class="create-btn">
+          <div onclick="createServerTabFunc('create-post-tag')" class="create-btn">
             <img src="{% static 'servers/svgs/plus.svg' %}" alt="add flair">
           </div>
         </div>
@@ -27,7 +60,9 @@
                 </div>
                 <div class="rule-options">
                   <button class='delete-rule-btn'>
-                    <img src="{% static 'servers/svgs/trash.svg' %}" alt="delete rule">
+                    <a href="{% url 'servers:server-rules-delete' rule.server.tag rule.id %}">
+                      <img src="{% static 'posts/svgs/trash.svg' %}" alt="delete rule">
+                    </a>
                   </button>
                   <button class='edit-rule-btn'>
                     <img src="{% static 'posts/svgs/edit.svg' %}" alt="edit rule">

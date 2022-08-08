@@ -1,6 +1,7 @@
 .rules-wrapper {
   width: 100%;
-  max-height: 23.8125rem;
+  height: auto;
+  margin-bottom: 3rem;
 }
 
 #list {
@@ -20,7 +21,6 @@
   background: var(--gray);
   padding: var(--p14);
   border-radius: 5px;
-  z-index: 2;
 }
 
 .rule-body {
@@ -34,13 +34,11 @@
   margin-top: -0.5rem;
   border-radius: 0.5rem;
   border: 2px solid #3b3b3b1a;
-  z-index: 1;
   display: none;
 }
 
 .rule-title,
 .rule-title-wrapper {
-
   display: flex;
   align-items: center;
 }

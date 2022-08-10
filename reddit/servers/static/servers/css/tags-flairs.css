@@ -49,3 +49,11 @@
   width: 100%;
   height: 100%;
 }
+
+#live-tag-overview {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  margin: var(--p30) 0 0;
+  transition: 0.25s ease-in;
+}

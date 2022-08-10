@@ -95,7 +95,7 @@
 .input>textarea {
     position: relative;
     background: #F9F9F9;
-    margin-top: var(--p14);
+    /* margin-top: var(--p14); */
     padding: var(--p14);
     border: 1px solid rgba(0, 0, 0, 0.09);
     transition: 0.15s ease-in-out;
@@ -105,7 +105,8 @@
     width: 100%;
 }
 
-.create-server-type>.input {
+.create-server-type>.input,
+.create-server-name>.input {
     direction: rtl;
     margin-top: var(--p14);
 }

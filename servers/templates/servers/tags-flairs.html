@@ -57,11 +57,11 @@
         <div id="create-server-title">
           <h2>لیست تگ ها</h2>
           <div onclick="createServerTabFunc('create-post-tag')" class="create-btn">
-            <img src="{% static 'servers/svgs/plus.svg' %}" alt="add flair">
+            <img src="{% static 'servers/svgs/plus.svg' %}" alt="crate post tag">
           </div>
         </div>
         <section id='list'>
-          {% for tag in server_tags  %}
+          {% for tag in server_post_tags  %}
             <div class="tag" style='background:{{tag.primary_color}}; border:3.5px solid {{tag.secondary_color}}; color:{{tag.secondary_color}}'>{{tag.name}}</div>
             <br>
           {% endfor %}
@@ -70,8 +70,16 @@
       <div class="wrapper tags-wrapper">
         <div id="create-server-title">
           <h2>لیست پسوند ها</h2>
-          <img src="{% static 'servers/svgs/plus.svg' %}" alt="">
+          <div onclick="createServerTabFunc('create-post-tag')" class="create-btn">
+            <img src="{% static 'servers/svgs/plus.svg' %}" alt="craete user tag">
+          </div>
         </div>
+        <section id='list'>
+          {% for tag in server_user_tags  %}
+            <div class="tag" style='background:{{tag.primary_color}}; border:3.5px solid {{tag.secondary_color}}; color:{{tag.secondary_color}}'>{{tag.name}}</div>
+            <br>
+          {% endfor %}
+        </section>
       </div>
   </section>
   {% include 'servers/inc/moderator-control-bar.html' %}

@@ -1,7 +1,7 @@
 from django.shortcuts import redirect, render
 from django.views import View
 from .models import Server, ServerFollow, ServerRule
-from .forms import CreateServerForm, CreatePostTagForm, CreateRuleForm
+from .forms import CreateServerForm, CreatePostTagForm, CreateUserTagForm, CreateRuleForm
 from posts.models import Vote
 from django.http import JsonResponse
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -11,6 +11,11 @@ class ServerView(View):
     def get(self, request, server_tag):
         server = Server.objects.get(tag=server_tag)
         posts = server.posts.all()
+        user_tags = server.user_tags.all()
+        if user_tags.filter(user=request.user).exists():
+            current_user_tag = user_tags.get(user=request.user)
+        else:
+            current_user_tag = None
         upvote = Vote.objects.filter(choice='up').count()
         downvote = Vote.objects.filter(choice='down').count()
         vote_count = upvote - downvote
@@ -21,7 +26,7 @@ class ServerView(View):
             qs = qs.filter(user=request.user)
             if qs.exists():
                 is_following = True
-        return render(request, 'servers/server.html', {'server':server, 'posts':posts, 'is_following':is_following, 'vote_count':vote_count})
+        return render(request, 'servers/server.html', {'server':server, 'posts':posts, 'is_following':is_following, 'vote_count':vote_count, 'user_tags':user_tags, 'current_user_tag':current_user_tag})
 class ServerFollowView(LoginRequiredMixin, View):
     def get(self, request, server_tag):
         server = Server.objects.get(tag=server_tag)
@@ -49,30 +54,34 @@ class CreateServerView(LoginRequiredMixin, View):
 class ServerModeratingView(LoginRequiredMixin, View):
     def get(self, request, server_tag):
         server = Server.objects.get(tag=server_tag, creator=request.user)
-        server_tags = server.tags.all()
-        return render(request, 'servers/moderating-page.html', {"server":server, "server_tags":server_tags})
+        server_post_tags = server.post_tags.all()
+        return render(request, 'servers/moderating-page.html', {"server":server, "server_post_tags":server_post_tags})
 class TagsAndFlairsView(LoginRequiredMixin, View):
     form_class = CreatePostTagForm
+    form_class_2 = CreateUserTagForm
 
     def get(self, request, server_tag):
         create_post_tag_form = self.form_class()
+        create_user_tag_form = self.form_class_2()
         
         server = Server.objects.get(tag=server_tag, creator=request.user)
-        server_tags = server.tags.all()
-        return render(request, 'servers/tags-flairs.html', {"server":server, "server_tags":server_tags, "create_post_tag_form":create_post_tag_form})
+        server_post_tags = server.post_tags.all()
+        server_user_tags = server.user_tags.all()
+        return render(request, 'servers/tags-flairs.html', {"server":server, "server_post_tags":server_post_tags, "server_user_tags":server_user_tags, "create_post_tag_form":create_post_tag_form, "create_user_tag_form":create_user_tag_form})
 
     def post(self, request, server_tag):
         create_post_tag_form = self.form_class(request.POST)
+        create_user_tag_form = self.form_class_2(request.POST)
 
         server = Server.objects.get(tag=server_tag, creator=request.user)
-        server_tags = server.tags.all()
+        server_post_tags = server.tags.all()
         if create_post_tag_form.is_valid():
             created_post_tag = create_post_tag_form.save(commit=False)
             created_post_tag.server = server
             created_post_tag.save()
             return redirect('servers:server-tags-and-flairs', server_tag)
         messages.error(request, 'this tag is wrong')
-        return render(request, 'servers/tags-flairs.html', {"server":server, "server_tags":server_tags, "create_post_tag_form":create_post_tag_form})
+        return render(request, 'servers/tags-flairs.html', {"server":server, "server_post_tags":server_post_tags, "create_post_tag_form":create_post_tag_form})
 
 class RulesView(LoginRequiredMixin, View):
     class_form = CreateRuleForm

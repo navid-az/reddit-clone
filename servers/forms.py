@@ -1,5 +1,5 @@
 from django import forms
-from .models import Server, ServerRule, ServerTag
+from .models import Server, ServerRule, ServerPostTag, ServerUserTag
 
 class CreateServerForm(forms.ModelForm):
   class Meta:
@@ -9,7 +9,11 @@ class CreateServerForm(forms.ModelForm):
 
 class CreatePostTagForm(forms.ModelForm):
   class Meta:
-    model = ServerTag
+    model = ServerPostTag
+    exclude = ['is_allowed', 'server']
+class CreateUserTagForm(forms.ModelForm):
+  class Meta:
+    model = ServerUserTag
     exclude = ['is_allowed', 'server']
 
 class CreateRuleForm(forms.ModelForm):

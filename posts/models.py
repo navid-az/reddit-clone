@@ -2,7 +2,7 @@ from django.db import models
 from servers.models import Server
 from django.contrib.auth.models import User
 from django.urls import reverse
-from servers.models import ServerTag
+from servers.models import ServerPostTag
 from mptt.models import MPTTModel, TreeForeignKey
 
 # if you put the child model on top of the parent model-
@@ -35,7 +35,7 @@ class Post(models.Model):
     created = models.DateTimeField(auto_now=True)
     type = models.CharField(max_length=5, choices=post_type_choices, default='text')
     votes_count = models.IntegerField(default=0)
-    tag = models.ForeignKey(ServerTag, on_delete=models.CASCADE, null=True, blank=True)
+    tag = models.ForeignKey(ServerPostTag, on_delete=models.CASCADE, null=True, blank=True)
 
     def get_absolute_url(self):
         return reverse("posts:post-page", args={self.id})

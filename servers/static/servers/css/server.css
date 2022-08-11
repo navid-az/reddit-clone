@@ -20,12 +20,15 @@
   margin-bottom: 3rem;
 }
 
-.server-info {
+.server-specifications {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
   position: relative;
   height: 100%;
 }
 
-.server-info>.server-name {
+.server-specifications>.server-name {
   position: absolute;
   display: flex;
   flex-direction: column;
@@ -34,18 +37,18 @@
   right: 10rem;
 }
 
-.server-info>.server-name>div {
+.server-specifications>.server-name>div {
   display: flex;
   justify-content: flex-end;
   gap: 0.625rem;
 }
 
-.server-info>.server-name>div>h2 {
+.server-specifications>.server-name>div>h2 {
   font-size: 1.5625rem;
   color: #ffff;
 }
 
-.server-info>.server-name>p {
+.server-specifications>.server-name>p {
   font-size: 1.125rem;
   color: #B6B6B6;
 }
@@ -65,7 +68,7 @@
   font-size: 1.125rem;
 }
 
-.server-info>.server-main-img {
+.server-specifications>.server-main-img {
   position: absolute;
   top: -4rem;
   width: 9.375rem;
@@ -73,7 +76,7 @@
   border-radius: 50rem;
 }
 
-.server-info>.server-main-img>img {
+.server-specifications>.server-main-img>img {
   border-radius: 50rem;
   width: 100%;
   height: 100%;
@@ -83,7 +86,6 @@
 .server-details {
   direction: rtl;
   background: #ffff;
-  min-height: 510px;
   border-radius: 0.5rem;
   height: auto;
 }
@@ -118,20 +120,45 @@
   padding: 0.875rem;
 }
 
-.about-server>h3,
-.server-created-at>h3 {
+.server-details-info>.server-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.server-details-info>.server-info:not(:last-of-type) {
+  margin-bottom: var(--p30);
+}
+
+.server-details-info>.server-info>h3 {
   color: #1E1E20;
 }
 
-.about-server>p,
-.server-created-at>p {
-  margin-top: 0.875rem;
+.server-details-info>.server-info>p,
+.server-details-info>.server-info>div {
+  font-size: var(--p14);
+  margin-top: 0.5rem;
   color: #7C7C7C;
 }
 
-.server-created-at>span {
+.user-tag {
+  border-radius: 0.5rem;
+  padding: 0.1875rem var(--p14);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.user-tag>p {
+  padding-top: 0.13rem;
+}
+
+.server-details-info>span {
   display: flex;
   gap: 0.3rem;
+}
+
+.server-numbers-wrapper {
+  margin-bottom: var(--p30);
 }
 
 .server-numbers-wrapper,
@@ -141,9 +168,8 @@
   justify-content: space-between;
   height: 4.25rem;
   background: #1E1E20;
-  border-radius: 0.5rem;
-  margin: 1.875rem 0;
   color: #ffff;
+  border-radius: 0.5rem;
   font-weight: Vbold;
   padding: 0.875rem;
 }

@@ -92,7 +92,7 @@ class CreatePostView(LoginRequiredMixin, View):
 class CreatePostAjaxView(View):
     def get(self, request, server_tag):
         server = Server.objects.get(tag=server_tag)
-        server_tags = server.tags.all()
+        server_tags = server.post_tags.all()
         server_rules = server.rules.all()
         serialized_server = serializers.serialize("python", {server})
         data = [serialized_server]

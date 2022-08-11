@@ -57,11 +57,9 @@
                 <p>{{rule.title}}</p>
                 </div>
                 <div class="rule-options">
-                  <button class='delete-rule-btn'>
-                    <a href="{% url 'servers:server-rules-delete' rule.server.tag rule.id %}">
-                      <img src="{% static 'posts/svgs/trash.svg' %}" alt="delete rule">
-                    </a>
-                  </button>
+                  <a href="{% url 'servers:server-rules-delete' rule.server.tag rule.id %}">
+                    <img src="{% static 'servers/svgs/trash.svg' %}" alt="delete rule">
+                  </a>
                   <button class='edit-rule-btn'>
                     <img src="{% static 'posts/svgs/edit.svg' %}" alt="edit rule">
                   </button>

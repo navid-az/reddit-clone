@@ -97,10 +97,10 @@ class RulesView(LoginRequiredMixin, View):
         return render(request, 'servers/rules.html', {"server":server, "server_rules":server_rules, "create_rule_form":create_rule_form})
 
 class DeleteRulesView(View):
-    def get(self, server_tag, rule_id):
-        rule = ServerRule.objects.get(pk=rule_id)
+    def get(self, *args, **kwargs):
+        rule = ServerRule.objects.get(pk=kwargs['rule_id'])
         rule.delete()
-        return redirect('servers:server-rules', server_tag)
+        return redirect('servers:server-rules', kwargs['server_tag'])
 
 
 class ModeratorSettingsView(LoginRequiredMixin, View):

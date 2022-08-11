@@ -24,7 +24,6 @@
 }
 
 .rule-body {
-  position: relative;
   font-weight: 400;
   background: var(--light-gray-3);
   color: var(--gray);
@@ -35,6 +34,7 @@
   border-radius: 0.5rem;
   border: 2px solid #3b3b3b1a;
   display: none;
+  transition: 0.25s ease-in-out;
 }
 
 .rule-title,
@@ -53,7 +53,8 @@
   gap: 0.5rem;
 }
 
-.rule-options>button {
+.rule-options>button,
+.rule-options>a {
   display: flex;
   align-items: center;
   justify-content: center;

@@ -19,4 +19,4 @@ class CreateUserTagForm(forms.ModelForm):
 class CreateRuleForm(forms.ModelForm):
   class Meta:
     model = ServerRule
-    exclude = ['created', 'server']
+    exclude = ['created', 'server', 'creator']

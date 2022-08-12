@@ -101,15 +101,20 @@ class RulesView(LoginRequiredMixin, View):
         if create_rule_form.is_valid():
             new_rule = create_rule_form.save(commit=False)
             new_rule.server = server
+            new_rule.creator = request.user
             new_rule.save()
             return redirect('servers:server-rules', server_tag)
         return render(request, 'servers/rules.html', {"server":server, "server_rules":server_rules, "create_rule_form":create_rule_form})
 
-class DeleteRulesView(View):
-    def get(self, *args, **kwargs):
-        rule = ServerRule.objects.get(pk=kwargs['rule_id'])
-        rule.delete()
-        return redirect('servers:server-rules', kwargs['server_tag'])
+class DeleteRulesView(LoginRequiredMixin, View):
+    def get(self, request, *args, **kwargs):
+        rule = ServerRule.objects.filter(pk=kwargs['rule_id'], creator=request.user)
+        if rule.exists():
+            rule.delete()
+            return redirect('servers:server-rules', kwargs['server_tag'])
+        else:
+            messages.error(request, 'فقط مدیر سرور میتواند قانون سرور را حذف کند')
+            return redirect('home:home')
 
 
 class ModeratorSettingsView(LoginRequiredMixin, View):

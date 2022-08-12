@@ -36,6 +36,21 @@
       <button id='form_popup_btn' type='submit'>ایجاد تگ</button>
     </form>
   </div>
+
+  {% for rule in server_rules %}
+    <div class='form-popup' id='delete-rule-tab'>
+      <section id='create-server-tab'>
+        <div id='create-server-title'>
+          <h2>آیا از حذف این قانون مطمعن هستید؟</h2>
+        </div>
+        <div id='yes-no-btn'>
+          {{rule.server.tag}} {{rule.id}}
+          <a href="{% url 'servers:server-rules-delete' rule.server.tag rule.id %}" id='form_popup_btn'>بله مطمعنم</a>
+          <button onclick="createServerTabFunc('delete-rule-tab')" id='form_popup_btn'>خیر</button>
+        </div>
+      </section>
+    </div>
+  {% endfor %}
 {% endblock form_popup %}
 
 {% block content %}
@@ -60,11 +75,14 @@
                   <a href="{% url 'servers:server-rules-delete' rule.server.tag rule.id %}">
                     <img src="{% static 'servers/svgs/trash.svg' %}" alt="delete rule">
                   </a>
+                  <button onclick="createServerTabFunc('delete-rule-tab')">
+                    <img src="{% static 'servers/svgs/trash.svg' %}" alt="delete rule">
+                  </button>
                   <button class='edit-rule-btn'>
                     <img src="{% static 'posts/svgs/edit.svg' %}" alt="edit rule">
                   </button>
                   <button onclick='openRuleDetails({{ forloop.counter0 }})' class='rule-detail-btn'>
-                    <img src="{% static 'svgs/maximize.svg' %}" alt="delete rule">
+                    <img src="{% static 'svgs/maximize.svg' %}" alt="rule detail">
                   </button>
                 </div>
               </div>

@@ -62,3 +62,18 @@
   height: 24px;
   background: none;
 }
+
+#yes-no-btn {
+  display: flex;
+  gap: var(--p14);
+}
+
+#yes-no-btn>* {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#yes-no-btn>*:first-child {
+  background: var(--gray);
+}

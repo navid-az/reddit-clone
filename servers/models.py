@@ -53,6 +53,10 @@ class ServerUserTag(models.Model):
 
 class ServerRule(models.Model):
     server = models.ForeignKey(Server, on_delete=models.CASCADE, related_name='rules')
+    creator = models.ForeignKey(User, on_delete=models.CASCADE, related_name='rules')
     title = models.CharField(max_length=100)
     body = models.TextField()
     created = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self) -> str:
+        return f'{self.title} | made by {self.creator} for r/{self.server.tag}'

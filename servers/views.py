@@ -61,8 +61,8 @@ class TagsAndFlairsView(LoginRequiredMixin, View):
     form_class_2 = CreateUserTagForm
 
     def get(self, request, server_tag):
-        create_post_tag_form = self.form_class()
-        create_user_tag_form = self.form_class_2()
+        create_post_tag_form = self.form_class(prefix='post-tag')
+        create_user_tag_form = self.form_class_2(prefix='user-tag')
         
         server = Server.objects.get(tag=server_tag, creator=request.user)
         server_post_tags = server.post_tags.all()
@@ -70,18 +70,24 @@ class TagsAndFlairsView(LoginRequiredMixin, View):
         return render(request, 'servers/tags-flairs.html', {"server":server, "server_post_tags":server_post_tags, "server_user_tags":server_user_tags, "create_post_tag_form":create_post_tag_form, "create_user_tag_form":create_user_tag_form})
 
     def post(self, request, server_tag):
-        create_post_tag_form = self.form_class(request.POST)
-        create_user_tag_form = self.form_class_2(request.POST)
-
+        create_post_tag_form = self.form_class(request.POST, prefix='post-tag')
+        create_user_tag_form = self.form_class_2(request.POST, prefix='user-tag')
         server = Server.objects.get(tag=server_tag, creator=request.user)
-        server_post_tags = server.tags.all()
         if create_post_tag_form.is_valid():
             created_post_tag = create_post_tag_form.save(commit=False)
             created_post_tag.server = server
             created_post_tag.save()
+            # messages.error(request, 'this tag is wrong')
             return redirect('servers:server-tags-and-flairs', server_tag)
-        messages.error(request, 'this tag is wrong')
-        return render(request, 'servers/tags-flairs.html', {"server":server, "server_post_tags":server_post_tags, "create_post_tag_form":create_post_tag_form})
+        elif create_user_tag_form.is_valid():
+            created_user_tag = create_user_tag_form.save(commit=False)
+            created_user_tag.server = server
+            created_user_tag.creator = request.user
+            created_user_tag.save()
+            return redirect('servers:server-tags-and-flairs', server_tag)
+        # messages.error(request, 'asdfsdfsda')
+        # return redirect('servers:server-tags-and-flairs', server_tag)
+        return render(request, 'servers/tags-flairs.html', {"server":server, "create_post_tag_form":create_post_tag_form, "create_user_tag_form":create_user_tag_form})
 
 class RulesView(LoginRequiredMixin, View):
     class_form = CreateRuleForm

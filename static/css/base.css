@@ -35,7 +35,8 @@
     font-size: 1rem;
 }
 
-#create-server-tab {
+#create-server-tab,
+.create-tag-form {
     background: #ffff;
     width: 442px;
     border-radius: 0.5rem;

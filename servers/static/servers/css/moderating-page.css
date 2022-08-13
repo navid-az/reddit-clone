@@ -35,8 +35,3 @@
   height: 31px;
   cursor: pointer;
 }
-
-#list {
-  margin-top: var(--p30);
-  display: flex;
-}

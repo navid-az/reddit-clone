@@ -144,12 +144,17 @@
 .user-tag {
   border-radius: 0.5rem;
   padding: 0.1875rem var(--p14);
-  font-size: 12px;
-  font-weight: 800;
+  font-size: 0.75rem !important;
 }
 
-.user-tag>p {
-  padding-top: 0.13rem;
+#server-user-tags {
+  display: flex;
+  gap: 0.5rem;
+  font-weight: 500;
+}
+
+.user-tag>P {
+  margin-top: 0.05rem;
 }
 
 .server-details-info>span {

@@ -11,10 +11,11 @@ class CreatePostTagForm(forms.ModelForm):
   class Meta:
     model = ServerPostTag
     exclude = ['is_allowed', 'server']
+
 class CreateUserTagForm(forms.ModelForm):
   class Meta:
     model = ServerUserTag
-    exclude = ['is_allowed', 'server']
+    exclude = ['is_allowed', 'server', 'user']
 
 class CreateRuleForm(forms.ModelForm):
   class Meta:

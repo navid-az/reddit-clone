@@ -1,5 +1,5 @@
 let tagColorOption = document.querySelectorAll(".tag-color-option");
-let postTagNameInput = document.getElementById("id_name");
+let postTagNameInput = document.getElementById("id_post-tag-name");
 let postTagPrimaryColorInput = document.getElementById("id_primary_color");
 let postTagSecondaryColorInput = document.getElementById("id_secondary_color");
 let liveTagOverview = document.getElementById("live-tag-overview");
@@ -58,3 +58,8 @@ postTagNameInput.addEventListener("keypress", function (e) {
   //   postTagNameInput.style.direction = dir;
   // }, 100);
 });
+
+const submitForm = (formName) => {
+  form = document.getElementById(formName);
+  form.submit();
+};

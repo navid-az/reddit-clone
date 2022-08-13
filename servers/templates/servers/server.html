@@ -83,9 +83,16 @@
                 <p>{{current_user_tag.name}}</p>
               </div>
             {% endif %}
-            {% comment %} {% for tag in user_tags  %}
-              {{tag.name}}
-            {% endfor %} {% endcomment %}
+              <div class="user-tag">
+                <img src="{% static 'servers/svgs/user-tag-edit.svg' %}" alt="">
+              </div>
+              <section id='server-user-tags'>
+                {% for tag in user_tags  %}
+                  <div class="user-tag" style='background:{{tag.primary_color}}; color:{{tag.secondary_color}}; border: 3px solid {{tag.secondary_color}}'>
+                    <p>{{tag.name}}</p>
+                  </div>
+                {% endfor %}
+              </section>
           </div>
         </div>
       </div>

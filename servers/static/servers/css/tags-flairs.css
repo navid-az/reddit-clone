@@ -1,24 +1,37 @@
 .tags-wrapper,
 .flairs-wrapper {
-
   width: 49%;
   max-height: 23.8125rem;
+}
+
+#list {
+  margin-top: var(--p30);
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
 }
 
 .tag {
   width: auto;
   border-radius: 20rem;
   padding: 0.2rem 1.125rem;
-  font-size: 1.125rem;
-  font-weight: 700;
+  font-size: var(--p14);
+  font-weight: 600;
   cursor: pointer;
-  margin-left: 0.5rem;
   transition: 0.25s ease-in-out;
 }
 
 .tag:hover {
-  transform: scale(1.02);
+  transform: scale(1.05);
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.116);
+}
+
+.post-tag {
+  margin-right: 0 !important;
+}
+
+.user-tag {
+  border-radius: 0.5rem;
 }
 
 /* form popup  */

@@ -1,8 +1,19 @@
 let tagColorOption = document.querySelectorAll(".tag-color-option");
 let postTagNameInput = document.getElementById("id_post-tag-name");
-let postTagPrimaryColorInput = document.getElementById("id_primary_color");
-let postTagSecondaryColorInput = document.getElementById("id_secondary_color");
-let liveTagOverview = document.getElementById("live-tag-overview");
+let userTagNameInput = document.getElementById("id_user-tag-name");
+let postTagPrimaryColorInput = document.getElementById(
+  "id_post-tag-primary_color"
+);
+let postTagSecondaryColorInput = document.getElementById(
+  "id_post-tag-secondary_color"
+);
+let userTagPrimaryColorInput = document.getElementById(
+  "id_user-tag-primary_color"
+);
+let userTagSecondaryColorInput = document.getElementById(
+  "id_user-tag-secondary_color"
+);
+let liveTagOverview = document.querySelectorAll(".live-tag-overview");
 let tagColorOptionsList = [];
 var timeout = setTimeout(function () {}, 0);
 
@@ -31,24 +42,40 @@ tagColorOption.forEach((postTagColor, i) => {
   ]);
 
   // default tag overview styling
-  liveTagOverview.style.background = tagColorOptionsList[0][0];
-  liveTagOverview.style.color = tagColorOptionsList[0][1];
-  liveTagOverview.style.border = `3px solid ${tagColorOptionsList[0][1]}`;
+  liveTagOverview.forEach((liveTag) => {
+    liveTag.style.background = tagColorOptionsList[0][0];
+    liveTag.style.color = tagColorOptionsList[0][1];
+    liveTag.style.border = `3px solid ${tagColorOptionsList[0][1]}`;
+    postTagColor.addEventListener("click", () => {
+      liveTag.style.background = tagColorOptionsList[i][0];
+      liveTag.style.color = tagColorOptionsList[i][1];
+      liveTag.style.border = `3px solid ${tagColorOptionsList[i][1]}`;
 
-  postTagColor.addEventListener("click", () => {
-    liveTagOverview.style.background = tagColorOptionsList[i][0];
-    liveTagOverview.style.color = tagColorOptionsList[i][1];
-    liveTagOverview.style.border = `3px solid ${tagColorOptionsList[i][1]}`;
-
-    postTagPrimaryColorInput.value = tagColorOptionsList[i][0];
-    postTagSecondaryColorInput.value = tagColorOptionsList[i][1];
+      postTagPrimaryColorInput.value = tagColorOptionsList[i][0];
+      postTagSecondaryColorInput.value = tagColorOptionsList[i][1];
+      userTagPrimaryColorInput.value = tagColorOptionsList[i][0];
+      userTagSecondaryColorInput.value = tagColorOptionsList[i][1];
+    });
   });
 });
 
 postTagNameInput.addEventListener("keypress", function (e) {
   clearTimeout(timeout);
   timeout = setTimeout(function () {
-    liveTagOverview.innerHTML = postTagNameInput.value;
+    liveTagOverview[0].innerHTML = postTagNameInput.value;
+  }, 1000);
+
+  // setTimeout(function () {
+  //   var isRTL = checkRTL(String.fromCharCode(e.charCode));
+  //   var dir = isRTL ? "RTL" : "LTR";
+
+  //   postTagNameInput.style.direction = dir;
+  // }, 100);
+});
+userTagNameInput.addEventListener("keypress", function (e) {
+  clearTimeout(timeout);
+  timeout = setTimeout(function () {
+    liveTagOverview[1].innerHTML = userTagNameInput.value;
   }, 1000);
 
   // setTimeout(function () {

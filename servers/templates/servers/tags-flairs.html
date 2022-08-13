@@ -8,13 +8,13 @@
 {% endblock jsFiles %}
 {% block form_popup %}
   <div class='form-popup' id='create-post-tag'>
-    <form action="" method="post" class='create-tag-form'>
+    <form action="" method="post" id='create-post-tag-form' class='create-tag-form'>
       {% csrf_token %}
-      <div id='create-server-title'>
+      <div class='form-title'>
         <img onclick="createServerTabFunc('create-post-tag')" src="{% static 'svgs/x.svg' %}" alt="close tab">
         <h2>ایجاد تگ پست</h2>
       </div>
-        <div class='tag' id='live-tag-overview'>تگ پست</div>
+        <div class='tag live-tag-overview'>تگ پست</div>
       <section class='create-server-name'>
         <div class="title">
           <p>نام تگ</p>
@@ -50,13 +50,13 @@
   </div>
 
   <div class='form-popup' id='create-user-tag'>
-    <form action="" method="post" class='create-tag-form'>
+    <form action="" method="post" id='create-user-tag-form' class='create-tag-form'>
       {% csrf_token %}
-      <div id='create-server-title'>
+      <div class='form-title'>
         <img onclick="createServerTabFunc('create-user-tag')" src="{% static 'svgs/x.svg' %}" alt="close tab">
         <h2>ایجاد تگ کاربر</h2>
       </div>
-        <div class='tag' id='live-tag-overview'>تگ کاربر</div>
+        <div class='tag live-tag-overview'>تگ کاربر</div>
       <section class='create-server-name'>
         <div class="title">
           <p>نام تگ</p>
@@ -96,7 +96,7 @@
 <div id="moderation-page-wrapper">
   <section id="moderator-display"> 
       <div class="wrapper flairs-wrapper">
-        <div id="create-server-title">
+        <div class="form-title">
           <h2>لیست تگ ها</h2>
           <div onclick="createServerTabFunc('create-post-tag')" class="create-btn">
             <img src="{% static 'servers/svgs/plus.svg' %}" alt="crate post tag">
@@ -109,7 +109,7 @@
         </section>
       </div>
       <div class="wrapper tags-wrapper">
-        <div id="create-server-title">
+        <div class="form-title">
           <h2>لیست پسوند ها</h2>
           <div onclick="createServerTabFunc('create-user-tag')" class="create-btn">
             <img src="{% static 'servers/svgs/plus.svg' %}" alt="craete user tag">

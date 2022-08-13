@@ -11,7 +11,7 @@
   <div class='form-popup' id='create-post-tag'>
     <form action="" method="post" id='create-server-tab'>
       {% csrf_token %}
-      <div id='create-server-title'>
+      <div class='form-title'>
         <img onclick="createServerTabFunc('create-post-tag')" src="{% static 'svgs/x.svg' %}" alt="close tab">
         <h2>ایجاد قانون</h2>
       </div>
@@ -40,7 +40,7 @@
   {% for rule in server_rules %}
     <div class='form-popup' id='delete-rule-tab'>
       <section id='create-server-tab'>
-        <div id='create-server-title'>
+        <div class='form-title'>
           <h2>آیا از حذف این قانون مطمعن هستید؟</h2>
         </div>
         <div id='yes-no-btn'>
@@ -57,7 +57,7 @@
 <div id="moderation-page-wrapper">
   <section id="moderator-display">
       <div class="wrapper rules-wrapper">
-        <div id="create-server-title">
+        <div class="form-title">
           <h2>لیست قوانین سرور</h2>
           <div onclick="createServerTabFunc('create-post-tag')" class="create-btn">
             <img src="{% static 'servers/svgs/plus.svg' %}" alt="add flair">

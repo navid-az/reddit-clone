@@ -21,7 +21,7 @@
     <div class='form-popup' id='gray-layer'>
       <form action="{% url 'servers:server-create' %}" method="post" id='create-server-tab' novalidate>
         {% csrf_token %}
-        <div id='create-server-title'>
+        <div class='form-title'>
           <img onclick="createServerTabFunc('gray-layer')" src="{% static 'svgs/x.svg' %}" alt="close tab">
           <h2>ایجاد سرور</h2>
         </div>

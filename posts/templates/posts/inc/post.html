@@ -14,7 +14,7 @@
         </section>
         <section>
           {% if post.tag %}
-            <span class='post-tag' style='background:{{post.tag.primary_color}}; color:{{post.tag.secondary_color}};border:3px solid {{post.tag.secondary_color}}'>{{post.tag.name}}</span>
+            <span class='tag post-tag' style='background:{{post.tag.primary_color}}; color:{{post.tag.secondary_color}};border:3px solid {{post.tag.secondary_color}}'>{{post.tag.name}}</span>
           {% endif %}
           <a href='{{post.get_absolute_url}}'><h3 class="post-title">{{post.title}}</h3></a>
         </section>

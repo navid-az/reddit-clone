@@ -10,7 +10,7 @@
 <div class="container">
   <div class="row">
     <div class="server-details-wrapper col-4" style='margin-top:3rem'>
-      <div class="server-details">
+      <div class="side-bar">
         <div class="server-details-header">
           <img
             class="server-header-img"
@@ -24,11 +24,10 @@
           />
           <div class="server-tag">r/{{post.server.tag}}</div>
         </div>
-        <div class="server-details-info">
-          <div class="about-server">
+          <section>
             <h3>درباره این سرور</h3>
             <p>{{post.server.about}}</p>
-          </div>
+          </section>
           <div class="server-numbers-wrapper">
             <div class="server-numbers">
               <div class="followers">
@@ -44,14 +43,10 @@
               <h2>#۸۷</h2>
             </div>
           </div>
-          <div class="server-created-at">
-            <span>
-              <img src="{% static 'servers/svgs/gift.svg' %}" alt="" />
-              <h3>ساخته شده در تاریخ</h3>
-            </span>
+          <section>
+            <h3>ساخته شده در تاریخ</h3>
             <p>{{post.server.created}}</p>
-          </div>
-        </div>
+          </section>
       </div>
     </div>
     <div class="popular-posts col-8" style="margin-top: 3rem">
@@ -82,11 +77,16 @@
               <img src="{{node.creator.profile.image.url|default:"https://play-lh.googleusercontent.com/nlptFyxNsb8J0g8ZLux6016kunduV4jCxIrOJ7EEy-IobSN1RCDXAJ6DTGP81z7rr5Zq"}}" alt="comment creator image">
             </div>
             <div class="created-creator">
-              <a
+              <section>
+                <a
                 href="{% url 'user:profile' node.creator.username %}"
                 class="creator-name"
                 >u/{{node.creator}}</a
-              >
+                >
+                <div class="user-tag" style='background:{{node.creator.user_tag.get.primary_color}}; color:{{node.creator.user_tag.get.secondary_color}};border:3px solid {{node.creator.user_tag.get.secondary_color}}'>
+                  <p>{{node.creator.user_tag.get.name}}</p>
+                </div>
+              </section>
               <p class="created-at">{{node.created|naturaltime}}</p>
             </div>
           </div>

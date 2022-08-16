@@ -66,6 +66,23 @@
     font-size: 1.25rem;
 }
 
+.form-btns {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.form-btns>* {
+    transition: 0.25s ease-in-out;
+}
+
+.form-btns>*:hover {
+    background: var(--orange);
+}
+
+.form-btns>*:active {
+    transform: scale(0.9);
+}
+
 .create-server-name>.title,
 .create-server-type>.title {
     display: flex;
@@ -185,4 +202,61 @@ body,
 button {
     background: var(--light-gray-2);
     font-family: Vmedium;
+}
+
+
+/* side bars */
+
+.side-bar {
+    background: #FFFF;
+    padding: var(--p14);
+    border-radius: 0.5rem;
+    box-shadow: 0px 8px 8px 3px rgba(0, 0, 0, 0.04);
+}
+
+.side-bar h3 {
+    margin-bottom: var(--p14);
+    color: var(--dark-gray);
+}
+
+.side-bar>section>p {
+    color: var(--gray);
+}
+
+.side-bar>section {
+    display: flex;
+    flex-direction: column;
+    direction: rtl;
+}
+
+.side-bar>section:not(:first-of-type) {
+    margin-top: var(--p30);
+}
+
+/* user tags and post tags  */
+
+.tag {
+    display: inline;
+    padding: 0.1rem var(--p14);
+    font-size: 0.75rem;
+    font-weight: 600;
+    transition: 0.25s ease-in-out;
+}
+
+/* .tag:hover {
+    transform: scale(1.05);
+} */
+
+.tag-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.post-tag {
+    border-radius: 20rem;
+}
+
+.user-tag {
+    border-radius: 0.5rem;
 }

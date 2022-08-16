@@ -48,11 +48,11 @@
           />
           <div class="server-tag">r/{{post.server.tag}}</div>
         </div>
-        <div class="server-details-info">
-          <div class="server-info">
+        <div class="side-bar">
+          <section>
             <h3>درباره این سرور</h3>
             <p>{{server.about}}</p>
-          </div>
+          </section>
           <div class="server-numbers-wrapper">
             <div class="server-numbers">
               <div class="followers">
@@ -68,33 +68,49 @@
               <h2>#۸۷</h2>
             </div>
           </div>
-          <div class="server-info">
+          <section>
             <span>
               <h3>ساخته شده در تاریخ</h3>
             </span>
             <p>{{server.created}}</p>
-          </div>
-          <div class="server-info">
+          </section>
+          <section>
             <span>
               <h3>تگ کاربر</h3>
             </span>
             {% if current_user_tag %}
-              <div class="user-tag" style='background:{{current_user_tag.primary_color}}; color:{{current_user_tag.secondary_color}}; border: 2px solid {{current_user_tag.secondary_color}}'>
-                <p>{{current_user_tag.name}}</p>
+              <div class="tag-list">
+                <div class="tag user-tag" style='background:{{current_user_tag.primary_color}}; color:{{current_user_tag.secondary_color}}; border: 3px solid {{current_user_tag.secondary_color}}'>
+                  <p>{{current_user_tag.name}}</p>
+                </div>
               </div>
             {% endif %}
               <div class="user-tag">
                 <img src="{% static 'servers/svgs/user-tag-edit.svg' %}" alt="">
               </div>
-              <section id='server-user-tags'>
+              <section class='tag-list'>
                 {% for tag in user_tags  %}
-                  <div class="user-tag" style='background:{{tag.primary_color}}; color:{{tag.secondary_color}}; border: 3px solid {{tag.secondary_color}}'>
+                  <div class="tag user-tag" style='background:{{tag.primary_color}}; color:{{tag.secondary_color}}; border: 3px solid {{tag.secondary_color}}'>
                     <p>{{tag.name}}</p>
                   </div>
                 {% endfor %}
               </section>
-          </div>
+          </section>
         </div>
+        {% if post_tags %}
+        <div class='side-bar'>
+          <section>
+            <h3>تگ های سرور</h3>
+            <div class="tag-list">
+              {% for tag in post_tags %}
+                <div class="tag post-tag" style='background:{{tag.primary_color}};color:{{tag.secondary_color}};border:3px solid {{tag.secondary_color}}'>
+                  {{tag.name}}
+                </div>
+              {% endfor %}
+            </div>
+          </section>
+        </div>
+        {% endif %}
       </div>
     </div>
     <div class="popular-posts col-8">

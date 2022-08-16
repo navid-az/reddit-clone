@@ -43,8 +43,9 @@
 }
 
 .post-info,
-.post-info>section:nth-child(1)>a:nth-child(1) {
-    padding-right: 0.75rem;
+.post-info>section:nth-child(1)>a:nth-child(1),
+.post-info .tag {
+    margin-right: 0.75rem !important;
 }
 
 .post-info>section>a {
@@ -65,11 +66,11 @@
     color: var(--orange);
 }
 
-.post-tag {
+/* .post-tag {
     border-radius: 20rem;
     padding: 0.2rem 0.5rem;
     margin-right: 0.5rem;
-}
+} */
 
 .post-body {
     width: 100%;

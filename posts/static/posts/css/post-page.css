@@ -110,11 +110,22 @@
   flex-direction: column;
 }
 
-.created-creator>a {
+.created-creator>section {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.created-creator>section>.user-tag {
+  font-size: 10px !important;
+  padding: 0.1rem 0.5rem !important;
+}
+
+.created-creator a {
   transition: 0.25s ease-in-out;
 }
 
-.created-creator>a:hover {
+.created-creator a:hover {
   color: var(--orange);
 }
 

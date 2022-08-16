@@ -85,7 +85,10 @@
 /* server details  */
 .server-details {
   direction: rtl;
-  background: #ffff;
+  display: flex;
+  flex-direction: column;
+  /* background: #ffff; */
+  gap: var(--p30);
   border-radius: 0.5rem;
   height: auto;
 }
@@ -104,14 +107,14 @@
 
 .server-details-header>.server-img {
   position: absolute;
-  right: 0.875rem;
+  left: var(--p14);
   bottom: 0;
   border: 4px solid white;
   object-fit: cover;
 }
 
 .server-tag {
-  padding-right: 6rem;
+  padding-left: 6.5rem;
   font-family: Vbold;
   font-size: 1rem;
 }
@@ -149,6 +152,7 @@
 
 #server-user-tags {
   display: flex;
+  flex-wrap: wrap;
   gap: 0.5rem;
   font-weight: 500;
 }
@@ -163,7 +167,8 @@
 }
 
 .server-numbers-wrapper {
-  margin-bottom: var(--p30);
+  direction: rtl;
+  margin-top: var(--p30);
 }
 
 .server-numbers-wrapper,

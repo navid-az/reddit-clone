@@ -56,7 +56,7 @@
         <img onclick="createServerTabFunc('create-user-tag')" src="{% static 'svgs/x.svg' %}" alt="close tab">
         <h2>ایجاد تگ کاربر</h2>
       </div>
-        <div class='tag live-tag-overview'>تگ کاربر</div>
+        <div class='tag live-tag-overview live-user-tag-overview'>تگ کاربر</div>
       <section class='create-server-name'>
         <div class="title">
           <p>نام تگ</p>
@@ -78,10 +78,18 @@
           <p>رنگ تگ</p>
         </div>
         <div class="input tag-color-options">
-          <div class="tag-color-option" style='background:#FFD80C; border:4px solid #4E1705'></div>
-          <div class="tag-color-option" style='background:#00DBC1; border:4px solid #047C6E'></div>
-          <div class="tag-color-option" style='background:#4BFF2E; border:4px solid #013A04'></div>
-          <div class="tag-color-option" style='background:#A50277; border:4px solid #FFB8EB'></div>
+          <div class="tag-color-option" style='background:#FFD80C; border:4px solid #4E1705'>
+            <img style='filter: invert(14%) sepia(19%) saturate(3238%) hue-rotate(338deg) brightness(100%) contrast(108%);' src="{% static 'servers/svgs/check.svg' %}" alt="choose tag color">
+          </div>
+          <div class="tag-color-option" style='background:#00DBC1; border:4px solid #0B4A43'>
+            <img style='filter: invert(19%) sepia(91%) saturate(413%) hue-rotate(124deg) brightness(94%) contrast(93%);' src="{% static 'servers/svgs/check.svg' %}" alt="choose tag color">
+          </div>
+          <div class="tag-color-option" style='background:#4BFF2E; border:4px solid #013A04'>
+            <img style='filter: invert(10%) sepia(52%) saturate(3878%) hue-rotate(121deg) brightness(96%) contrast(99%);' src="{% static 'servers/svgs/check.svg' %}" alt="choose tag color">
+          </div>
+          <div class="tag-color-option" style='background:#A50277; border:4px solid #FFB8EB'>
+            <img style='filter: invert(87%) sepia(16%) saturate(1251%) hue-rotate(280deg) brightness(99%) contrast(105%);' src="{% static 'servers/svgs/check.svg' %}" alt="choose tag color">
+          </div>
           <div id='choose-tag-color-btn' class="tag-color-option" style='background:#323232; border:4px solid #D0D0D0'>
             <img src="{% static 'servers/svgs/gray-plus.svg' %}" alt="choose tag color">
           </div>
@@ -97,27 +105,51 @@
   <section id="moderator-display"> 
       <div class="wrapper flairs-wrapper">
         <div class="form-title">
-          <h2>لیست تگ ها</h2>
-          <div onclick="createServerTabFunc('create-post-tag')" class="create-btn">
-            <img src="{% static 'servers/svgs/plus.svg' %}" alt="crate post tag">
+          <h2>تگ پست ها</h2>
+          <div class="form-btns">
+            <div onclick="createServerTabFunc('create-post-tag')" class="create-btn">
+              <img src="{% static 'servers/svgs/plus.svg' %}" alt="crate post tag">
+            </div>
+            <div onclick="deleteTag('post-tag-wrapper','post-tag-delete-btn')" class="create-btn">
+              <img class='trash-icon' src="{% static 'servers/svgs/trash.svg' %}" alt="delete post tag">
+            </div>
           </div>
         </div>
-        <section id='list'>
+        <section class='list'>
           {% for tag in server_post_tags  %}
-            <div class="tag post-tag" style='background:{{tag.primary_color}}; border:3.5px solid {{tag.secondary_color}}; color:{{tag.secondary_color}}'>{{tag.name}}</div>
+              <div class="post-tag-wrapper delete-effect">
+                <div class="tag post-tag" style='background:{{tag.primary_color}}; border:3px solid {{tag.secondary_color}}; color:{{tag.secondary_color}}'>
+                  {{tag.name}}
+                </div>
+                <a href='{% url 'home:home' %}' class='post-tag-delete-btn'>
+                  <img class='trash-icon' src="{% static 'servers/svgs/trash.svg' %}" alt="delete post tag">
+                </a>
+              </div>
           {% endfor %}
         </section>
       </div>
       <div class="wrapper tags-wrapper">
         <div class="form-title">
-          <h2>لیست پسوند ها</h2>
-          <div onclick="createServerTabFunc('create-user-tag')" class="create-btn">
-            <img src="{% static 'servers/svgs/plus.svg' %}" alt="craete user tag">
+          <h2>تگ کاربران</h2>
+          <div class="form-btns">
+            <div onclick="createServerTabFunc('create-user-tag')" class="create-btn">
+              <img src="{% static 'servers/svgs/plus.svg' %}" alt="craete user tag">
+            </div>
+            <div onclick="deleteTag('user-tag-wrapper','user-tag-delete-btn')" class="create-btn">
+              <img class='trash-icon' src="{% static 'servers/svgs/trash.svg' %}" alt="delete user tag">
+            </div>
           </div>
         </div>
-        <section id='list'>
+        <section class='list'>
           {% for tag in server_user_tags  %}
-            <div class="tag user-tag" style='background:{{tag.primary_color}}; border:3.5px solid {{tag.secondary_color}}; color:{{tag.secondary_color}}'>{{tag.name}}</div>
+            <div class="user-tag-wrapper delete-effect">
+              <div class="tag user-tag" style='background:{{tag.primary_color}}; border:3px solid {{tag.secondary_color}}; color:{{tag.secondary_color}}'>
+                {{tag.name}}
+              </div>
+              <a style='border-radius:0.5rem' href='{% url 'home:home' %}' class='user-tag-delete-btn'>
+                <img class='trash-icon' src="{% static 'servers/svgs/trash.svg' %}" alt="delete post tag">
+              </a>
+            </div>
           {% endfor %}
         </section>
       </div>

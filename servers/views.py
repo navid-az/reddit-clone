@@ -11,6 +11,7 @@ class ServerView(View):
     def get(self, request, server_tag):
         server = Server.objects.get(tag=server_tag)
         posts = server.posts.all()
+        post_tags = server.post_tags.all()
         user_tags = server.user_tags.all()
         if user_tags.filter(user=request.user).exists():
             current_user_tag = user_tags.get(user=request.user)
@@ -26,7 +27,7 @@ class ServerView(View):
             qs = qs.filter(user=request.user)
             if qs.exists():
                 is_following = True
-        return render(request, 'servers/server.html', {'server':server, 'posts':posts, 'is_following':is_following, 'vote_count':vote_count, 'user_tags':user_tags, 'current_user_tag':current_user_tag})
+        return render(request, 'servers/server.html', {'server':server, 'posts':posts, 'is_following':is_following, 'vote_count':vote_count, 'user_tags':user_tags, 'current_user_tag':current_user_tag, 'post_tags':post_tags})
 class ServerFollowView(LoginRequiredMixin, View):
     def get(self, request, server_tag):
         server = Server.objects.get(tag=server_tag)

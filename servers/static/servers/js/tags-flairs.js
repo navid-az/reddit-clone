@@ -1,4 +1,8 @@
 let tagColorOption = document.querySelectorAll(".tag-color-option");
+let tagColorOptionCheck = document.querySelectorAll(".tag-color-option > img");
+//this code changes the above nodeList to array
+// let tagColorOption = [...document.querySelectorAll(".tag-color-option")].slice(0,5);
+
 let postTagNameInput = document.getElementById("id_post-tag-name");
 let userTagNameInput = document.getElementById("id_user-tag-name");
 let postTagPrimaryColorInput = document.getElementById(
@@ -34,19 +38,25 @@ const rgb2hex = (rgb) =>
 //   return rtlDirCheck.test(s);
 // }
 
-tagColorOption.forEach((postTagColor, i) => {
-  // create a list of bg and color for tag color options
+// tagColorOption.forEach((tagColor, i) => {
+for (let i = 0; i < 5; i++) {
   tagColorOptionsList.push([
     rgb2hex(tagColorOption[i].style.background),
     rgb2hex(tagColorOption[i].style.borderColor),
   ]);
-
+  // create a list of bg and color for tag color options
   // default tag overview styling
   liveTagOverview.forEach((liveTag) => {
     liveTag.style.background = tagColorOptionsList[0][0];
     liveTag.style.color = tagColorOptionsList[0][1];
     liveTag.style.border = `3px solid ${tagColorOptionsList[0][1]}`;
-    postTagColor.addEventListener("click", () => {
+
+    postTagPrimaryColorInput.value = tagColorOptionsList[0][0];
+    postTagSecondaryColorInput.value = tagColorOptionsList[0][1];
+    userTagPrimaryColorInput.value = tagColorOptionsList[0][0];
+    userTagSecondaryColorInput.value = tagColorOptionsList[0][1];
+
+    tagColorOption[i].addEventListener("click", () => {
       liveTag.style.background = tagColorOptionsList[i][0];
       liveTag.style.color = tagColorOptionsList[i][1];
       liveTag.style.border = `3px solid ${tagColorOptionsList[i][1]}`;
@@ -57,7 +67,10 @@ tagColorOption.forEach((postTagColor, i) => {
       userTagSecondaryColorInput.value = tagColorOptionsList[i][1];
     });
   });
-});
+}
+console.log(tagColorOptionsList);
+
+// });
 
 postTagNameInput.addEventListener("keypress", function (e) {
   clearTimeout(timeout);
@@ -89,4 +102,29 @@ userTagNameInput.addEventListener("keypress", function (e) {
 const submitForm = (formName) => {
   form = document.getElementById(formName);
   form.submit();
+};
+
+const deleteTag = (tagClass, deleteClass) => {
+  let tagWrapper = document.querySelectorAll(`.${tagClass}`);
+  let tagDeleteBtn = document.querySelectorAll(`.${deleteClass}`);
+
+  tagWrapper.forEach((tag, index) => {
+    if (tag.classList.contains("animate")) {
+      tagDeleteBtn[index].style.display = "none";
+      tag.classList.remove("animate");
+    } else {
+      tag.classList.add("animate");
+      tagDeleteBtn.forEach((btn, index) => {
+        btn.style.display = "flex";
+        btn.addEventListener("mouseover", () => {
+          btn.style.opacity = "1";
+          // tagWrapper[index].classList.remove("animate");
+        });
+        btn.addEventListener("mouseout", () => {
+          btn.style.opacity = "0";
+          // tagWrapper[index].classList.add("animate");
+        });
+      });
+    }
+  });
 };

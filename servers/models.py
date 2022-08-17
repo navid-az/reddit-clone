@@ -32,6 +32,7 @@ class ServerFollow(models.Model):
 
 class ServerPostTag(models.Model):
     server = models.ForeignKey(Server, on_delete=models.CASCADE, related_name='post_tags')
+    creator = models.ForeignKey(User, on_delete=models.CASCADE, related_name='post_tags')
     name = models.CharField(max_length=20)
     primary_color = ColorField(default = '#A50277')
     secondary_color = ColorField(default = '#FFB8EB')
@@ -42,6 +43,7 @@ class ServerPostTag(models.Model):
 
 class ServerUserTag(models.Model):
     server = models.ForeignKey(Server, on_delete=models.CASCADE, related_name='user_tags')
+    creator = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user_tags')
     user = models.ManyToManyField(User, related_name='user_tag')
     name = models.CharField(max_length=20)
     primary_color = ColorField(default = '#A50277')

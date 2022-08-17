@@ -121,7 +121,7 @@
                 <div class="tag post-tag" style='background:{{tag.primary_color}}; border:3px solid {{tag.secondary_color}}; color:{{tag.secondary_color}}'>
                   {{tag.name}}
                 </div>
-                <a href='{% url 'home:home' %}' class='post-tag-delete-btn'>
+                <a href='{% url 'servers:server-tag-delete' tag.server.tag tag.id  %}' class='post-tag-delete-btn'>
                   <img class='trash-icon' src="{% static 'servers/svgs/trash.svg' %}" alt="delete post tag">
                 </a>
               </div>
@@ -146,7 +146,7 @@
               <div class="tag user-tag" style='background:{{tag.primary_color}}; border:3px solid {{tag.secondary_color}}; color:{{tag.secondary_color}}'>
                 {{tag.name}}
               </div>
-              <a style='border-radius:0.5rem' href='{% url 'home:home' %}' class='user-tag-delete-btn'>
+              <a style='border-radius:0.5rem' href='{% url 'servers:server-tag-delete' tag.server.tag tag.id %}' class='user-tag-delete-btn'>
                 <img class='trash-icon' src="{% static 'servers/svgs/trash.svg' %}" alt="delete post tag">
               </a>
             </div>

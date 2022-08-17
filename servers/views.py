@@ -1,12 +1,13 @@
 from django.shortcuts import redirect, render
 from django.views import View
-from .models import Server, ServerFollow, ServerRule
+from .models import Server, ServerFollow, ServerPostTag, ServerRule, ServerUserTag
 from .forms import CreateServerForm, CreatePostTagForm, CreateUserTagForm, CreateRuleForm
 from posts.models import Vote
 from django.http import JsonResponse
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+
 class ServerView(View):
     def get(self, request, server_tag):
         server = Server.objects.get(tag=server_tag)
@@ -28,6 +29,7 @@ class ServerView(View):
             if qs.exists():
                 is_following = True
         return render(request, 'servers/server.html', {'server':server, 'posts':posts, 'is_following':is_following, 'vote_count':vote_count, 'user_tags':user_tags, 'current_user_tag':current_user_tag, 'post_tags':post_tags})
+
 class ServerFollowView(LoginRequiredMixin, View):
     def get(self, request, server_tag):
         server = Server.objects.get(tag=server_tag)
@@ -73,12 +75,13 @@ class TagsAndFlairsView(LoginRequiredMixin, View):
     def post(self, request, server_tag):
         create_post_tag_form = self.form_class(request.POST, prefix='post-tag')
         create_user_tag_form = self.form_class_2(request.POST, prefix='user-tag')
+
         server = Server.objects.get(tag=server_tag, creator=request.user)
         if create_post_tag_form.is_valid():
             created_post_tag = create_post_tag_form.save(commit=False)
             created_post_tag.server = server
+            created_post_tag.creator = request.user
             created_post_tag.save()
-            # messages.error(request, 'this tag is wrong')
             return redirect('servers:server-tags-and-flairs', server_tag)
         elif create_user_tag_form.is_valid():
             created_user_tag = create_user_tag_form.save(commit=False)
@@ -86,10 +89,21 @@ class TagsAndFlairsView(LoginRequiredMixin, View):
             created_user_tag.creator = request.user
             created_user_tag.save()
             return redirect('servers:server-tags-and-flairs', server_tag)
-        # messages.error(request, 'asdfsdfsda')
-        # return redirect('servers:server-tags-and-flairs', server_tag)
         return render(request, 'servers/tags-flairs.html', {"server":server, "create_post_tag_form":create_post_tag_form, "create_user_tag_form":create_user_tag_form})
 
+class DeleteTagsAndFlairsView(LoginRequiredMixin ,View):
+    def get(self, request, *args, **kwargs):
+        post_tag = ServerPostTag.objects.filter(pk=kwargs['tag_id'], creator=request.user)
+        user_tag = ServerUserTag.objects.filter(pk=kwargs['tag_id'], creator=request.user)
+        if post_tag.exists():
+            post_tag.delete()
+            return redirect('servers:server-tags-and-flairs', kwargs['server_tag'])
+        elif user_tag.exists():
+            user_tag.delete()
+            return redirect('servers:server-tags-and-flairs', kwargs['server_tag'])
+        else:
+            messages.error(request, 'فقط مدیر سرور میتواند این تگ را حذف کند')
+            return redirect('home:home')
 class RulesView(LoginRequiredMixin, View):
     class_form = CreateRuleForm
 

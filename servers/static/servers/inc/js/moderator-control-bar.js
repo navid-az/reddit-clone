@@ -6,7 +6,6 @@ $.ajax({
   url: "/r/moderating-page/",
   success: function (response) {
     const data = response.data;
-    console.log(data);
     data.forEach((x) => {
       if (x.server_type == "pri") {
         serverList.innerHTML += `
@@ -45,9 +44,11 @@ $.ajax({
 const openChooseServerList = () => {
   if (is_open) {
     serverList.style.display = "none";
+    serverList.style.height = "0";
     is_open = false;
   } else {
     serverList.style.display = "block";
+    serverList.style.height = "200px";
     is_open = true;
   }
 };

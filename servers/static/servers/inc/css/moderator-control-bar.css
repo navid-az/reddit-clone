@@ -43,6 +43,8 @@
 
 #server-list {
   display: none;
+  height: 0;
+  transition: 0.25s ease-in-out;
 }
 
 #server-list>* {

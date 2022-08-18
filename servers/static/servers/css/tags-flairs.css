@@ -124,7 +124,8 @@
   gap: 0.5rem;
 }
 
-.tag-color-option {
+.tag-color-option,
+.pick-tag-color-btn {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -135,11 +136,13 @@
   cursor: pointer;
 }
 
-.tag-color-option:hover {
+.tag-color-option:hover,
+.pick-tag-color-btn:hover {
   transform: scale(1.08);
 }
 
-.tag-color-option>img {
+.tag-color-option>img,
+.pick-tag-color-btn>img {
   width: 80%;
   height: 80%;
 }
@@ -158,4 +161,40 @@
 
 .live-user-tag-overview {
   border-radius: 0.5rem;
+}
+
+/* pick-tag-color */
+.pick-tag-color {
+  height: 0;
+  margin-top: var(--p14);
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  transition: 0.25s ease-in-out;
+}
+
+.pick-tag-color>section {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.pick-tag-color>section>input {
+  width: 6rem;
+  height: 2.4rem;
+  background: #FFFF;
+  border: none;
+}
+
+.pick-tag-color>section>input::-webkit-color-swatch {
+  cursor: pointer;
+  border: none;
+  border-radius: 0.5rem;
+}
+
+.pick-tag-color>section>label {
+  opacity: 0;
+  font-size: 12px;
+  font-weight: 700;
+  color: black;
 }

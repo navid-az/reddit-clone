@@ -21,6 +21,7 @@ let liveTagOverview = document.querySelectorAll(".live-tag-overview");
 let tagColorOptionsList = [];
 var timeout = setTimeout(function () {}, 0);
 
+// RGB code to HEX code
 const rgb2hex = (rgb) =>
   `#${rgb
     .match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/)
@@ -28,25 +29,15 @@ const rgb2hex = (rgb) =>
     .map((n) => parseInt(n, 10).toString(16).padStart(2, "0"))
     .join("")}`;
 
-// function checkRTL(s) {
-//   var ltrChars =
-//       "A-Za-z\u00C0-\u00D6\u00D8-\u00F6\u00F8-\u02B8\u0300-\u0590\u0800-\u1FFF" +
-//       "\u2C00-\uFB1C\uFDFE-\uFE6F\uFEFD-\uFFFF",
-//     rtlChars = "\u0591-\u07FF\uFB1D-\uFDFD\uFE70-\uFEFC",
-//     rtlDirCheck = new RegExp("^[^" + ltrChars + "]*[" + rtlChars + "]");
-
-//   return rtlDirCheck.test(s);
-// }
-
-// tagColorOption.forEach((tagColor, i) => {
-for (let i = 0; i < 5; i++) {
+for (let i = 0; i < tagColorOption.length; i++) {
+  // create a list of bg and color for tag color options
   tagColorOptionsList.push([
     rgb2hex(tagColorOption[i].style.background),
     rgb2hex(tagColorOption[i].style.borderColor),
   ]);
-  // create a list of bg and color for tag color options
-  // default tag overview styling
+
   liveTagOverview.forEach((liveTag) => {
+    // default tag overview styling
     liveTag.style.background = tagColorOptionsList[0][0];
     liveTag.style.color = tagColorOptionsList[0][1];
     liveTag.style.border = `3px solid ${tagColorOptionsList[0][1]}`;
@@ -56,6 +47,7 @@ for (let i = 0; i < 5; i++) {
     userTagPrimaryColorInput.value = tagColorOptionsList[0][0];
     userTagSecondaryColorInput.value = tagColorOptionsList[0][1];
 
+    // tag overview styling
     tagColorOption[i].addEventListener("click", () => {
       liveTag.style.background = tagColorOptionsList[i][0];
       liveTag.style.color = tagColorOptionsList[i][1];
@@ -68,42 +60,27 @@ for (let i = 0; i < 5; i++) {
     });
   });
 }
-console.log(tagColorOptionsList);
+// let form = document.getElementById("create-user-tag");
+// if ((form.style.display = "none")) {
+//   console.log("hello");
+//   setDefaultColor();
+// }
 
-// });
-
-postTagNameInput.addEventListener("keypress", function (e) {
+// typing tag name and updating live tag overview
+postTagNameInput.addEventListener("keypress", function () {
   clearTimeout(timeout);
   timeout = setTimeout(function () {
     liveTagOverview[0].innerHTML = postTagNameInput.value;
   }, 1000);
-
-  // setTimeout(function () {
-  //   var isRTL = checkRTL(String.fromCharCode(e.charCode));
-  //   var dir = isRTL ? "RTL" : "LTR";
-
-  //   postTagNameInput.style.direction = dir;
-  // }, 100);
 });
-userTagNameInput.addEventListener("keypress", function (e) {
+userTagNameInput.addEventListener("keypress", function () {
   clearTimeout(timeout);
   timeout = setTimeout(function () {
     liveTagOverview[1].innerHTML = userTagNameInput.value;
   }, 1000);
-
-  // setTimeout(function () {
-  //   var isRTL = checkRTL(String.fromCharCode(e.charCode));
-  //   var dir = isRTL ? "RTL" : "LTR";
-
-  //   postTagNameInput.style.direction = dir;
-  // }, 100);
 });
 
-const submitForm = (formName) => {
-  form = document.getElementById(formName);
-  form.submit();
-};
-
+// deleting tags animation
 const deleteTag = (tagClass, deleteClass) => {
   let tagWrapper = document.querySelectorAll(`.${tagClass}`);
   let tagDeleteBtn = document.querySelectorAll(`.${deleteClass}`);
@@ -118,13 +95,78 @@ const deleteTag = (tagClass, deleteClass) => {
         btn.style.display = "flex";
         btn.addEventListener("mouseover", () => {
           btn.style.opacity = "1";
-          // tagWrapper[index].classList.remove("animate");
         });
         btn.addEventListener("mouseout", () => {
           btn.style.opacity = "0";
-          // tagWrapper[index].classList.add("animate");
         });
       });
     }
   });
+};
+
+let pickTagColor = document.querySelectorAll(".pick-tag-color");
+let pickTagColorLabel = document.querySelectorAll(
+  ".pick-tag-color>section>label"
+);
+let pickTagColorInput = document.querySelectorAll(
+  ".pick-tag-color>section>input"
+);
+let pickTagColorBtn = document.querySelectorAll(".pick-tag-color-btn");
+let tabOpen = false;
+
+const pickColorTab = (btnNum) => {
+  if (tabOpen) {
+    pickTagColor[btnNum].style.height = "0";
+    console.log("height should change");
+    pickTagColorLabel.forEach((label) => {
+      label.style.opacity = "0";
+    });
+    tabOpen = false;
+    console.log("its close", tabStatus);
+  } else {
+    pickTagColor[btnNum].style.height = "60px";
+    pickTagColorLabel.forEach((label) => {
+      label.style.opacity = "1";
+    });
+    pickTagColorInput.forEach((input) => {
+      // change tag and live tag color with color inputs
+      input.addEventListener("input", () => {
+        if (btnNum == 0) {
+          liveTagOverview[btnNum].style.background = pickTagColorInput[0].value;
+          liveTagOverview[btnNum].style.color = pickTagColorInput[1].value;
+          liveTagOverview[
+            btnNum
+          ].style.border = `3px solid ${pickTagColorInput[1].value}`;
+
+          postTagPrimaryColorInput.value = pickTagColorInput[0].value;
+          postTagSecondaryColorInput.value = pickTagColorInput[1].value;
+        } else {
+          liveTagOverview[btnNum].style.background = pickTagColorInput[2].value;
+          liveTagOverview[btnNum].style.color = pickTagColorInput[3].value;
+          liveTagOverview[
+            btnNum
+          ].style.border = `3px solid ${pickTagColorInput[3].value}`;
+          userTagPrimaryColorInput.value = pickTagColorInput[2].value;
+          userTagSecondaryColorInput.value = pickTagColorInput[3].value;
+        }
+      });
+    });
+
+    tabOpen = true;
+    console.log("its open", tabStatus);
+  }
+  return btnNum;
+};
+
+// if (createServerTabFunc()) {
+//   pickTagColor[btnNum].style.height = "0";
+//   pickTagColorLabel.forEach((label) => {
+//     label.style.opacity = "0";
+//   });
+//   tabOpen = false;
+// }
+
+const submitForm = (formName) => {
+  form = document.getElementById(formName);
+  form.submit();
 };

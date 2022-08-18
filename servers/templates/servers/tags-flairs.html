@@ -40,9 +40,19 @@
           <div class="tag-color-option" style='background:#00DBC1; border:4px solid #047C6E'></div>
           <div class="tag-color-option" style='background:#4BFF2E; border:4px solid #013A04'></div>
           <div class="tag-color-option" style='background:#A50277; border:4px solid #FFB8EB'></div>
-          <div id='choose-tag-color-btn' class="tag-color-option" style='background:#323232; border:4px solid #D0D0D0'>
+          <div onclick='pickColorTab(0)' class="pick-tag-color-btn" style='background:#323232; border:4px solid #D0D0D0'>
             <img src="{% static 'servers/svgs/gray-plus.svg' %}" alt="choose tag color">
           </div>
+        </div>
+        <div class="pick-tag-color">
+          <section>
+            <label for="primary-color">رنگ فرعی</label>
+            <input type="color" name="secondary-color" value="#4E1705">
+          </section>
+          <section>
+            <label for="primary-color">رنگ اصلی</label>
+            <input type="color" name="primary-color" value="#FFD80C">
+          </section>
         </div>
       </section>
       <button onclick="submitForm('create-post-tag-form')" id='form_popup_btn' type='button'>ایجاد تگ</button>
@@ -90,9 +100,19 @@
           <div class="tag-color-option" style='background:#A50277; border:4px solid #FFB8EB'>
             <img style='filter: invert(87%) sepia(16%) saturate(1251%) hue-rotate(280deg) brightness(99%) contrast(105%);' src="{% static 'servers/svgs/check.svg' %}" alt="choose tag color">
           </div>
-          <div id='choose-tag-color-btn' class="tag-color-option" style='background:#323232; border:4px solid #D0D0D0'>
+          <div onclick='pickColorTab(1)' class="pick-tag-color-btn" style='background:#323232; border:4px solid #D0D0D0'>
             <img src="{% static 'servers/svgs/gray-plus.svg' %}" alt="choose tag color">
           </div>
+        </div>
+        <div class="pick-tag-color">
+          <section>
+            <label for="primary-color">رنگ فرعی</label>
+            <input type="color" name="secondary-color" value="#4E1705">
+          </section>
+          <section>
+            <label for="primary-color">رنگ اصلی</label>
+            <input type="color" name="primary-color" value="#FFD80C">
+          </section>
         </div>
       </section>
       <button onclick="submitForm('create-user-tag-form')" id='form_popup_btn' type='button'>ایجاد تگ</button>

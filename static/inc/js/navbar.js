@@ -1,10 +1,10 @@
 let tabStatus = true;
-let createServerTab = document.getElementById("create-server-tab");
+// let createServerTab = document.getElementById("create-server-tab");
 
-// create server tab open and close function
+// form tab open and close function
 const createServerTabFunc = (formId) => {
   let form = document.getElementById(formId);
-  // console.log(form);
+
   if (tabStatus == true) {
     form.style.display = "flex";
     setTimeout(() => {

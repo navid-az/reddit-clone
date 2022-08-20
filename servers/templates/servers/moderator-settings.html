@@ -1,0 +1,56 @@
+{% extends 'base.html' %} {% load static %}
+
+{% block cssFiles %}
+  <link rel="stylesheet" href="{% static 'servers/css/moderating-page.css' %}">
+  <link rel="stylesheet" href="{% static 'servers/css/rules.css' %}">
+  <link rel="stylesheet" href="{% static 'servers/css/moderator-settings.css' %}">
+{% endblock cssFiles %}
+{% block jsFiles %}
+  <script src="{% static 'servers/js/rules.js' %}"></script>
+{% endblock jsFiles %}
+
+
+{% block content %}
+<div id="moderation-page-wrapper">
+  <section id="moderator-display">
+      <div class="wrapper l-wrapper">
+        <div class="form-title">
+          <h2>مدیران سرور</h2>
+          <div onclick="createServerTabFunc('create-post-tag')" class='square-btn'>
+            <img src="{% static 'servers/svgs/plus.svg' %}" alt="add flair">
+          </div>
+        </div>
+        <section id='list'>
+          {% for moderator in moderators %}
+          <div class="rule">
+            <div class="rule-title-wrapper">
+              <div class="rule-title">
+                {{ forloop.counter }}
+                <div class="moderator-img">
+                  <img src="{{moderator.user.profile.image.url}}" alt="moderator profile image">
+                </div>
+                <p>u/{{moderator.user.username}}</p>
+              </div>
+              {% comment %} <div class="rule-options">
+                <a href="{% url 'servers:server-rules-delete' rule.server.tag rule.id %}">
+                  <img src="{% static 'servers/svgs/trash.svg' %}" alt="delete rule">
+                </a>
+                <button class='edit-rule-btn'>
+                  <img src="{% static 'posts/svgs/edit.svg' %}" alt="edit rule">
+                </button>
+                <button onclick='openRuleDetails({{ forloop.counter0 }})' class='rule-detail-btn'>
+                  <img src="{% static 'svgs/maximize.svg' %}" alt="rule detail">
+                </button>
+              </div> {% endcomment %}
+            </div>
+            <div class="rule-body">
+              {% comment %} {{moderator.body}} {% endcomment %}
+            </div>
+          </div>
+          {% endfor %}
+        </section>
+      </div>
+  </section>
+  {% include 'servers/inc/moderator-control-bar.html' %}
+</div>
+{% endblock content %}

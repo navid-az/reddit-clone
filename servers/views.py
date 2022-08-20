@@ -1,6 +1,6 @@
 from django.shortcuts import redirect, render
 from django.views import View
-from .models import Server, ServerFollow, ServerPostTag, ServerRule, ServerUserTag
+from .models import Server, ServerFollow, ServerPostTag, ServerRule, ServerUserTag, ServerModerator
 from .forms import CreateServerForm, CreatePostTagForm, CreateUserTagForm, CreateRuleForm
 from posts.models import Vote
 from django.http import JsonResponse
@@ -159,3 +159,9 @@ class ChooseServerAjaxView(View):
             }
             data.append(item)
         return JsonResponse({'data':data})
+
+class ModeratorSettingsView(View):
+    def get(self, request, *args, **kwargs):
+        server = Server.objects.get(tag=kwargs['server_tag'])
+        moderators = ServerModerator.objects.filter(server=server)
+        return render(request, 'servers/moderator-settings.html', {'moderators':moderators, 'server':server})

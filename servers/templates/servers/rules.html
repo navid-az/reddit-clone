@@ -8,14 +8,16 @@
 {% endblock jsFiles %}
 
 {% block form_popup %}
-  <div class='form-popup' id='create-post-tag'>
+  <div class='form-popup' id='create-rule'>
     <form action="" method="post" id='create-server-tab'>
       {% csrf_token %}
       <div class='form-title'>
-        <img onclick="createServerTabFunc('create-post-tag')" src="{% static 'svgs/x.svg' %}" alt="close tab">
+        <div class="form-title-btns close-btn" onclick="createServerTabFunc('create-rule')">
+          <img src="{% static 'svgs/x.svg' %}" alt="close tab">
+        </div>
         <h2>ایجاد قانون</h2>
       </div>
-      <section class='create-server-name'>
+      <section class='form-body'>
         <div class="title">
           <p>قانون</p>
           <p>کلیت قانون را خلاصه وار بنویسید</p>
@@ -24,7 +26,7 @@
           {{create_rule_form.title}}
         </div>
       </section>
-      <section class='create-server-type'>
+      <section class='form-body'>
         <div class="title">
           <p>توضیحات تکمیلی</p>
             <p>شرایطی که موجب نقض قانون میشود را ذکر کنید</p>
@@ -53,11 +55,13 @@
 {% block content %}
 <div id="moderation-page-wrapper">
   <section id="moderator-display">
-      <div class="wrapper rules-wrapper">
+      <div class="wrapper l-wrapper">
         <div class="form-title">
           <h2>لیست قوانین سرور</h2>
-          <div onclick="createServerTabFunc('create-post-tag')" class="create-btn">
-            <img src="{% static 'servers/svgs/plus.svg' %}" alt="add flair">
+          <div class="form-title-btns">
+            <div onclick="createServerTabFunc('create-rule')" class="square-btn">
+              <img src="{% static 'servers/svgs/plus.svg' %}" alt="add flair">
+            </div>
           </div>
         </div>
         <section id='list'>

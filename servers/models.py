@@ -1,3 +1,4 @@
+from tkinter import CASCADE
 from django.db import models
 from django.contrib.auth.models import User
 from django.forms import CharField
@@ -62,3 +63,15 @@ class ServerRule(models.Model):
 
     def __str__(self) -> str:
         return f'{self.title} | made by {self.creator} for r/{self.server.tag}'
+
+class ServerModerator(models.Model):
+    server = models.ManyToManyField(Server, related_name='moderators')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='moderators')
+    allow_create_tag = models.BooleanField(default=True)
+    allow_create_rule = models.BooleanField(default=False)
+    allow_remove_user = models.BooleanField(default=True)
+    allow_remove_moderator = models.BooleanField(default=False)
+    allow_delete_post = models.BooleanField(default=False)
+
+    def __str__(self) -> str:
+        return f'{self.user.username}'

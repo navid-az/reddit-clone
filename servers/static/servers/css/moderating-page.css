@@ -25,7 +25,7 @@
   direction: rtl;
 }
 
-.create-btn {
+.square-btn {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -33,5 +33,4 @@
   background: var(--gray);
   width: 31px;
   height: 31px;
-  cursor: pointer;
 }

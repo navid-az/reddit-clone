@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Server, ServerFollow, ServerPostTag, ServerUserTag, ServerRule
+from .models import Server, ServerFollow, ServerPostTag, ServerUserTag, ServerRule, ServerModerator
 
 admin.site.register(Server) 
 admin.site.register(ServerFollow)
@@ -7,3 +7,4 @@ admin.site.register(ServerFollow)
 admin.site.register(ServerPostTag)
 admin.site.register(ServerUserTag)
 admin.site.register(ServerRule)
+admin.site.register(ServerModerator)

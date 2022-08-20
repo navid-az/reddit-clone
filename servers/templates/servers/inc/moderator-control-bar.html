@@ -23,6 +23,12 @@
         <section id='server-list'></section>
       </li>
       <li>
+        <a onclick="createServerTabFunc('gray-layer')">
+          <p>ایجاد سرور جدید</p>
+          <img src="{% static 'servers/svgs/add-server.svg' %}" alt="add server">
+        </a>
+      </li>
+      <li>
         <a href="{% url 'servers:server-tags-and-flairs' server.tag %}">
           <p>تگ ها و پسوند ها</p>
           <img src="{% static 'servers/svgs/tag.svg' %}" alt="tags and flairs">
@@ -31,19 +37,19 @@
       <li>
         <a href="{% url 'servers:server-rules' server.tag %}">
           <p>قوانین و مقررات</p>
-          <img src="{% static 'servers/svgs/rule.svg' %}" alt="tags and flairs">
+          <img src="{% static 'servers/svgs/rule.svg' %}" alt="rules">
         </a>
       </li>
       <li>
-        <a href="{% url 'servers:server-moderator-settings' %}">
+        <a href="{% url 'servers:server-moderator-settings' server.tag %}">
           <p>تنظیمات مدیریت</p>
-          <img src="{% static 'servers/svgs/users.svg' %}" alt="tags and flairs">
+          <img src="{% static 'servers/svgs/users.svg' %}" alt="moderator settings">
         </a>
       </li>
       <li>
         <a href="{% url 'servers:server-user-settings' %}">
           <p>تنظیمات کاربر</p>
-          <img src="{% static 'servers/svgs/user.svg' %}" alt="tags and flairs">
+          <img src="{% static 'servers/svgs/user.svg' %}" alt="users settings">
         </a>
       </li>
     </ul>

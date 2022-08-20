@@ -13,6 +13,9 @@
     --p30: 1.875rem;
 }
 
+/* ~~~~Global Selectors~~~~  */
+
+/* popup form  */
 .form-popup {
     position: fixed;
     display: none;
@@ -66,25 +69,29 @@
     font-size: 1.25rem;
 }
 
-.form-btns {
+.form-title-btns {
     display: flex;
     gap: 0.5rem;
 }
 
-.form-btns>* {
+.form-title-btns>* {
+    cursor: pointer;
     transition: 0.25s ease-in-out;
 }
 
-.form-btns>*:hover {
+.form-title-btns>*:hover {
     background: var(--orange);
 }
 
-.form-btns>*:active {
+.form-title-btns>*:active {
     transform: scale(0.9);
 }
 
-.create-server-name>.title,
-.create-server-type>.title {
+.close-btn>*:hover {
+    background: none;
+}
+
+.form-body>.title {
     display: flex;
     flex-direction: column;
     align-items: flex-end;
@@ -92,21 +99,20 @@
     gap: 0.3125rem;
 }
 
-.create-server-name>.title>p:nth-child(1),
-.create-server-type>.title>p:nth-child(1) {
+.form-body>.title>p:nth-child(1) {
     font-weight: 700;
 }
 
-.create-server-name>.title>p:nth-child(2),
-.create-server-type>.title>p:nth-child(2),
-.create-server-name>.title>span {
+.form-body>.title>p:nth-child(2),
+.form-body>.title>p:nth-child(2),
+.form-body>.title>span {
     display: flex;
     color: #646464;
     font-size: 0.75rem;
     font-weight: 400;
 }
 
-.create-server-name>.title>span>img {
+.form-body>.title>span>img {
     margin-left: 0.3rem;
 }
 
@@ -125,7 +131,7 @@
 }
 
 .create-server-type>.input,
-.create-server-name>.input {
+.form-body>.input {
     direction: rtl;
     margin-top: var(--p14);
 }
@@ -187,6 +193,21 @@ a {
 input,
 textarea {
     font-family: Vbold;
+}
+
+input[type=text]:hover,
+textarea:hover {
+    border: 1px solid #00000031 !important;
+}
+
+input[type=text]:focus,
+textarea:focus {
+    border: 2px solid var(--orange) !important;
+}
+
+.not-input:focus,
+.not-input:hover {
+    border: none !important;
 }
 
 a:active {

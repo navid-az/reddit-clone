@@ -11,11 +11,13 @@
     <form action="" method="post" id='create-post-tag-form' class='create-tag-form'>
       {% csrf_token %}
       <div class='form-title'>
-        <img onclick="createServerTabFunc('create-post-tag')" src="{% static 'svgs/x.svg' %}" alt="close tab">
+        <div class="form-title-btns close-btn" onclick="createServerTabFunc('create-post-tag')">
+          <img src="{% static 'svgs/x.svg' %}" alt="close tab">
+        </div>
         <h2>ایجاد تگ پست</h2>
       </div>
         <div class='tag live-tag-overview'>تگ پست</div>
-      <section class='create-server-name'>
+      <section class='form-body'>
         <div class="title">
           <p>نام تگ</p>
           <span>
@@ -31,7 +33,7 @@
           </span>
         </div>
       </section>
-      <section class='create-server-type'>
+      <section class='form-body'>
         <div class="title">
           <p>رنگ تگ</p>
         </div>
@@ -63,11 +65,13 @@
     <form action="" method="post" id='create-user-tag-form' class='create-tag-form'>
       {% csrf_token %}
       <div class='form-title'>
-        <img onclick="createServerTabFunc('create-user-tag')" src="{% static 'svgs/x.svg' %}" alt="close tab">
+        <div class="form-title-btns close-btn" onclick="createServerTabFunc('create-user-tag')">
+          <img src="{% static 'svgs/x.svg' %}" alt="close tab">
+        </div>
         <h2>ایجاد تگ کاربر</h2>
       </div>
         <div class='tag live-tag-overview live-user-tag-overview'>تگ کاربر</div>
-      <section class='create-server-name'>
+      <section class='form-body'>
         <div class="title">
           <p>نام تگ</p>
           <span>
@@ -83,7 +87,7 @@
           </span>
         </div>
       </section>
-      <section class='create-server-type'>
+      <section class='form-body'>
         <div class="title">
           <p>رنگ تگ</p>
         </div>
@@ -126,11 +130,11 @@
       <div class="wrapper flairs-wrapper">
         <div class="form-title">
           <h2>تگ پست ها</h2>
-          <div class="form-btns">
-            <div onclick="createServerTabFunc('create-post-tag')" class="create-btn">
+          <div class="form-title-btns">
+            <div onclick="createServerTabFunc('create-post-tag')" class="square-btn">
               <img src="{% static 'servers/svgs/plus.svg' %}" alt="crate post tag">
             </div>
-            <div onclick="deleteTag('post-tag-wrapper','post-tag-delete-btn')" class="create-btn">
+            <div onclick="deleteTag('post-tag-wrapper','post-tag-delete-btn')" class="square-btn">
               <img class='trash-icon' src="{% static 'servers/svgs/trash.svg' %}" alt="delete post tag">
             </div>
           </div>
@@ -151,11 +155,11 @@
       <div class="wrapper tags-wrapper">
         <div class="form-title">
           <h2>تگ کاربران</h2>
-          <div class="form-btns">
-            <div onclick="createServerTabFunc('create-user-tag')" class="create-btn">
+          <div class="form-title-btns">
+            <div onclick="createServerTabFunc('create-user-tag')" class="square-btn">
               <img src="{% static 'servers/svgs/plus.svg' %}" alt="craete user tag">
             </div>
-            <div onclick="deleteTag('user-tag-wrapper','user-tag-delete-btn')" class="create-btn">
+            <div onclick="deleteTag('user-tag-wrapper','user-tag-delete-btn')" class="square-btn">
               <img class='trash-icon' src="{% static 'servers/svgs/trash.svg' %}" alt="delete user tag">
             </div>
           </div>

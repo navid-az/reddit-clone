@@ -100,3 +100,6 @@ class ServerModeratorPermission(models.Model):
     allow_remove_moderator = models.BooleanField(default=False)
     allow_delete_post = models.BooleanField(default=False)
 
+    def __str__(self) -> str:
+        return f'{self.moderator} moderator of r/{self.server.tag}'
+

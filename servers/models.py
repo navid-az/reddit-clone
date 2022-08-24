@@ -1,10 +1,20 @@
-from tkinter import CASCADE
 from django.db import models
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
 from django.forms import CharField
 from colorfield.fields import ColorField
+from django.db.models import Q
 
-# Create your models here.
+# class ServerQuerySet(models.QuerySet):
+#     def check_moderator(self, current_user, tag):
+#         moderator = ServerModerator.objects.get(user=current_user)
+#         server = Server.objects.get(tag=tag)
+#         server.moderator_of.get(server=moderator)
+#         self = self.get(Q(tag=tag) & Q(creator=moderator))
+#         return self
+# class ServerQuerySet(models.QuerySet):
+#     def check_moderator(self, tag):
+#         server = Server.objects.get(tag=tag)
+#         return server
 class Server(models.Model):
     SERVER_CHOICES = (
         ('pub', 'عمومی'),
@@ -23,8 +33,16 @@ class Server(models.Model):
     online_count = models.IntegerField(default=0)
     required_karma = models.IntegerField(default=0)
 
+    # objects = ServerQuerySet.as_manager()
+
     def __str__(self):
-        return f'r/{self.tag} owned by {self.creator}'
+        return f'r/{self.tag} owned by {self.creator}'   
+
+    # @staticmethod
+    # def moderator_checker(self, current_user):
+    #     moderator = ServerModerator.objects.get(user=current_user)
+    #     server = Server.objects.get(Q(creator=current_user) | Q(moderators=moderator), Q(tag=self.tag))
+    #     return server
 
 class ServerFollow(models.Model):
     server = models.ForeignKey(Server ,on_delete=models.CASCADE, related_name='followers')
@@ -65,13 +83,20 @@ class ServerRule(models.Model):
         return f'{self.title} | made by {self.creator} for r/{self.server.tag}'
 
 class ServerModerator(models.Model):
-    server = models.ManyToManyField(Server, related_name='moderators')
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='moderators')
+    server = models.ManyToManyField(Server, related_name='moderator_of', blank=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='moderator_of')
+
+    def __str__(self) -> str:
+        return f'{self.user.username}'
+
+class ServerModeratorPermission(models.Model):
+    server = models.ForeignKey(Server, on_delete=models.CASCADE, related_name='permissions', default=0)
+    moderator = models.ForeignKey(ServerModerator, on_delete=models.CASCADE, related_name='permissions')
     allow_create_tag = models.BooleanField(default=True)
+    allow_delete_tag = models.BooleanField(default=False)
     allow_create_rule = models.BooleanField(default=False)
+    allow_delete_rule = models.BooleanField(default=False)
     allow_remove_user = models.BooleanField(default=True)
     allow_remove_moderator = models.BooleanField(default=False)
     allow_delete_post = models.BooleanField(default=False)
 
-    def __str__(self) -> str:
-        return f'{self.user.username}'

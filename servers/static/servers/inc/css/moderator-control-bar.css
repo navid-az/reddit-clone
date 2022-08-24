@@ -20,7 +20,7 @@
 #moderator-control-bar>ul>li>a,
 #moderator-control-bar>ul>li>button,
 #moderator-control-bar>ul>li>div,
-#choose-server-wrapper>#server-list>a {
+.server-list-options {
   margin: 0 0.5rem;
   justify-content: flex-end;
   width: calc(100% - 0.875rem);
@@ -34,8 +34,10 @@
   transition: 0.25s ease;
 }
 
-#choose-server-wrapper>#server-list>a {
-  justify-content: flex-start;
+#choose-server-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 #moderator-control-bar>ul>li>a:hover {
@@ -44,13 +46,38 @@
 
 #server-list {
   display: none;
-  height: 0;
+  width: calc(100% - 0.875rem);
+  height: 9.9rem;
+  transition: 0.25s ease-in-out;
+  flex-direction: column;
+}
+
+#server-list::-webkit-scrollbar {
+  width: 5px;
+}
+
+#server-list::-webkit-scrollbar-track {
+  border-radius: 0 0 0.5rem 0;
+  background: #181818;
+}
+
+#server-list::-webkit-scrollbar-thumb {
+  background: #6B6B6B;
+  border-radius: 20rem;
+}
+
+
+.server-list-options {
+  width: 100%;
+  margin: 0;
+  background: #272727;
+  border-radius: 0;
+  justify-content: flex-start;
   transition: 0.25s ease-in-out;
 }
 
-#server-list>* {
-  background: #272727;
-  border-radius: 0 !important;
+.server-list-options:hover {
+  background: #191919;
 }
 
 #choose-server-wrapper>div {

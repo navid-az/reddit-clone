@@ -9,4 +9,4 @@ class Profile(models.Model):
   header_image = models.ImageField(upload_to='users/header-pic/', null=True, blank=True)
   bio = models.TextField(null=True, blank=True)
   age = models.PositiveSmallIntegerField(null=True, blank=True)
-  tag = models.ManyToManyField(ServerUserTag, default=1)
+  tag = models.ManyToManyField(ServerUserTag, blank=True, null=True)

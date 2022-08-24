@@ -83,9 +83,11 @@
                 class="creator-name"
                 >u/{{node.creator}}</a
                 >
-                <div class="user-tag" style='background:{{node.creator.user_tag.get.primary_color}}; color:{{node.creator.user_tag.get.secondary_color}};border:3px solid {{node.creator.user_tag.get.secondary_color}}'>
-                  <p>{{node.creator.user_tag.get.name}}</p>
-                </div>
+                {% if node.creator.user_tag.get %}
+                  <div class="user-tag" style='background:{{node.creator.user_tag.get.primary_color}}; color:{{node.creator.user_tag.get.secondary_color}};border:3px solid {{node.creator.user_tag.get.secondary_color}}'>
+                    <p>{{node.creator.user_tag.get.name}}</p>
+                  </div>
+                {% endif %}
               </section>
               <p class="created-at">{{node.created|naturaltime}}</p>
             </div>

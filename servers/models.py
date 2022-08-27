@@ -92,12 +92,15 @@ class ServerModerator(models.Model):
 class ServerModeratorPermission(models.Model):
     server = models.ForeignKey(Server, on_delete=models.CASCADE, related_name='permissions', default=0)
     moderator = models.ForeignKey(ServerModerator, on_delete=models.CASCADE, related_name='permissions')
-    allow_create_tag = models.BooleanField(default=True)
     allow_delete_tag = models.BooleanField(default=False)
-    allow_create_rule = models.BooleanField(default=False)
+    allow_create_tag = models.BooleanField(default=True)
     allow_delete_rule = models.BooleanField(default=False)
-    allow_remove_user = models.BooleanField(default=True)
+    allow_update_rule = models.BooleanField(default=False)
+    allow_create_rule = models.BooleanField(default=False)
     allow_remove_moderator = models.BooleanField(default=False)
+    allow_add_moderator = models.BooleanField(default=False)
+    allow_ban_user = models.BooleanField(default=True)
+    allow_remove_user = models.BooleanField(default=False)
     allow_delete_post = models.BooleanField(default=False)
 
     def __str__(self) -> str:

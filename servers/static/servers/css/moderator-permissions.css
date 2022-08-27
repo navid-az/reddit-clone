@@ -1,0 +1,27 @@
+.checkbox-wrapper {
+  margin-top: var(--p14);
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--p30);
+}
+
+#list {
+  margin-top: -30px;
+  display: flex;
+  flex-direction: row-reverse;
+  gap: 10rem;
+}
+
+.checkbox-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.checkbox-btn>img {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  filter: invert(99%) sepia(1%) saturate(13%) hue-rotate(126deg) brightness(103%) contrast(100%);
+}

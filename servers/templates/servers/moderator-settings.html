@@ -31,17 +31,11 @@
                 </div>
                 <p>u/{{moderator.user.username}}</p>
               </div>
-              {% comment %} <div class="rule-options">
-                <a href="{% url 'servers:server-rules-delete' rule.server.tag rule.id %}">
-                  <img src="{% static 'servers/svgs/trash.svg' %}" alt="delete rule">
+              <div class="rule-options">
+                <a href="{% url 'servers:server-moderator-permissions' server.tag moderator.user.id %}">
+                  <img src="{% static 'servers/svgs/trash.svg' %}" alt="moderator permissions">
                 </a>
-                <button class='edit-rule-btn'>
-                  <img src="{% static 'posts/svgs/edit.svg' %}" alt="edit rule">
-                </button>
-                <button onclick='openRuleDetails({{ forloop.counter0 }})' class='rule-detail-btn'>
-                  <img src="{% static 'svgs/maximize.svg' %}" alt="rule detail">
-                </button>
-              </div> {% endcomment %}
+              </div>
             </div>
             <div class="rule-body">
               {% comment %} {{moderator.body}} {% endcomment %}

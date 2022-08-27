@@ -1,0 +1,186 @@
+{% extends 'base.html' %} {% load static %} {% block cssFiles %}
+<link rel="stylesheet" href="{% static 'servers/css/moderating-page.css' %}" />
+<link rel="stylesheet" href="{% static 'servers/css/rules.css' %}" />
+<link
+  rel="stylesheet"
+  href="{% static 'servers/css/moderator-permissions.css' %}"
+/>
+{% endblock cssFiles %} {% block jsFiles %}
+<script src="{% static 'servers/js/rules.js' %}"></script>
+{% endblock jsFiles %} {% block content %}
+<div id="moderation-page-wrapper">
+  <section id="moderator-display">
+    <div class="wrapper l-wrapper">
+      <div class="form-title">
+        <h2>تنظیمات مدیر</h2>
+        <h2>u/{{moderator.user}}</h2>
+        <div class="form-title-btns">
+          <a href='{% url 'servers:server-moderator-settings' server.tag %}' class="square-btn">
+            <img src="{% static 'servers/svgs/go-back-btn.svg' %}" alt="go back" />
+          </a>
+        </div>
+      </div>
+      <form action="" method="post" id="list" style="direction: ltr">
+        {% csrf_token %}
+        <div class="d-none">{{form.as_p}}</div>
+        <div class="form-body-wrapper">
+          <section class="form-body">
+            <div class="title">
+              <p>تگ ها و پسوند ها</p>
+              <span>دسترسی های مربوط به ایجاد و حذف تگ ها</span>
+            </div>
+            <section class="checkbox-wrapper">
+              <div class="checkbox">
+                <div class="checkbox-label">حذف تگ</div>
+                <div class="checkbox-btn">
+                  <img
+                    onclick="checkboxForm('id_allow_delete_tag')"
+                    style="fill: white"
+                    src="{% static 'servers/svgs/check.svg' %}"
+                    alt="check mark"
+                  />
+                </div>
+              </div>
+              <div class="checkbox">
+                <div class="checkbox-label">ایجاد تگ</div>
+                <div class="checkbox-btn">
+                  <img
+                    onclick="checkboxForm('id_allow_create_tag')"
+                    style="fill: white"
+                    src="{% static 'servers/svgs/check.svg' %}"
+                    alt="check mark"
+                  />
+                </div>
+              </div>
+            </section>
+          </section>
+          <section class="form-body">
+            <div class="title">
+              <p>قوانین و مقررات سرور</p>
+              <span>دسترسی های مربوط به قوانین و مقررات</span>
+            </div>
+            <section class="checkbox-wrapper">
+              <div class="checkbox">
+                <div class="checkbox-label">حذف قانون</div>
+                <div class="checkbox-btn">
+                  <img
+                    onclick="checkboxForm('id_allow_delete_rule')"
+                    style="fill: white"
+                    src="{% static 'servers/svgs/check.svg' %}"
+                    alt="check mark"
+                  />
+                </div>
+              </div>
+              <div class="checkbox">
+                <div class="checkbox-label">ویرایش قانون</div>
+                <div class="checkbox-btn">
+                  <img
+                    onclick="checkboxForm('id_allow_update_rule')"
+                    style="fill: white"
+                    src="{% static 'servers/svgs/check.svg' %}"
+                    alt="check mark"
+                  />
+                </div>
+              </div>
+              <div class="checkbox">
+                <div class="checkbox-label">ایجاد قانون</div>
+                <div class="checkbox-btn">
+                  <img
+                    onclick="checkboxForm('id_allow_create_rule')"
+                    style="fill: white"
+                    src="{% static 'servers/svgs/check.svg' %}"
+                    alt="check mark"
+                  />
+                </div>
+              </div>
+            </section>
+          </section>
+          <section class="form-body">
+            <div class="title">
+              <p>مدیریت</p>
+              <span>دسترسی های مربوط به تغییر دسترسی های مدیران</span>
+            </div>
+            <section class="checkbox-wrapper">
+              <div class="checkbox">
+                <div class="checkbox-label">حذف مدیر</div>
+                <div class="checkbox-btn">
+                  <img
+                    onclick="checkboxForm('id_allow_remove_moderator')"
+                    style="fill: white"
+                    src="{% static 'servers/svgs/check.svg' %}"
+                    alt="check mark"
+                  />
+                </div>
+              </div>
+              <div class="checkbox">
+                <div class="checkbox-label">افزودن مدیر</div>
+                <div class="checkbox-btn">
+                  <img
+                    onclick="checkboxForm('id_allow_add_moderator')"
+                    style="fill: white"
+                    src="{% static 'servers/svgs/check.svg' %}"
+                    alt="check mark"
+                  />
+                </div>
+              </div>
+            </section>
+          </section>
+        </div>
+        <div class="form-body-wrapper">
+          <section class="form-body">
+            <div class="title">
+              <p>کاربران سرور</p>
+              <span>دسترسی های مربوط به کابران سرور</span>
+            </div>
+            <section class="checkbox-wrapper">
+              <div class="checkbox">
+                <div class="checkbox-label">محدود سازی کاربر</div>
+                <div class="checkbox-btn">
+                  <img
+                    onclick="checkboxForm('id_allow_ban_user')"
+                    style="fill: white"
+                    src="{% static 'servers/svgs/check.svg' %}"
+                    alt="check mark"
+                  />
+                </div>
+              </div>
+              <div class="checkbox">
+                <div class="checkbox-label">حذف کاربر</div>
+                <div class="checkbox-btn">
+                  <img
+                    onclick="checkboxForm('id_allow_remove_user')"
+                    style="fill: white"
+                    src="{% static 'servers/svgs/check.svg' %}"
+                    alt="check mark"
+                  />
+                </div>
+              </div>
+            </section>
+          </section>
+          <section class="form-body">
+            <div class="title">
+              <p>پست ها و پیام ها</p>
+              <span>دسترسی های مربوط به پست ها و پیام های سرور</span>
+            </div>
+            <section class="checkbox-wrapper">
+              <div class="checkbox">
+                <div class="checkbox-label">حذف پست</div>
+                <div class="checkbox-btn">
+                  <img
+                    onclick="checkboxForm('id_allow_delete_post')"
+                    style="fill: white"
+                    src="{% static 'servers/svgs/check.svg' %}"
+                    alt="check mark"
+                  />
+                </div>
+              </div>
+            </section>
+          </section>
+        </div>
+        <input type="submit" value="ثبت تغییرات" />
+      </form>
+    </div>
+  </section>
+  {% include 'servers/inc/moderator-control-bar.html' %}
+</div>
+{% endblock content %}

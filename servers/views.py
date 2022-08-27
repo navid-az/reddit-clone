@@ -1,8 +1,9 @@
 from email import message
+from http import server
 from django.shortcuts import redirect, render
 from django.views import View
 from .models import Server, ServerFollow, ServerModeratorPermission, ServerPostTag, ServerRule, ServerUserTag, ServerModerator
-from .forms import CreateServerForm, CreatePostTagForm, CreateUserTagForm, CreateRuleForm
+from .forms import CreateServerForm, CreatePostTagForm, CreateUserTagForm, CreateRuleForm, UpdateModeratorPermissionsForm
 from posts.models import Vote
 from django.http import JsonResponse
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -110,8 +111,6 @@ class TagsAndFlairsView(LoginRequiredMixin, View):
             return render(request, 'servers/tags-flairs.html', {"server":server, "create_post_tag_form":create_post_tag_form, "create_user_tag_form":create_user_tag_form})
         messages.error(request, 'شما نمیتوانید تگ ایجاد کنید')
         return redirect('servers:server-tags-and-flairs', server_tag)
-
-
 class DeleteTagsAndFlairsView(LoginRequiredMixin ,View):
     def get(self, request, *args, **kwargs):
         post_tag = ServerPostTag.objects.filter(pk=kwargs['tag_id'], creator=request.user)
@@ -186,6 +185,34 @@ class ModeratorSettingsView(View):
         server = Server.objects.get(tag=kwargs['server_tag'])
         moderators = server.moderator_of.all()
         return render(request, 'servers/moderator-settings.html', {'moderators':moderators, 'server':server})
+
+class ModeratorPermissionsView(View):
+    form_class = UpdateModeratorPermissionsForm
+
+    def get(self, request, *args, **kwargs):
+        server = Server.objects.get(tag=kwargs['server_tag'])
+        moderator = server.moderator_of.get(user=kwargs['user_id'])
+        permission = server.permissions.get(moderator=moderator)
+        form = self.form_class(instance=permission)
+        return render(request, 'servers/moderator-permissions.html', {'server':server, 'moderator':moderator, 'form':form})
+    
+    def post(self, request, *args, **kwargs):
+        server = Server.objects.get(tag=kwargs['server_tag'])
+        moderator = server.moderator_of.get(user=kwargs['user_id'])
+        permission = server.permissions.get(moderator=moderator)
+        form = self.form_class(request.POST, instance=permission)
+        if form.is_valid():
+            updated_permission = form.save(commit=False)
+            updated_permission.server = server
+            updated_permission.moderator = moderator
+            moderators = server.moderator_of.all()
+            updated_permission.save()
+            messages.success(request, 'yes')
+            return render(request, 'servers/moderator-settings.html', {'moderators':moderators, 'server':server})
+        messages.success(request, 'yes')
+        return redirect(request, 'servers:server-moderator-settings', kwargs['server_tag'])
+    
+
 class UserSettingsView(LoginRequiredMixin, View):
     def get(self, request):
         return render(request, 'servers/user-settings.html')

@@ -8,6 +8,7 @@ urlpatterns = [
     path('<str:server_tag>', ServerView.as_view(), name='server'),
     path('follow/<str:server_tag>', ServerFollowView.as_view(), name='server-follow'),
     path('create/', CreateServerView.as_view(), name='server-create'),
+    
     path('<str:server_tag>/moderating-page/', ServerModeratingView.as_view(), name='server-moderating-page'),
     path('moderating-page/', ChooseServerAjaxView.as_view(), name='server-choose'),
     path('<str:server_tag>/moderating-page/tags-and-flairs', TagsAndFlairsView.as_view(), name='server-tags-and-flairs'),

@@ -26,7 +26,7 @@ class Server(models.Model):
     about = models.TextField(default='about')
     tag = models.CharField(max_length=50, unique=True)
     slug = models.SlugField(default='server')
-    image = models.ImageField(upload_to='servers/pic/', default='https://play-lh.googleusercontent.com/nlptFyxNsb8J0g8ZLux6016kunduV4jCxIrOJ7EEy-IobSN1RCDXAJ6DTGP81z7rr5Zq')
+    image = models.ImageField(upload_to='servers/pic/', default='default/reddit.jpg')
     header_image = models.ImageField(upload_to='servers/header-pic/', default='https://play-lh.googleusercontent.com/nlptFyxNsb8J0g8ZLux6016kunduV4jCxIrOJ7EEy-IobSN1RCDXAJ6DTGP81z7rr5Zq')
     server_type = models.CharField(max_length=3, choices=SERVER_CHOICES, default='pri')
     members_count = models.IntegerField(default=0)
@@ -85,6 +85,9 @@ class ServerRule(models.Model):
 class ServerModerator(models.Model):
     server = models.ManyToManyField(Server, related_name='moderator_of', blank=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='moderator_of')
+
+    def is_moderator(self):
+        moderator = ServerModerator.objects.filter(user=self.user, server=self.server)
 
     def __str__(self) -> str:
         return f'{self.user.username}'

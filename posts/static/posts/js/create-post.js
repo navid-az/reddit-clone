@@ -163,6 +163,7 @@ const showData = (serverTag) => {
     },
   });
 };
+
 let ruleBody = document.querySelectorAll(".rule-body");
 // let ruleTitle;
 // const showRuleDetail = (counter) => {

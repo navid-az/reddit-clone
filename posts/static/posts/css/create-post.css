@@ -7,9 +7,9 @@
 .form-header,
 #form-footer {
     width: 100%;
-    height: 4.625rem;
+    height: 4.125rem;
     background: rgb(0, 0, 0);
-    padding: 1.125rem 0.875rem;
+    padding: var(--p14);
     border-radius: 0.5rem 0.5rem 0 0;
 }
 
@@ -94,11 +94,12 @@
     background: var(--gray);
     color: white;
     font-size: 1.125rem;
-    padding: 0.4375rem 1rem;
+    padding: 0.5rem 0.8rem;
     transition: 0.25s ease-in-out;
 }
 
 .servers {
+    position: relative;
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -113,7 +114,6 @@
     transition: 0.09s ease-in-out;
 }
 
-#server-search-bar,
 #selected-server {
     display: flex;
     justify-content: space-between;
@@ -152,28 +152,45 @@
 }
 
 #servers-tab {
-    display: flex;
+    position: absolute;
+    top: 38px;
+    overflow: auto;
+    display: none;
+    width: 100%;
+    height: 10.5rem;
     flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
     background: var(--gray);
     color: #ffff;
-    display: none;
     z-index: 1;
     border-radius: 0 0 0.5rem 0.5rem;
     border-top: 2px solid black;
 }
 
+#servers-tab::-webkit-scrollbar {
+    width: 5px;
+}
+
+#servers-tab::-webkit-scrollbar-track {
+    border-radius: 0 0 0.5rem 0;
+    background: #181818;
+}
+
+#servers-tab::-webkit-scrollbar-thumb {
+    background: #6B6B6B;
+    border-radius: 20rem;
+}
+
 .server {
+    clear: both;
     display: flex;
     flex-direction: row;
     align-items: center;
     gap: 0.5rem;
-    padding: 0.25rem 0.4375rem;
+    padding: 0.5rem;
     width: 100%;
+    height: 3.5rem;
     cursor: pointer;
     transition: 0.25s ease-in-out;
-    border-radius: 0.5rem;
 }
 
 .server:hover {
@@ -256,11 +273,12 @@
 }
 
 #submit {
-    height: 3.125rem;
     background: var(--orange);
     color: #ffff;
+    height: 100%;
+    font-weight: 600;
     border-radius: 0.5rem;
-    padding: 0.6875rem 2.875rem;
+    padding: 0 3rem;
     border: none;
 }
 

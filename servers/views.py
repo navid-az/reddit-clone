@@ -1,5 +1,6 @@
 from django.shortcuts import redirect, render
 from django.views import View
+from django.contrib.auth.models import User
 from .models import Server, ServerFollow, ServerModeratorPermission, ServerPostTag, ServerRule, ServerUserTag, ServerModerator
 from .forms import CreateServerForm, CreatePostTagForm, CreateUserTagForm, CreateRuleForm, UpdateModeratorPermissionsForm
 from posts.models import Vote
@@ -9,6 +10,9 @@ from django.contrib import messages
 from django.shortcuts import get_object_or_404
 from django.db.models import Q
 import itertools
+
+def is_ajax(request):
+    return request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest'
 class ServerView(View):
     def get(self, request, server_tag):
         server = Server.objects.get(tag=server_tag)
@@ -206,6 +210,25 @@ class ModeratorPermissionsView(LoginRequiredMixin, View):
         messages.success(request, 'yes')
         return render(request, 'servers/moderator-permissions.html', {'server':self.server, 'moderator':self.moderator, 'form':form})
 
+def ModeratorSearchAjaxView(request):
+    if is_ajax(request=request):
+        username = request.POST.get('user')
+        users = User.objects.filter(username__icontains=username)
+        if len(users) > 0 and len(username) > 0:
+            data = []
+            for user in users:
+                item = {
+                    'id':user.id,
+                    'username':user.username,
+                    'image': str(user.profile.image.url),
+                }
+                data.append(item)
+            response = data
+        else:
+            response = 'کاربری با این نام یافت نشد'
+        return JsonResponse({'data':response})
+    return JsonResponse({})
+    
 class UserSettingsView(LoginRequiredMixin, View):
     def get(self, request):
         return render(request, 'servers/user-settings.html')

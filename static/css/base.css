@@ -96,6 +96,7 @@
     flex-direction: column;
     align-items: flex-end;
     margin-top: var(--p30);
+    margin-bottom: var(--p14);
     gap: 0.3125rem;
 }
 
@@ -133,7 +134,6 @@
 .create-server-type>.input,
 .form-body>.input {
     direction: rtl;
-    margin-top: var(--p14);
 }
 
 .checkbox {

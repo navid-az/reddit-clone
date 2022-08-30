@@ -6,7 +6,7 @@
   <link rel="stylesheet" href="{% static 'servers/css/moderator-settings.css' %}">
 {% endblock cssFiles %}
 {% block jsFiles %}
-  <script src="{% static 'servers/js/rules.js' %}"></script>
+  <script src="{% static 'servers/js/moderator-search.js' %}"></script>
 {% endblock jsFiles %}
 
 
@@ -16,8 +16,15 @@
       <div class="wrapper l-wrapper">
         <div class="form-title">
           <h2>مدیران سرور</h2>
-          <div onclick="createServerTabFunc('create-post-tag')" class='square-btn'>
-            <img src="{% static 'servers/svgs/plus.svg' %}" alt="add flair">
+          <div class="form-title-btns">
+            <form class="input">
+              {% csrf_token %}
+              <input type="text" class='input' id='moderator-search-input'>
+              <div id="search-results-tab"></div>
+            </form>
+            <div onclick="createServerTabFunc('create-post-tag')" class='square-btn'>
+              <img src="{% static 'servers/svgs/plus.svg' %}" alt="add flair">
+            </div>
           </div>
         </div>
         <section id='list'>

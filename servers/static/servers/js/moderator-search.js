@@ -1,11 +1,15 @@
 const moderatorSearchInput = document.getElementById("moderator-search-input");
 const searchResultsTab = document.getElementById("search-results-tab");
 const csrf = document.getElementsByName("csrfmiddlewaretoken")[0].value;
+const input = document.getElementById("id_user");
+const moderatorSearchWrapper = document.getElementById(
+  "moderator-search-wrapper"
+);
 
 const sendData = (username) => {
   $.ajax({
     type: "POST",
-    url: "/r/get-moderator/",
+    url: "/r/get-moderators/",
     data: {
       csrfmiddlewaretoken: csrf,
       user: username,
@@ -16,7 +20,15 @@ const sendData = (username) => {
       if (Array.isArray(data)) {
         searchResultsTab.innerHTML = "";
         data.forEach((user) => {
-          searchResultsTab.innerHTML += `${user.username} <img src="${user.image}"> <br>`;
+          searchResultsTab.innerHTML += `
+            <div id='${user.id}' class='user'>
+              <img src="${user.image}" alt="">
+              <div class="server-info">
+                <p>u/${user.username}</p>
+                <img onclick='addModerator(${user.id})' src="/static/servers/svgs/plus.svg" alt="add moderator">
+              </div>
+            </div> 
+          `;
         });
       } else {
         if (moderatorSearchInput.value.length > 0) {
@@ -35,3 +47,8 @@ const sendData = (username) => {
 moderatorSearchInput.addEventListener("keyup", (e) => {
   sendData(e.target.value);
 });
+
+const addModerator = (id) => {
+  input.value = id;
+  moderatorSearchWrapper.submit();
+};

@@ -11,7 +11,8 @@ urlpatterns = [
     
     path('<str:server_tag>/moderating-page/', ServerModeratingView.as_view(), name='server-moderating-page'),
     path('moderating-page/', ChooseServerAjaxView.as_view(), name='server-choose'),
-    path('get-moderator/', ModeratorSearchAjaxView, name='moderator-search'),
+    path('get-moderators/', ModeratorSearchAjaxView, name='moderator-search'),
+    # path('<str:server_tag>/add-moderator/', AddModeratorView.as_view(), name='add-moderator'),
     path('<str:server_tag>/moderating-page/tags-and-flairs', TagsAndFlairsView.as_view(), name='server-tags-and-flairs'),
     path('<str:server_tag>/moderating-page/tags-and-flairs/<int:tag_id>/delete', DeleteTagsAndFlairsView.as_view(), name='server-tag-delete'),
 

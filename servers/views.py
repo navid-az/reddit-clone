@@ -2,7 +2,7 @@ from django.shortcuts import redirect, render
 from django.views import View
 from django.contrib.auth.models import User
 from .models import Server, ServerFollow, ServerModeratorPermission, ServerPostTag, ServerRule, ServerUserTag, ServerModerator
-from .forms import CreateServerForm, CreatePostTagForm, CreateUserTagForm, CreateRuleForm, UpdateModeratorPermissionsForm
+from .forms import AddModeratorForm, CreateServerForm, CreatePostTagForm, CreateUserTagForm, CreateRuleForm, UpdateModeratorPermissionsForm
 from posts.models import Vote
 from django.http import JsonResponse
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -179,10 +179,23 @@ class DeleteRulesView(LoginRequiredMixin, View):
         messages.error(request, 'شما اجازه حذف قانون در این سرور را ندارید')
         return redirect('servers:server-rules', kwargs['server_tag'])
 class ModeratorSettingsView(LoginRequiredMixin, View):
+    form_class = AddModeratorForm
+
     def get(self, request, server_tag):
+        form = self.form_class()
         server = Server.objects.get(tag=server_tag)
         moderators = server.moderator_of.exclude(user=server.creator)
-        return render(request, 'servers/moderator-settings.html', {'moderators':moderators, 'server':server})
+        return render(request, 'servers/moderator-settings.html', {'moderators':moderators, 'server':server, 'form':form})
+
+    def post(self, request, server_tag):
+        form = self.form_class(request.POST)
+        user = User.objects.get(pk=request.POST.get('user'))
+        server = Server.objects.get(tag=server_tag)
+        moderators = server.moderator_of.exclude(user=server.creator)
+        ServerModerator.objects.get_or_create(user=user)
+        moderator = ServerModerator.objects.get(user=user)
+        moderator.server.add(server)
+        return render(request, 'servers/moderator-settings.html', {'moderators':moderators, 'server':server, 'form':form})
 
 class ModeratorPermissionsView(LoginRequiredMixin, View):
     form_class = UpdateModeratorPermissionsForm

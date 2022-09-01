@@ -1,5 +1,5 @@
 from django import forms
-from .models import Server, ServerRule, ServerPostTag, ServerUserTag, ServerModeratorPermission
+from .models import Server, ServerModerator, ServerRule, ServerPostTag, ServerUserTag, ServerModeratorPermission
 
 class CreateServerForm(forms.ModelForm):
   class Meta:
@@ -26,3 +26,8 @@ class UpdateModeratorPermissionsForm(forms.ModelForm):
   class Meta:
     model = ServerModeratorPermission
     exclude = ['server', 'moderator']
+
+class AddModeratorForm(forms.ModelForm):
+  class Meta:
+    model = ServerModerator
+    fields = ['user']

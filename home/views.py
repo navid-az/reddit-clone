@@ -1,9 +1,13 @@
-from xmlrpc.client import Server
 from django.http import JsonResponse
 from django.shortcuts import render
 from django.views import View
 from posts.models import Post, Save
 from servers.models import Server
+from django.contrib.auth.models import User
+import itertools
+
+def is_ajax(request):
+    return request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest'
 
 # Create your views here.
 class Home(View):
@@ -37,3 +41,35 @@ class NewPosts(View):
             
         #     data.append(item)
         # return JsonResponse({'data':data})
+
+
+def SearchAjaxView(request):
+    if is_ajax(request=request):
+        response = None
+        searched_word = request.POST.get('searchedWord')
+        servers = Server.objects.filter(tag__icontains=searched_word)
+        users = User.objects.filter(username__icontains=searched_word)
+        querysets = itertools.chain(users,servers)
+
+        if len(users) > 0 or len(servers) > 0 and len(searched_word) > 0:
+            data = []
+            for qs in querysets:
+                try:
+                    item = {
+                        'id':qs.id,
+                        'username':qs.username,
+                        'image': str(qs.profile.image.url),
+                    }
+                except:
+                    item = {
+                        'id':qs.id,
+                        'tag':qs.tag,
+                        'image': str(qs.image.url),
+                        'followers_count': str(qs.followers.count())
+                    }
+                data.append(item)
+            response = data
+        else:
+            response = 'no results found'
+        return JsonResponse({'data':response})
+    return JsonResponse({})

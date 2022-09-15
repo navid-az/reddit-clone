@@ -1,6 +1,6 @@
 const moderatorSearchInput = document.getElementById("moderator-search-input");
 const searchResultsTab = document.getElementById("search-results-tab");
-const csrf = document.getElementsByName("csrfmiddlewaretoken")[0].value;
+const csrff = document.getElementsByName("csrfmiddlewaretoken")[0].value;
 const input = document.getElementById("id_user");
 const moderatorSearchWrapper = document.getElementById(
   "moderator-search-wrapper"
@@ -11,7 +11,7 @@ const sendData = (username) => {
     type: "POST",
     url: "/r/get-moderators/",
     data: {
-      csrfmiddlewaretoken: csrf,
+      csrfmiddlewaretoken: csrff,
       user: username,
     },
     success: (response) => {

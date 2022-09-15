@@ -29,7 +29,7 @@
     transition: 0.25s ease-in-out;
 }
 
-.nav-btns>*:hover {
+.nav-btns>*:not(:last-child):hover {
     background: #ee2800 !important;
 }
 

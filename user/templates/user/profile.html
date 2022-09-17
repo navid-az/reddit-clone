@@ -23,7 +23,9 @@
         <div class="profile-more-info">
          <div class="user-date-settings">
             <div class="settings-btn">
+            {% if request.user.id == user.id %}
             <a href="{% url 'user:profile-settings' request.user.username %}"><img src="{% static 'user/svgs/settings.svg' %}" alt="user settings" /></a>
+            {% endif %}
           </div>
           <div class="info">
             <div class="cake-day">

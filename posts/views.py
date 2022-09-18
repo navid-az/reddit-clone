@@ -4,7 +4,7 @@ from .forms import UpdatePostForm, CreatePostForm, CreateCommentReplyForm
 from .models import Post, Comment, Vote, Save
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
-from servers.models import Server
+from servers.models import Server, ServerFollow
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
@@ -70,16 +70,14 @@ class CreatePostView(LoginRequiredMixin, View):
             return redirect('home:home')
         return super().dispatch(request, *args, **kwargs)
 
-    def get(self, request, pk):
-        servers = Server.objects.all()
+    def get(self, request, *args, **kwargs):
+        following = ServerFollow.objects.filter(user=request.user)
         form = self.form_class()
-        # servers = self.server_form()
-        return render(request, 'posts/create-post.html', {'form':form, 'servers':servers})
+        return render(request, 'posts/create-post.html', {'form':form, 'following':following})
 
-    def post(self, request, pk):
+    def post(self, request, *args, **kwargs):
         form = self.form_class(request.POST, request.FILES)
-        servers = Server.objects.all()
-        # servers = self.server_form(request.POST)
+        following = ServerFollow.objects.filter(user=request.user)
         if form.is_valid():
             saved_form = form.save(commit=False)
             saved_form.creator = request.user
@@ -87,7 +85,7 @@ class CreatePostView(LoginRequiredMixin, View):
             # servers.save()
             messages.success(request, 'پست شما باموفقیت ایجاد شد')
             return redirect('home:home')
-        return render(request, 'posts/create-post.html', {'form':form, 'servers':servers})
+        return render(request, 'posts/create-post.html', {'form':form, 'following':following})
 
 class CreatePostAjaxView(View):
     def get(self, request, server_tag):

@@ -34,10 +34,10 @@
                 <div id="selected-server">
                   <img
                     id="selected-server-img"
-                    src="{{servers.0.image.url}}"
+                    src="{{following.0.server.image.url}}"
                     alt="server image"
                   />
-                  <input id='selected-server-name' type='textarea' value='r/{{servers.0.tag}}'>
+                  <input id='selected-server-name' type='textarea' value='r/{{following.0.server.tag}}'>
                 </div>
                 <img
                   id='arrow-icon'
@@ -49,12 +49,12 @@
               {{form.server}}
 
               <div id="servers-tab">
-                {% for server in servers %} 
-                  <div id='{{server.id}}' class='server'>
-                    <img src="{{server.image.url}}" alt="">
+                {% for i in following %} 
+                  <div id='{{i.server.id}}' class='server'>
+                    <img src="{{i.server.image.url}}" alt="server image">
                     <div class="server-info">
-                      <p>r/{{server.tag}}</p>
-                      <p>عضو {{server.followers.count}}</p>
+                      <p>r/{{i.server.tag}}</p>
+                      <p>عضو {{i.server.count}}</p>
                     </div>
                   </div> 
                 {% endfor %}

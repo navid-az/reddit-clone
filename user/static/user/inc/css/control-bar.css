@@ -24,7 +24,7 @@
 }
 
 .saved-hidden>a,
-.posts-controls>a {
+.posts-controls>button {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -32,14 +32,24 @@
   font-size: 1.125rem;
 }
 
-.posts-controls>a {
+.posts-controls>button {
+  background: unset;
   color: rgb(215, 215, 215);
   border-radius: 50px;
   padding: 0.2rem 0.9rem;
   transition: 0.2s ease-in-out;
 }
 
-.posts-controls>a:hover {
+.posts-controls>button:hover {
   background: var(--dark-gray-2);
   font-family: Vbold;
+}
+
+#user-comments-wrapper,
+#user-posts-wrapper {
+  transition: 0.25s ease-in-out;
+}
+
+#user-comments-wrapper {
+  opacity: 0;
 }

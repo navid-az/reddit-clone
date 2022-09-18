@@ -11,7 +11,8 @@ class UserProfileView(View):
 	def get(self, request, username):
 		user = get_object_or_404(User, username=username)
 		posts = user.posts.all()
-		return render(request, 'user/profile.html', {'posts':posts, 'user':user})
+		comments = user.user_comments.all()
+		return render(request, 'user/profile.html', {'posts':posts, 'comments':comments, 'user':user})
 
 class UserProfileSettingsView(View):
 	form_class = UserProfileSettingsForm

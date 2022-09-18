@@ -2,7 +2,11 @@
 {% block title %}r/{{user.username}} profile {% endblock title %} 
 {% block cssFiles %}
   <link rel="stylesheet" href="{% static 'user/css/profile.css' %}" />
-{% endblock cssFiles %} 
+{% endblock cssFiles %}
+{% block jsFiles %}
+  <script src="{% static 'user/js/profile.js' %}"></script>
+{% endblock jsFiles %}
+
 {% block content %} {% include 'user/inc/control-bar.html' %}
 <div class="container">
   <div class="row">
@@ -46,7 +50,20 @@
       </div>
     </section>
     <div class="popular-posts col-8">
-      {% for post in posts %} {% include 'posts/inc/post.html' %} {% endfor %}
+      <section id='user-posts-wrapper'>
+        {% for post in posts %} {% include 'posts/inc/post.html' %} {% endfor %}
+      </section>
+      <section id='user-comments-wrapper' class='d-none'>
+        {% for comment in comments %}
+          {{comment.body}}
+          {{comment.creator}}
+          <img src="{{comment.creator.profile.image.url}}" alt="">
+          <br>
+          {{comment.post.title}}
+          {{comment.post.server.tag}}
+          <br><br><br>
+        {% endfor %}
+      </section>  
     </div>
   </div>
 </div>

@@ -4,12 +4,15 @@
   <link rel="stylesheet" href="{% static 'user/css/profile.css' %}" />
   <link rel="stylesheet" href="{% static 'user/css/saved_posts.css' %}" />
 {% endblock cssFiles %} 
+{% block jsFiles %}
+  <script src="{% static 'user/js/profile.js' %}"></script>
+{% endblock jsFiles %}
 {% block content %}
 {% include 'user/inc/control-bar.html' %}
 <div class="container">
   <div class="row">
     <section class="col-4">
-      <div class="user-info">
+      <div class="side-bar">
         <div class="profile-image-wrapper">
           <img
             class="profile-img"

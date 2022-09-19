@@ -2,6 +2,7 @@
 {% block title %}r/{{user.username}} profile {% endblock title %} 
 {% block cssFiles %}
   <link rel="stylesheet" href="{% static 'user/css/profile.css' %}" />
+  <link rel="stylesheet" href="{% static 'posts/css/post-page.css' %}" />
 {% endblock cssFiles %}
 {% block jsFiles %}
   <script src="{% static 'user/js/profile.js' %}"></script>
@@ -55,16 +56,48 @@
       </section>
       <section id='user-comments-wrapper' class='d-none'>
         {% for comment in comments %}
-          {{comment.body}}
-          {{comment.creator}}
-          <img src="{{comment.creator.profile.image.url}}" alt="">
-          <br>
-          {{comment.post.title}}
-          {{comment.post.server.tag}}
-          <br><br><br>
+          <div class="user-comment-wrapper">
+            <div class="user-comment-info">
+              <p>نظر</p>
+              <p>u/{{comment.creator}}</p>
+              <p>نسبت به</p>
+              <a href="{% url 'posts:post-page' comment.post.id %}">{{comment.post.title}}</a>
+              {% if comment.post.tag %}
+                <span class='tag post-tag' style='background:{{comment.post.tag.primary_color}}; color:{{comment.post.tag.secondary_color}};border:3px solid {{comment.post.tag.secondary_color}}'>{{comment.post.tag.name}}</span>
+              {% endif %}
+            </div>
+            <div class="user-comment-server-info">
+              <p>پست شده توسط</p>
+              <a href="{% url 'user:profile' user.username %}">u/{{comment.post.creator}}</a>
+              <p>.</p>
+              <a href="{% url 'servers:server' comment.post.server.tag %}">r/{{comment.post.server.tag}}</p>
+            </div>
+
+            <div class="comment">
+              <div class="creator-info">
+                <div class="creator-img">
+                  <img src="{{comment.creator.profile.image.url}}" alt="user image">
+                </div>
+                <div class="created-creator">
+                  <section>
+                    <a
+                    href="{% url 'user:profile' user.username %}"
+                    class="creator-name"
+                    >u/{{comment.creator}}</a
+                    >
+                  </section>
+                  <p class="created-at">{{comment.created|naturaltime}}</p>
+                </div>
+              </div>
+              <div class="comment-body">
+                <p>{{comment.body}}</p>
+              </div>
+            </div>
+          </div>
         {% endfor %}
       </section>  
     </div>
   </div>
 </div>
 {% endblock content %}
+

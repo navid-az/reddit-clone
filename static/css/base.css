@@ -249,6 +249,8 @@ button {
 /* side bars */
 
 .side-bar {
+    top: 48px;
+    position: sticky;
     background: #FFFF;
     padding: var(--p14);
     border-radius: 0.5rem;

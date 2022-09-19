@@ -96,3 +96,54 @@
 .btns>button:hover {
     background: var(--orange);
 }
+
+
+/* comments */
+
+.user-comment-wrapper {
+    background: #FFFF;
+    direction: rtl;
+    margin-bottom: var(--p30);
+    border-radius: 0.5rem;
+    padding: var(--p14);
+}
+
+.user-comment-info,
+.user-comment-server-info {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: var(--p14);
+}
+
+.user-comment-info>a,
+.user-comment-server-info>a {
+    color: var(--dark-gray);
+    transition: 0.25s ease-in-out;
+}
+
+.user-comment-server-info>a:hover,
+.user-comment-info>a:hover,
+.user-comment-info>p:nth-of-type(2) {
+    color: var(--orange);
+}
+
+.user-comment-info {
+    font-size: 1rem;
+}
+
+.user-comment-info>a {
+    font-weight: 800;
+}
+
+.user-comment-server-info {
+    margin-top: 0.5rem;
+}
+
+.user-comment-server-info>p {
+    color: var(--light-gray);
+}
+
+.post-tag {
+    transform: scale(0.9);
+}

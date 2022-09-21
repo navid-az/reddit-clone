@@ -4,7 +4,7 @@ from .forms import UpdatePostForm, CreatePostForm, CreateCommentReplyForm
 from .models import Post, Comment, Vote, Save
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
-from servers.models import Server, ServerFollow
+from servers.models import Server, ServerFollow, ServerUserTag
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator

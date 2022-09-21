@@ -88,6 +88,7 @@
                     <p>{{node.creator.user_tag.get.name}}</p>
                   </div>
                 {% endif %}
+                {% comment %} {{node.post.server.user_tags.all}} {% endcomment %}
               </section>
               <p class="created-at">{{node.created|naturaltime}}</p>
             </div>

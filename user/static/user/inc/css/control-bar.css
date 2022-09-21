@@ -41,8 +41,9 @@
 }
 
 .posts-controls>button:hover {
-  background: var(--dark-gray-2);
-  font-family: Vbold;
+  /* background: var(--dark-gray-2) !; */
+  /* font-family: Vbold; */
+  color: #FFFF !important;
 }
 
 #user-comments-wrapper,

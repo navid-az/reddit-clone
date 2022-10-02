@@ -6,6 +6,7 @@
 {% endblock cssFiles %} 
 {% block jsFiles %}
   <script src="{% static 'user/js/profile.js' %}"></script>
+  <script src="{% static 'home/js/save-post.js' %}"></script>
 {% endblock jsFiles %}
 {% block content %}
 {% include 'user/inc/control-bar.html' %}
@@ -81,7 +82,25 @@
                 <div class="post-items">
                   <a href="{% url 'posts:post-page' i.post.id %}"><img class="comment-btn" src="{% static 'posts/svgs/comment.svg' %}" alt="comment button">{{i.post.post_comments.count}}</a>
                   <a href=""><img class="share-btn" src="{% static 'posts/svgs/share.svg' %}" alt="share button"></a>
-                  <a href="{% url 'posts:save-post' i.post.id %}"><img class="save-btn" src="{% static 'posts/svgs/saved.svg' %}" alt="save post button"></a>
+                  <form action="{% url 'home:save-post' %}" method="post" class='save-post-form' id='{{i.post.id}}'>
+                {% csrf_token %}
+                <input type="hidden" name="{{i.post.id}}">
+                <button type='submit' id='save-post-btn-{{i.post.id}}'>
+                  {% if request.user not in post.saved.all %}
+                  <img
+                  id="save-post-btn-img-{{i.post.id}}"
+                  src="{% static 'posts/svgs/save.svg' %}"
+                  alt="save post button"
+                  />
+                  {% else %}
+                  <img
+                  id="save-post-btn-img-{{i.post.id}}"
+                  src="{% static 'posts/svgs/saved.svg' %}"
+                  alt="save post button"
+                  />
+                  {% endif %}
+                </button>
+              </form>
                 </div>
               </section>
             </div>

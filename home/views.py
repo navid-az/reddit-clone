@@ -1,7 +1,7 @@
 from django.http import JsonResponse
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views import View
-from posts.models import Post, Save
+from posts.models import Post, PostSave
 from servers.models import Server
 from django.contrib.auth.models import User
 import itertools
@@ -15,7 +15,7 @@ class Home(View):
         posts = Post.objects.all()
         servers = Server.objects.all()
         if request.user.is_authenticated:
-            is_saved = Save.objects.filter(user=request.user.id)
+            is_saved = PostSave.objects.filter(user=request.user.id)
             return render(request, 'home/home.html',{'servers':servers, 'posts':posts, 'is_saved':is_saved})
         else:
             return render(request, 'home/home.html',{'servers':servers, 'posts':posts})
@@ -73,3 +73,26 @@ def SearchAjaxView(request):
             response = 'no results found'
         return JsonResponse({'data':response})
     return JsonResponse({})
+
+def savePostAjaxView(request):
+    if request.method == 'POST':
+        post_id = request.POST.get('postId')
+        post = Post.objects.get(id=post_id)
+        user = User.objects.get(id=request.user.id)
+
+        if user in post.saved.all():
+            post.saved.remove(user)
+        else:
+            post.saved.add(user)
+        
+        save_post, created = PostSave.objects.get_or_create(post=post, user=user,)
+        if not created:
+            if save_post.value=='save':
+                save_post.value='unsave'
+            else:
+                save_post.value='save'
+        else:
+            save_post.value='save'  
+        post.save()
+        save_post.save()
+    return redirect('home:home')

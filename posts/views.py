@@ -1,7 +1,7 @@
 from django.shortcuts import redirect, render, get_object_or_404, get_list_or_404
 from django.views import View
 from .forms import UpdatePostForm, CreatePostForm, CreateCommentReplyForm
-from .models import Post, Comment, Vote, Save
+from .models import Post, Comment, Vote, PostSave
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 from servers.models import Server, ServerFollow, ServerUserTag
@@ -21,7 +21,7 @@ class PostPageView(View):
 
     def get(self, request, *args, **kwargs):
         form = self.form_class()
-        is_saved = Save.objects.filter(post=self.post_instance, user=request.user.id)
+        is_saved = PostSave.objects.filter(post=self.post_instance, user=request.user.id)
         comments = self.post_instance.post_comments.filter(is_reply=False)
         return render(request, 'posts/post-page.html',{'post':self.post_instance, 'comments':comments, 'form':form, 'is_saved':is_saved})
 
@@ -193,13 +193,13 @@ class DownVotePostView(LoginRequiredMixin, View):
             Vote(post=post, user=request.user, choice='down').save()
             return redirect('posts:post-page', post_id)
 
-class SavePostView(LoginRequiredMixin ,View):
+class PostSavePostView(LoginRequiredMixin ,View):
     def get(self, request, post_id):
         post = Post.objects.get(id=post_id)
-        saved_post = Save.objects.filter(post=post, user=request.user)
+        saved_post = PostSave.objects.filter(post=post, user=request.user)
         if saved_post.exists():
             saved_post.delete()
             return redirect('posts:post-page', post_id)
-        Save(post=post, user=request.user).save()
+        PostSave(post=post, user=request.user).save()
         messages.success(request, '!پست مورد نظر با موفقیت ذخیره شد')
         return redirect('posts:post-page', post_id)

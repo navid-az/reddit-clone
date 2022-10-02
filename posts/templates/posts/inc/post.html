@@ -2,53 +2,99 @@
 <div class="post">
   <div class="post-header">
     <div class="vote">
-      <a href="{% url 'posts:upvote' post.id %}"><img class="upvote" src="{% static 'svgs/up-vote.svg' %}" alt=""></a>
+      <a href="{% url 'posts:upvote' post.id %}"
+        ><img class="upvote" src="{% static 'svgs/up-vote.svg' %}" alt=""
+      /></a>
       <p class="vots-counter">{{post.votes_count}}</p>
-      <a href="{% url 'posts:downvote' post.id %}"><img class="upvote" src="{% static 'svgs/down-vote.svg' %}" alt=""></a>
+      <a href="{% url 'posts:downvote' post.id %}"
+        ><img class="upvote" src="{% static 'svgs/down-vote.svg' %}" alt=""
+      /></a>
     </div>
     <div class="server-info">
       <div class="post-info">
         <section>
-          <a class="creator-name" href='{{post.get_profile_page}}'>u/{{post.creator}} پست شده توسط </a>
-          <a class="server-name" href='{% url 'servers:server' post.server.tag %}'>r/{{post.server.tag}}</a>
+          <a class="creator-name" href="{{post.get_profile_page}}"
+            >u/{{post.creator}} پست شده توسط
+          </a>
+          <a
+            class="server-name"
+            href="{% url 'servers:server' post.server.tag %}"
+            >r/{{post.server.tag}}
+          </a>
         </section>
         <section>
           {% if post.tag %}
-            <span class='tag post-tag' style='background:{{post.tag.primary_color}}; color:{{post.tag.secondary_color}};border:3px solid {{post.tag.secondary_color}}'>{{post.tag.name}}</span>
+          <span
+            class="tag post-tag"
+            style="background:{{post.tag.primary_color}}; color:{{post.tag.secondary_color}};border:3px solid {{post.tag.secondary_color}}"
+            >{{post.tag.name}}</span
+          >
           {% endif %}
-          <a href='{{post.get_absolute_url}}'><h3 class="post-title">{{post.title}}</h3></a>
+          <a href="{{post.get_absolute_url}}"
+            ><h3 class="post-title">{{post.title}}</h3></a
+          >
         </section>
       </div>
-      <div class="server-img"><img src="{{post.server.image.url}}" alt="server image"></div>
+      <div class="server-img">
+        <img src="{{post.server.image.url}}" alt="server image" />
+      </div>
     </div>
   </div>
   <div class="post-body">
     {% if post.image %}
-      <img src="{{post.image.url}}" alt="">
+    <img src="{{post.image.url}}" alt="" />
     {% elif post.video %}
-      <video controls>
-        <source src="{{post.video.url}}" type="video/mp4">
-      </video>   
+    <video controls>
+      <source src="{{post.video.url}}" type="video/mp4" />
+    </video>
     {% elif post.text %}
-      <p>{{post.text}}</p>
+    <p>{{post.text}}</p>
     {% endif %}
   </div>
 
-
   <div class="post-footer">
     <div class="post-items">
-      <a href="{% url 'posts:post-page' post.id %}"><img class="comment-btn" src="{% static 'posts/svgs/comment.svg' %}" alt="comment button">{{post.post_comments.count}}</a>
-      <a href=""><img class="share-btn" src="{% static 'posts/svgs/share.svg' %}" alt="share button"></a>
-      {% if is_saved %}
-        <a href="{% url 'posts:save-post' post.id %}"><img class="save-btn" src="{% static 'posts/svgs/saved.svg' %}" alt="save post button"></a>
-      {% else %}
-        <a href="{% url 'posts:save-post' post.id %}"><img class="save-btn" src="{% static 'posts/svgs/save.svg' %}" alt="save post button"></a>
-      {% endif %}
+      <a href="{% url 'posts:post-page' post.id %}"
+        ><img
+          class="comment-btn"
+          src="{% static 'posts/svgs/comment.svg' %}"
+          alt="comment button"
+        />{{post.post_comments.count}}</a
+      >
+      <a href=""
+        ><img
+          class="share-btn"
+          src="{% static 'posts/svgs/share.svg' %}"
+          alt="share button"
+      /></a>
+      <form action="{% url 'home:save-post' %}" method="post" class='save-post-form' id='{{post.id}}'>
+                {% csrf_token %}
+                <input type="hidden" name="{{post.id}}">
+                <button type='submit' id='save-post-btn-{{post.id}}'>
+                  {% if request.user not in post.saved.all %}
+                  <img
+                  id="save-post-btn-img-{{post.id}}"
+                  src="{% static 'posts/svgs/save.svg' %}"
+                  alt="save post button"
+                  />
+                  {% else %}
+                  <img
+                  id="save-post-btn-img-{{post.id}}"
+                  src="{% static 'posts/svgs/saved.svg' %}"
+                  alt="save post button"
+                  />
+                  {% endif %}
+                </button>
+              </form>
     </div>
     <div class="post-options">
       {% if request.user.id == post.creator.id %}
-        <a href="{% url 'posts:delete-post' post.id %}"><img src="{% static 'posts/svgs/trash.svg' %}" alt=""></a>
-        <div id="join-btn"><a href="{% url 'posts:update-post' post.id %}">ویرایش</a></div>
+      <a href="{% url 'posts:delete-post' post.id %}"
+        ><img src="{% static 'posts/svgs/trash.svg' %}" alt=""
+      /></a>
+      <div id="join-btn">
+        <a href="{% url 'posts:update-post' post.id %}">ویرایش</a>
+      </div>
       {% endif %}
 
       <div id="join-btn"><a href="">عضویت</a></div>

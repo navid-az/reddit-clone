@@ -180,6 +180,11 @@
     border-radius: 1.875rem;
 }
 
+[id^='save-post-btn'] {
+    display: flex;
+    background: none;
+}
+
 .post-items>* {
     height: 100%;
     width: 33.33%;

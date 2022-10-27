@@ -12,7 +12,7 @@ savePostForm.forEach((form) => {
 
     $.ajax({
       type: "POST",
-      url: "/save/",
+      url: "/posts/save/",
       data: {
         csrfmiddlewaretoken: csrf,
         postId: postId,
@@ -30,7 +30,7 @@ savePostForm.forEach((form) => {
         }
       },
       error: (err) => {
-        console.log(err);
+        window.location.href = "http://127.0.0.1:8000/accounts/login/";
       },
     });
   });

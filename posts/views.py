@@ -145,61 +145,136 @@ class DeletePostView(LoginRequiredMixin ,View):
         else:
             messages.error('شما نمیتوانید پست دیگران را حذف کنید')
         return redirect('user:profile', request.user.username)
+        
+def savePostAjaxView(request):
+    if request.method == 'POST':
+        post_id = request.POST.get('postId')
+        post = Post.objects.get(id=post_id)
+        user = User.objects.get(id=request.user.id)
 
-class UpVotePostView(LoginRequiredMixin, View):
-    def get(self, request, post_id):
-        post = get_object_or_404(Post, id=post_id)
-        upvote = Vote.objects.filter(post=post, user=request.user, choice='up')
-        downvote = Vote.objects.filter(post=post, user=request.user, choice='down')
-        if upvote.exists():
-            post.votes_count = F('votes_count') - 1
+        if user in post.saved.all():
+            post.saved.remove(user)
+        else:
+            post.saved.add(user)
+        
+        save_post, created = PostSave.objects.get_or_create(post=post, user=user)
+        if not created:
+            if save_post.value=='save':
+                save_post.value='unsave'
+            else:
+                save_post.value='save'
+        else:
+            save_post.value='save'  
+        post.save()
+        save_post.save()
+    return redirect('home:home')
+
+def votePostAjaxView(request):
+    if request.method == 'POST':
+        post_id = request.POST.get('postId')
+        vote_type = request.POST.get('voteType')
+        post = Post.objects.get(id=post_id)
+        user = User.objects.get(id=request.user.id)
+        # if user in post.upvotes.all():
+        #     post.upvotes.remove(user)
+        # else:
+        #     post.saved.add(user)
+
+        vote, created = Vote.objects.get_or_create(post=post, user=user)
+        
+        if not created:
+            if vote.choice == 'up' and vote_type == 'downvote':
+                post.downvotes.add(user)
+                post.upvotes.remove(user)
+                post.votes_count = F('votes_count') - 2
+                vote.choice = 'down'
+                post.save()
+                vote.save()
+            elif vote.choice == 'down' and vote_type == 'upvote':
+                post.downvotes.remove(user)
+                post.upvotes.add(user)
+                post.votes_count = F('votes_count') + 2
+                vote.choice = 'up'
+                post.save()
+                vote.save()
+            else:
+                if vote.choice == 'up':
+                    post.votes_count = F('votes_count') - 1
+                else:
+                    post.votes_count = F('votes_count') + 1
+
+                post.upvotes.remove(user)
+                post.downvotes.remove(user)
+                post.save()
+                vote.delete()
+        else:
+            if vote_type == 'upvote':
+                post.votes_count = F('votes_count') + 1
+                post.upvotes.add(user)
+                vote.choice = 'up'
+            else:
+                post.votes_count = F('votes_count') - 1
+                post.downvotes.add(user)
+                vote.choice = 'down'
+
             post.save()
-            upvote.delete()
-            messages.warning(request, 'you have already upvoted this post')
-            return redirect('posts:post-page', post_id)
-        elif downvote.exists():
-            post.votes_count = F('votes_count') + 2
-            post.save()
-            downvote.delete()
-            Vote(post=post, user=request.user, choice='up').save()
-            return redirect('posts:post-page', post_id)
-        elif not upvote.exists() and not downvote.exists():
-            post.votes_count = F('votes_count') + 1
-            post.save()
-            Vote(post=post, user=request.user, choice='up').save()
-            return redirect('posts:post-page', post_id)
+            vote.save()
+    return redirect('home:home')
+
+# class UpVotePostView(LoginRequiredMixin, View):
+#     def get(self, request, post_id):
+#         post = get_object_or_404(Post, id=post_id)
+#         upvote = Vote.objects.filter(post=post, user=request.user, choice='up')
+#         downvote = Vote.objects.filter(post=post, user=request.user, choice='down')
+#         if upvote.exists():
+#             post.votes_count = F('votes_count') - 1
+#             post.save()
+#             upvote.delete()
+#             messages.warning(request, 'you have already upvoted this post')
+#             return redirect('posts:post-page', post_id)
+#         elif downvote.exists():
+#             post.votes_count = F('votes_count') + 2
+#             post.save()
+#             downvote.delete()
+#             Vote(post=post, user=request.user, choice='up').save()
+#             return redirect('posts:post-page', post_id)
+#         elif not upvote.exists() and not downvote.exists():
+#             post.votes_count = F('votes_count') + 1
+#             post.save()
+#             Vote(post=post, user=request.user, choice='up').save()
+#             return redirect('posts:post-page', post_id)
 
             
-class DownVotePostView(LoginRequiredMixin, View):
-    def get(self, request, post_id):
-        post = get_object_or_404(Post, id=post_id)
-        upvote = Vote.objects.filter(post=post, user=request.user, choice='up')
-        downvote = Vote.objects.filter(post=post, user=request.user, choice='down')
-        if upvote.exists():
-            post.votes_count = F('votes_count') - 2
-            post.save()
-            upvote.delete()
-            Vote(post=post, user=request.user, choice='down').save()
-            return redirect('posts:post-page', post_id)
-        elif downvote.exists():
-            post.votes_count = F('votes_count') + 1
-            post.save()
-            downvote.delete()
-            messages.warning(request, 'you have already downvoted this post')
-            return redirect('posts:post-page', post_id)
-        elif not upvote.exists() and not downvote.exists():
-            post.votes_count = F('votes_count') - 1
-            post.save()
-            Vote(post=post, user=request.user, choice='down').save()
-            return redirect('posts:post-page', post_id)
+# class DownVotePostView(LoginRequiredMixin, View):
+#     def get(self, request, post_id):
+#         post = get_object_or_404(Post, id=post_id)
+#         upvote = Vote.objects.filter(post=post, user=request.user, choice='up')
+#         downvote = Vote.objects.filter(post=post, user=request.user, choice='down')
+#         if upvote.exists():
+#             post.votes_count = F('votes_count') - 2
+#             post.save()
+#             upvote.delete()
+#             Vote(post=post, user=request.user, choice='down').save()
+#             return redirect('posts:post-page', post_id)
+#         elif downvote.exists():
+#             post.votes_count = F('votes_count') + 1
+#             post.save()
+#             downvote.delete()
+#             messages.warning(request, 'you have already downvoted this post')
+#             return redirect('posts:post-page', post_id)
+#         elif not upvote.exists() and not downvote.exists():
+#             post.votes_count = F('votes_count') - 1
+#             post.save()
+#             Vote(post=post, user=request.user, choice='down').save()
+#             return redirect('posts:post-page', post_id)
 
-class PostSavePostView(LoginRequiredMixin ,View):
-    def get(self, request, post_id):
-        post = Post.objects.get(id=post_id)
-        saved_post = PostSave.objects.filter(post=post, user=request.user)
-        if saved_post.exists():
-            saved_post.delete()
-            return redirect('posts:post-page', post_id)
-        PostSave(post=post, user=request.user).save()
-        messages.success(request, '!پست مورد نظر با موفقیت ذخیره شد')
-        return redirect('posts:post-page', post_id)
+# class PostSavePostView(LoginRequiredMixin ,View):
+#     def get(self, request, post_id):
+#         post = Post.objects.get(id=post_id)
+#         saved_post = PostSave.objects.filter(post=post, user=request.user)
+#         if saved_post.exists():
+#             saved_post.delete()
+#             return redirect('posts:post-page', post_id)
+#         PostSave(post=post, user=request.user).save()
+#         messages.success(request, '!پست مورد نظر با موفقیت ذخیره شد')
+#         return redirect('posts:post-page', post_id)

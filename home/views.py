@@ -1,10 +1,13 @@
+from secrets import choice
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.views import View
-from posts.models import Post, PostSave
+from posts.models import Post, PostSave, Vote
 from servers.models import Server
 from django.contrib.auth.models import User
 import itertools
+from django.db.models import F
+
 
 def is_ajax(request):
     return request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest'
@@ -20,7 +23,6 @@ class Home(View):
         else:
             return render(request, 'home/home.html',{'servers':servers, 'posts':posts})
             
-
 class NewPosts(View):
     def get(self, request):
         posts = Post.objects.order_by('-created')
@@ -73,26 +75,3 @@ def SearchAjaxView(request):
             response = 'no results found'
         return JsonResponse({'data':response})
     return JsonResponse({})
-
-def savePostAjaxView(request):
-    if request.method == 'POST':
-        post_id = request.POST.get('postId')
-        post = Post.objects.get(id=post_id)
-        user = User.objects.get(id=request.user.id)
-
-        if user in post.saved.all():
-            post.saved.remove(user)
-        else:
-            post.saved.add(user)
-        
-        save_post, created = PostSave.objects.get_or_create(post=post, user=user,)
-        if not created:
-            if save_post.value=='save':
-                save_post.value='unsave'
-            else:
-                save_post.value='save'
-        else:
-            save_post.value='save'  
-        post.save()
-        save_post.save()
-    return redirect('home:home')

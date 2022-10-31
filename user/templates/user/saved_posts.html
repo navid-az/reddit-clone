@@ -3,10 +3,12 @@
 {% block cssFiles %}
   <link rel="stylesheet" href="{% static 'user/css/profile.css' %}" />
   <link rel="stylesheet" href="{% static 'user/css/saved_posts.css' %}" />
+  <link rel="stylesheet" href="{% static 'posts/css/post-page.css' %}" />
 {% endblock cssFiles %} 
 {% block jsFiles %}
   <script src="{% static 'user/js/profile.js' %}"></script>
-  <script src="{% static 'home/js/save-post.js' %}"></script>
+  <script src="{% static 'posts/js/save-post.js' %}"></script>
+  <script src="{% static 'posts/js/vote-post.js' %}"></script>
 {% endblock jsFiles %}
 {% block content %}
 {% include 'user/inc/control-bar.html' %}
@@ -63,11 +65,57 @@
               {% endif %}
             </div>
             <div class="post-info">
-              <div class="vote">
-                <a href="{% url 'posts:upvote' i.post.id %}"><img class="upvote" src="{% static 'svgs/up-vote.svg' %}" alt=""></a>
-                <p class="vots-counter">{{i.post.votes_count}}</p>
-                <a href="{% url 'posts:downvote' i.post.id %}"><img class="upvote" src="{% static 'svgs/down-vote.svg' %}" alt=""></a>
+              <form action="{% url 'posts:vote-post' %}" method="post" class='vote-post-form' id='{{i.post.id}}'>
+              {% csrf_token %}
+              <div class="vote-wrapper">
+                {% if request.user in i.post.upvotes.all %}
+                  <button class='vote-btn' type="submit" name='upvote'>
+                    <img
+                      src="{% static 'svgs/up-voted.svg' %}"
+                      alt="upvote"
+                    />
+                  </button>
+                  <p id="vote-counter-{{i.post.id}}">{{i.post.votes_count}}</p>
+                  <button class='vote-btn' type="submit" name='downvote'>
+                    <img
+                      style='transform:rotate(180deg)'
+                      src="{% static 'svgs/vote.svg' %}"
+                      alt="downvote"
+                    />
+                  </button>
+                {% elif request.user in i.post.downvotes.all %}
+                  <button class='vote-btn' type="submit" name='upvote'>
+                    <img
+                      src="{% static 'svgs/vote.svg' %}"
+                      alt="upvote"
+                    />
+                  </button>
+                  <p id="vote-counter-{{i.post.id}}">{{i.post.votes_count}}</p>
+                  <button class='vote-btn' type="submit" name='downvote'>
+                    <img
+                      style='transform:rotate(180deg)'
+                      src="{% static 'svgs/down-voted.svg' %}"
+                      alt="downvote"
+                    />
+                  </button>
+                {% else %}
+                  <button class='vote-btn' type="submit" name='upvote'>
+                    <img
+                      src="{% static 'svgs/vote.svg' %}"
+                      alt="upvote"
+                    />
+                  </button>
+                  <p id="vote-counter-{{i.post.id}}">{{i.post.votes_count}}</p>
+                  <button class='vote-btn' type="submit" name='downvote'>
+                    <img
+                      style='transform:rotate(180deg)'
+                      src="{% static 'svgs/vote.svg' %}"
+                      alt="downvote"
+                    />
+                  </button>
+                {% endif %}
               </div>
+            </form>
               <section>
                 <div class="info">
                   <section>
@@ -82,7 +130,7 @@
                 <div class="post-items">
                   <a href="{% url 'posts:post-page' i.post.id %}"><img class="comment-btn" src="{% static 'posts/svgs/comment.svg' %}" alt="comment button">{{i.post.post_comments.count}}</a>
                   <a href=""><img class="share-btn" src="{% static 'posts/svgs/share.svg' %}" alt="share button"></a>
-                  <form action="{% url 'home:save-post' %}" method="post" class='save-post-form' id='{{i.post.id}}'>
+                  <form action="{% url 'posts:save-post' %}" method="post" class='save-post-form' id='{{i.post.id}}'>
                 {% csrf_token %}
                 <input type="hidden" name="{{i.post.id}}">
                 <button type='submit' id='save-post-btn-{{i.post.id}}'>

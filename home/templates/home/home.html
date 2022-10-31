@@ -1,8 +1,8 @@
 {% extends 'base.html' %} {% load static %} 
 {% block title %}Home{% endblock title %} {% block jsFiles %}
 <script src="{% static 'home/js/home.js' %}"></script>
-<script src="{% static 'home/js/save-post.js' %}"></script>
-<script src="{% static 'home/js/vote-post.js' %}"></script>
+<script src="{% static 'posts/js/save-post.js' %}"></script>
+<script src="{% static 'posts/js/vote-post.js' %}"></script>
 {% endblock jsFiles %}
 <!---->
 {% load static %} {% block cssFiles %}
@@ -36,6 +36,8 @@
         {% for post in posts %}
         <div class="post">
           <div class="post-header">
+            
+            <!--save post form--> 
             <form action="{% url 'posts:vote-post' %}" method="post" class='vote-post-form' id='{{post.id}}'>
               {% csrf_token %}
               <div class="vote-wrapper">

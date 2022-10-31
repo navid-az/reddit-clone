@@ -172,6 +172,7 @@ def savePostAjaxView(request):
 def votePostAjaxView(request):
     if request.method == 'POST':
         post_id = request.POST.get('postId')
+        print(post_id,'%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%')
         vote_type = request.POST.get('voteType')
         post = Post.objects.get(id=post_id)
         user = User.objects.get(id=request.user.id)

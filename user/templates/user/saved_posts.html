@@ -7,8 +7,6 @@
 {% endblock cssFiles %} 
 {% block jsFiles %}
   <script src="{% static 'user/js/profile.js' %}"></script>
-  <script src="{% static 'posts/js/save-post.js' %}"></script>
-  <script src="{% static 'posts/js/vote-post.js' %}"></script>
 {% endblock jsFiles %}
 {% block content %}
 {% include 'user/inc/control-bar.html' %}
@@ -120,7 +118,12 @@
                 <div class="info">
                   <section>
                     <div class="post-tags"></div>
-                    <a href="{% url 'posts:post-page' i.post.id %}"><h3 class="post-title">{{i.post.title}}</h3></a>
+                    <a href="{% url 'posts:post-page' i.post.id %}">
+                      <h3 class="post-title">{{i.post.title}}</h3>
+                      {% if i.post.tag %}
+                        <span class="tag post-tag" style="background:{{i.post.tag.primary_color}}; color:{{i.post.tag.secondary_color}}; border:3px solid {{i.post.tag.secondary_color}}">{{i.post.tag.name}}</span>
+                      {% endif %}
+                    </a>
                   </section>
                   <section>
                     <a class="creator-name" href='{% url 'user:profile' i.post.creator.username %}'>u/{{i.post.creator}} پست شده توسط </a>

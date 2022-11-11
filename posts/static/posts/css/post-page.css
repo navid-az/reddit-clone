@@ -150,6 +150,9 @@
 
 .comment-options {
   display: flex;
+  gap: 2rem;
+  margin-top: 0.5rem;
+  height: 32px;
   gap: 0.5rem;
 }
 
@@ -165,10 +168,41 @@
   padding: 0.5rem 1rem;
   background: var(--light-gray-3);
   color: #AAAAAA;
-  margin-top: 0.5rem;
   transition: 0.25s ease-in-out;
 }
 
 .reply-btn:hover {
   background: var(--gray);
+}
+
+/* ~~~comment vote~~~  */
+.vote-comment-form .vote-wrapper {
+  width: 120px;
+  height: 100%;
+  border-radius: 20rem;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  gap: 0.2rem;
+  background: var(--light-gray-3);
+}
+
+.vote-comment-form .vote-btn {
+  background: var(--light-gray-3);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 20rem;
+  width: 50px;
+  height: 100% !important;
+  transition: 0.25s ease-in-out;
+}
+
+.vote-comment-form p[id^="vote-counter-"] {
+  direction: ltr;
+}
+
+.vote-comment-form .vote-btn:hover {
+  /* background: var(--light-gray-2); */
+  background: #eae9e9;
 }

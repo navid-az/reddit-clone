@@ -3,7 +3,7 @@ from django.views import View
 from django.contrib.auth.models import User
 from .models import Server, ServerFollow, ServerModeratorPermission, ServerPostTag, ServerRule, ServerUserTag, ServerModerator
 from .forms import AddModeratorForm, CreateServerForm, CreatePostTagForm, CreateUserTagForm, CreateRuleForm, UpdateModeratorPermissionsForm
-from posts.models import Vote
+from posts.models import PostVote
 from django.http import JsonResponse
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
@@ -23,8 +23,8 @@ class ServerView(View):
             current_user_tag = user_tags.get(user=request.user)
         else:
             current_user_tag = None
-        upvote = Vote.objects.filter(choice='up').count()
-        downvote = Vote.objects.filter(choice='down').count()
+        upvote = PostVote.objects.filter(choice='up').count()
+        downvote = PostVote.objects.filter(choice='down').count()
         vote_count = upvote - downvote
         is_following = False
         # the code bellow will make sure to show this page to all users even to those whom haven't logged in yet

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Post, Comment, Vote, PostSave
+from .models import Post, Comment, CommentVote, PostVote, PostSave
 from mptt.admin import MPTTModelAdmin
 
 # Register your models here.
@@ -13,5 +13,6 @@ class AdminPost(admin.ModelAdmin):
 
 # admin.site.register(Comment)
 admin.site.register(Comment, MPTTModelAdmin)
-admin.site.register(Vote)
+admin.site.register(PostVote)
+admin.site.register(CommentVote)
 admin.site.register(PostSave)

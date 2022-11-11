@@ -1,7 +1,7 @@
 from django.shortcuts import redirect, render, get_object_or_404, get_list_or_404
 from django.views import View
 from .forms import UpdatePostForm, CreatePostForm, CreateCommentReplyForm
-from .models import Post, Comment, Vote, PostSave
+from .models import Post, Comment, PostVote, PostSave, CommentVote
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 from servers.models import Server, ServerFollow, ServerUserTag
@@ -171,62 +171,103 @@ def savePostAjaxView(request):
 
 def votePostAjaxView(request):
     if request.method == 'POST':
-        post_id = request.POST.get('postId')
-        print(post_id,'%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%')
         vote_type = request.POST.get('voteType')
-        post = Post.objects.get(id=post_id)
+        vote_for = request.POST.get('voteFor')
         user = User.objects.get(id=request.user.id)
-        # if user in post.upvotes.all():
-        #     post.upvotes.remove(user)
-        # else:
-        #     post.saved.add(user)
 
-        vote, created = Vote.objects.get_or_create(post=post, user=user)
-        
-        if not created:
-            if vote.choice == 'up' and vote_type == 'downvote':
-                post.downvotes.add(user)
-                post.upvotes.remove(user)
-                post.votes_count = F('votes_count') - 2
-                vote.choice = 'down'
-                post.save()
-                vote.save()
-            elif vote.choice == 'down' and vote_type == 'upvote':
-                post.downvotes.remove(user)
-                post.upvotes.add(user)
-                post.votes_count = F('votes_count') + 2
-                vote.choice = 'up'
-                post.save()
-                vote.save()
-            else:
-                if vote.choice == 'up':
-                    post.votes_count = F('votes_count') - 1
-                else:
-                    post.votes_count = F('votes_count') + 1
-
-                post.upvotes.remove(user)
-                post.downvotes.remove(user)
-                post.save()
-                vote.delete()
+        if vote_for == 'comment':
+            comment_id = request.POST.get('commentId')
+            comment = Comment.objects.get(id=comment_id)
+            vote, created = CommentVote.objects.get_or_create(comment=comment, user=user)
         else:
-            if vote_type == 'upvote':
-                post.votes_count = F('votes_count') + 1
-                post.upvotes.add(user)
-                vote.choice = 'up'
-            else:
-                post.votes_count = F('votes_count') - 1
-                post.downvotes.add(user)
-                vote.choice = 'down'
+            post_id = request.POST.get('postId')
+            post = Post.objects.get(id=post_id)
+            vote, created = PostVote.objects.get_or_create(post=post, user=user)
 
-            post.save()
-            vote.save()
+        
+        if vote_for == 'post':
+            if not created:
+                if vote.choice == 'up' and vote_type == 'downvote':
+                    post.downvotes.add(user)
+                    post.upvotes.remove(user)
+                    post.votes_count = F('votes_count') - 2
+                    vote.choice = 'down'
+                    post.save()
+                    vote.save()
+                elif vote.choice == 'down' and vote_type == 'upvote':
+                    post.downvotes.remove(user)
+                    post.upvotes.add(user)
+                    post.votes_count = F('votes_count') + 2
+                    vote.choice = 'up'
+                    post.save()
+                    vote.save()
+                else:
+                    if vote.choice == 'up':
+                        post.votes_count = F('votes_count') - 1
+                    else:
+                        post.votes_count = F('votes_count') + 1
+
+                    post.upvotes.remove(user)
+                    post.downvotes.remove(user)
+                    post.save()
+                    vote.delete()
+            else:
+                if vote_type == 'upvote':
+                    post.votes_count = F('votes_count') + 1
+                    post.upvotes.add(user)
+                    vote.choice = 'up'
+                else:
+                    post.votes_count = F('votes_count') - 1
+                    post.downvotes.add(user)
+                    vote.choice = 'down'
+
+                post.save()
+                vote.save()
+        else:
+            if not created:
+                if vote.choice == 'up' and vote_type == 'downvote':
+                    comment.downvotes.add(user)
+                    comment.upvotes.remove(user)
+                    comment.votes_count = F('votes_count') - 2
+                    vote.choice = 'down'
+                    comment.save()
+                    vote.save()
+                elif vote.choice == 'down' and vote_type == 'upvote':
+                    comment.downvotes.remove(user)
+                    comment.upvotes.add(user)
+                    comment.votes_count = F('votes_count') + 2
+                    vote.choice = 'up'
+                    comment.save()
+                    vote.save()
+                else:
+                    if vote.choice == 'up':
+                        comment.votes_count = F('votes_count') - 1
+                    else:
+                        comment.votes_count = F('votes_count') + 1
+
+                    comment.upvotes.remove(user)
+                    comment.downvotes.remove(user)
+                    comment.save()
+                    vote.delete()
+            else:
+                if vote_type == 'upvote':
+                    comment.votes_count = F('votes_count') + 1
+                    comment.upvotes.add(user)
+                    vote.choice = 'up'
+                else:
+                    comment.votes_count = F('votes_count') - 1
+                    comment.downvotes.add(user)
+                    vote.choice = 'down'
+
+                comment.save()
+                vote.save()
     return redirect('home:home')
 
-# class UpVotePostView(LoginRequiredMixin, View):
+# class UpPostVotePostView(LoginRequiredMixin, View):
 #     def get(self, request, post_id):
 #         post = get_object_or_404(Post, id=post_id)
-#         upvote = Vote.objects.filter(post=post, user=request.user, choice='up')
-#         downvote = Vote.objects.filter(post=post, user=request.user, choice='down')
+#         upvote = PostVote.objects.filter(post=post, user=request.user, choice='up')
+#         downvote = PostVote.objects.filter(post=post, user=request.user, choice='down')
 #         if upvote.exists():
 #             post.votes_count = F('votes_count') - 1
 #             post.save()
@@ -237,25 +278,25 @@ def votePostAjaxView(request):
 #             post.votes_count = F('votes_count') + 2
 #             post.save()
 #             downvote.delete()
-#             Vote(post=post, user=request.user, choice='up').save()
+#             PostVote(post=post, user=request.user, choice='up').save()
 #             return redirect('posts:post-page', post_id)
 #         elif not upvote.exists() and not downvote.exists():
 #             post.votes_count = F('votes_count') + 1
 #             post.save()
-#             Vote(post=post, user=request.user, choice='up').save()
+#             PostVote(post=post, user=request.user, choice='up').save()
 #             return redirect('posts:post-page', post_id)
 
             
-# class DownVotePostView(LoginRequiredMixin, View):
+# class DownPostVotePostView(LoginRequiredMixin, View):
 #     def get(self, request, post_id):
 #         post = get_object_or_404(Post, id=post_id)
-#         upvote = Vote.objects.filter(post=post, user=request.user, choice='up')
-#         downvote = Vote.objects.filter(post=post, user=request.user, choice='down')
+#         upvote = PostVote.objects.filter(post=post, user=request.user, choice='up')
+#         downvote = PostVote.objects.filter(post=post, user=request.user, choice='down')
 #         if upvote.exists():
 #             post.votes_count = F('votes_count') - 2
 #             post.save()
 #             upvote.delete()
-#             Vote(post=post, user=request.user, choice='down').save()
+#             PostVote(post=post, user=request.user, choice='down').save()
 #             return redirect('posts:post-page', post_id)
 #         elif downvote.exists():
 #             post.votes_count = F('votes_count') + 1
@@ -266,7 +307,7 @@ def votePostAjaxView(request):
 #         elif not upvote.exists() and not downvote.exists():
 #             post.votes_count = F('votes_count') - 1
 #             post.save()
-#             Vote(post=post, user=request.user, choice='down').save()
+#             PostVote(post=post, user=request.user, choice='down').save()
 #             return redirect('posts:post-page', post_id)
 
 # class PostSavePostView(LoginRequiredMixin ,View):

@@ -35,7 +35,7 @@
         <div class="post">
           <div class="post-header">
             
-            <!--save post form--> 
+            <!--vote post form--> 
             <form action="{% url 'posts:vote-post' %}" method="post" class='vote-post-form' id='{{post.id}}'>
               {% csrf_token %}
               <div class="vote-wrapper">
@@ -87,21 +87,6 @@
                 {% endif %}
               </div>
             </form>
-            {% comment %} <div class="vote">
-              <a href="{% url 'posts:upvote' post.id %}"
-                ><img
-                  class="upvote"
-                  src="{% static 'svgs/up-vote.svg' %}"
-                  alt=""
-              /></a>
-              <p class="vots-counter">{{post.votes_count}}</p>
-              <a href="{% url 'posts:downvote' post.id %}"
-                ><img
-                  class="upvote"
-                  src="{% static 'svgs/down-vote.svg' %}"
-                  alt=""
-              /></a>
-            </div> {% endcomment %}
 
             <div class="server-info">
               <div class="post-info">
@@ -159,22 +144,6 @@
                   src="{% static 'posts/svgs/share.svg' %}"
                   alt="share button"
               /></a>
-              {% comment %} {% if is_saved %}
-              <a href="{% url 'posts:save-post' post.id %}"
-                ><img
-                  class="save-btn"
-                  src="{% static 'posts/svgs/saved.svg' %}"
-                  alt="save post button"
-              /></a>
-              {% else %}
-              <a href="{% url 'posts:save-post' post.id %}"
-                ><img
-                  class="save-btn"
-                  src="{% static 'posts/svgs/save.svg' %}"
-                  alt="save post button"
-              /></a>
-              
-              {% endif %} {% endcomment %}
               <form action="{% url 'posts:save-post' %}" method="post" class='save-post-form' id='{{post.id}}'>
                 {% csrf_token %}
                 <input type="hidden" name="{{post.id}}">

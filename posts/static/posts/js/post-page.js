@@ -11,6 +11,7 @@ let replyForms = document.querySelectorAll(`[id^="reply-to-"]`);
 replyForms.forEach((id) => {
   id.style.display = "none";
 });
+
 const openReplyForm = (id) => {
   let replyForm = document.getElementById(`reply-to-${id}`);
   if (replyForm.style.display == "block") {

@@ -4,8 +4,11 @@
   <link rel="stylesheet" href="{% static 'posts/inc/css/post.css' %}" />
   <link rel="stylesheet" href="{% static 'posts/css/post-page.css' %}" />
   <link rel="stylesheet" href="{% static 'servers/css/server.css' %}" />
-{% endblock cssFiles %} {% block jsFiles %}
-{% endblock jsFiles %} {% block content %}
+{% endblock cssFiles %} 
+{% block jsFiles %}
+  <script src="{% static 'posts/js/post-page.js' %}"></script>
+{% endblock jsFiles %} 
+{% block content %}
 <div class="container">
   <div class="row">
     <div class="server-details-wrapper col-4" style='margin-top:3rem'>
@@ -95,7 +98,8 @@
           <div class="comment-body">
             <p>{{node.body}}</p>
             <div class="comment-options">
-              <div class="comment-vote">
+              
+              {% comment %} <div class="comment-vote">
                 <img
                   src="{% static 'posts/svgs/comment-up-vote.svg' %}"
                   alt="comment up vote"
@@ -105,7 +109,58 @@
                   src="{% static 'posts/svgs/comment-down-vote.svg' %}"
                   alt="comment down vote"
                 />
+              </div> {% endcomment %}
+              <form action="{% url 'posts:vote-post' %}" method="post" class='vote-comment-form' id='{{node.id}}'>
+              {% csrf_token %}
+              <div class="vote-wrapper">
+                {% if request.user in node.upvotes.all %}
+                  <button class='vote-btn' type="submit" name='upvote'>
+                    <img
+                      src="{% static 'svgs/up-voted.svg' %}"
+                      alt="upvote"
+                    />
+                  </button>
+                  <p id="vote-counter-{{node.id}}">{{node.votes_count}}</p>
+                  <button class='vote-btn' type="submit" name='downvote'>
+                    <img
+                      style='transform:rotate(180deg)'
+                      src="{% static 'svgs/vote.svg' %}"
+                      alt="downvote"
+                    />
+                  </button>
+                {% elif request.user in node.downvotes.all %}
+                  <button class='vote-btn' type="submit" name='upvote'>
+                    <img
+                      src="{% static 'svgs/vote.svg' %}"
+                      alt="upvote"
+                    />
+                  </button>
+                  <p id="vote-counter-{{node.id}}">{{node.votes_count}}</p>
+                  <button class='vote-btn' type="submit" name='downvote'>
+                    <img
+                      style='transform:rotate(180deg)'
+                      src="{% static 'svgs/down-voted.svg' %}"
+                      alt="downvote"
+                    />
+                  </button>
+                {% else %}
+                  <button class='vote-btn' type="submit" name='upvote'>
+                    <img
+                      src="{% static 'svgs/vote.svg' %}"
+                      alt="upvote"
+                    />
+                  </button>
+                  <p id="vote-counter-{{node.id}}">{{node.votes_count}}</p>
+                  <button class='vote-btn' type="submit" name='downvote'>
+                    <img
+                      style='transform:rotate(180deg)'
+                      src="{% static 'svgs/vote.svg' %}"
+                      alt="downvote"
+                    />
+                  </button>
+                {% endif %}
               </div>
+            </form>
               <button class="reply-btn" onclick="openReplyForm({{node.id}})">
                 <p>پاسخ</p>
                 <img src="{% static 'posts/svgs/reply.svg' %}" alt="" />

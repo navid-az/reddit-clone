@@ -2,7 +2,7 @@ from secrets import choice
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.views import View
-from posts.models import Post, PostSave, Vote
+from posts.models import Post, PostSave
 from servers.models import Server
 from django.contrib.auth.models import User
 import itertools

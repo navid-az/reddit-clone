@@ -7,4 +7,5 @@ urlpatterns = [
     path('<str:username>/profile/', UserProfileView.as_view(), name='profile'),
     path('<str:username>/profile/settings', UserProfileSettingsView.as_view(), name='profile-settings'),
     path('<str:username>/saves/', UserSavedPostsView.as_view(), name='saved-posts'),
+    # path('<str:username>/saves/', UserKarmaCounterView.as_view(), name='user-karma'),
 ]

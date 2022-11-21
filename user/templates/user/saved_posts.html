@@ -23,7 +23,7 @@
           <div class="user-tag">u/{{user.username}}</div>
         </div>
         <div class="user-details">
-          <div class="karma">1.5 کارما .</div>
+          <div class="karma">{{user.profile.karma}}</div>..
           <div class="active-for">4 سال</div>
         </div>
         <div class="profile-more-info">
@@ -43,8 +43,10 @@
           </div>
          </div>
           <div class="btns">
+            {% if not request.user == user %}
             <button type='button'>دنبال کردن</button>
             <button type='button'>پیام</button>
+            {% endif %}
           </div>
         </div>
       </div>

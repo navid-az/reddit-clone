@@ -22,8 +22,11 @@
           <div class="user-tag">u/{{user.username}}</div>
         </div>
         <div class="user-details">
-          <div class="karma">1.5 کارما .</div>
-          <div class="active-for">4 سال</div>
+          <div class="karma">
+            <p>کارما</p><p>{{user.profile.karma}}</p>
+            <img src="{% static 'svgs/karma.svg' %}" alt="user karma">
+          </div>
+          <div class="active-for">{{now|timesince:user.date_joined}}</div>
         </div>
         <div class="profile-more-info">
          <div class="user-date-settings">

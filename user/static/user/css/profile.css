@@ -147,3 +147,14 @@
 .post-tag {
     transform: scale(0.9);
 }
+
+.karma {
+    display: flex;
+    gap: 0.2rem;
+    color: #731495;
+}
+
+.karma>img {
+    width: 18px;
+    margin-bottom: 0.15rem;
+}

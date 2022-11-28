@@ -10,6 +10,12 @@ from django.contrib import messages
 from django.shortcuts import get_object_or_404
 from django.db.models import Q
 import itertools
+from django.db.models import Count
+from django.db.models.functions import TruncDate
+import datetime
+
+from chartjs.views.lines import BaseLineChartView
+from django.views.generic import TemplateView
 
 def is_ajax(request):
     return request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest'
@@ -27,7 +33,7 @@ class ServerView(View):
         downvote = PostVote.objects.filter(choice='down').count()
         vote_count = upvote - downvote
         is_following = False
-        # the code bellow will make sure to show this page to all users even to those whom haven't logged in yet
+        # the following code will make sure to show this page to all users even to those whom haven't logged in yet
         qs = ServerFollow.objects.filter(server=server)
         if qs and request.user.is_authenticated:
             qs = qs.filter(user=request.user)
@@ -69,6 +75,22 @@ class ServerModeratingView(LoginRequiredMixin, View):
             return render(request, 'servers/moderating-page.html', {"server":server})
         messages.warning(request, 'شما مدیر این سرور نیستید')
         return redirect('home:home')
+
+class ServerInsightsView(View):
+    def get(self, request, server_tag):
+        server = Server.objects.get(tag=server_tag)
+        post_daily_count = server.posts.all().values('created').annotate(dailycount=Count('created')).order_by()
+        post_daily_count = list(server.posts.all().annotate(date=TruncDate('created')).values('date').annotate(dailycount=Count('date')).order_by())
+        print(list(post_daily_count))
+        server_follow_daily_count = list(server.followers.all().annotate(date=TruncDate('created')).values('date').annotate(dailycount=Count('date')).order_by())
+        today = datetime.date.today()
+        tomorrow = today + datetime.timedelta(days=1)
+        for value in post_daily_count:
+            value['date'] = str(value['date'])
+
+        for value in server_follow_daily_count:
+            value['date'] = str(value['date']) 
+        return render(request, 'servers/insights.html', {'server':server, 'post_daily_count': post_daily_count, 'server_follow_daily_count':server_follow_daily_count, 'tomorrow':tomorrow})
 class TagsAndFlairsView(LoginRequiredMixin, View):
     form_class = CreatePostTagForm
     form_class_2 = CreateUserTagForm

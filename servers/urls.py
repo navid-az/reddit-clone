@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import (ServerView, ServerFollowView, CreateServerView, ServerModeratingView, TagsAndFlairsView, DeleteTagsAndFlairsView, 
+from .views import (ServerView, ServerFollowView, CreateServerView, ServerModeratingView, ServerInsightsView, TagsAndFlairsView, DeleteTagsAndFlairsView, 
 RulesView, DeleteRulesView, ChooseServerAjaxView, ModeratorSettingsView, ModeratorPermissionsView, ModeratorSearchAjaxView)
 
 app_name= 'servers'
@@ -9,7 +9,14 @@ urlpatterns = [
     path('follow/<str:server_tag>', ServerFollowView.as_view(), name='server-follow'),
     path('create/', CreateServerView.as_view(), name='server-create'),
     
-    path('<str:server_tag>/moderating-page/', ServerModeratingView.as_view(), name='server-moderating-page'),
+    # path('<str:server_tag>/moderating-page/', ServerInsightsView.as_view(), name='server-moderating-page'),
+    path('<str:server_tag>/insights/', ServerInsightsView.as_view(), name='server-insights'),
+    # path('<str:server_tag>/charts/', ServerChartsView.as_view(), name='server-charts'),
+    
+    # path('insights/', insights, name='server-insights'),
+    # path('charts/', server_chart, name='server-charts'),
+
+
     path('moderating-page/', ChooseServerAjaxView.as_view(), name='server-choose'),
     path('get-moderators/', ModeratorSearchAjaxView, name='moderator-search'),
     # path('<str:server_tag>/add-moderator/', AddModeratorView.as_view(), name='add-moderator'),

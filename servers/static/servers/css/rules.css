@@ -1,9 +1,3 @@
-.l-wrapper {
-  width: 100%;
-  height: auto;
-  margin-bottom: 3rem;
-}
-
 #list {
   flex-direction: column;
 }

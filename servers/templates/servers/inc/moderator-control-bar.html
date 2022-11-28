@@ -29,6 +29,12 @@
         </a>
       </li>
       <li>
+        <a href="{% url 'servers:server-insights' server.tag %}">
+          <p>وضعیت سرور</p>
+          <img src="{% static 'servers/svgs/insights.svg' %}" alt="insights">
+        </a>
+      </li>
+      <li>
         <a href="{% url 'servers:server-tags-and-flairs' server.tag %}">
           <p>تگ ها و پسوند ها</p>
           <img src="{% static 'servers/svgs/tag.svg' %}" alt="tags and flairs">

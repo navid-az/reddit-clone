@@ -48,6 +48,7 @@ class ServerFollow(models.Model):
     server = models.ForeignKey(Server ,on_delete=models.CASCADE, related_name='followers')
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='following_server')
     created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
 
 class ServerPostTag(models.Model):
     server = models.ForeignKey(Server, on_delete=models.CASCADE, related_name='post_tags')

@@ -2,7 +2,9 @@
 {% block cssFiles %}
   <link rel="stylesheet" href="{% static 'servers/css/moderating-page.css' %}">
 {% endblock cssFiles %}
-
+{% block jsFiles %}
+<script src="{% static 'servers/inc/js/moderator-control-bar' %}"></script>
+{% endblock jsFiles %}
 {% block content %}
 <div id="moderation-page-wrapper">
   <section id="server-tab">fasd</section>

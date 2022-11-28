@@ -1,0 +1,135 @@
+{% extends 'base.html' %} {% load static %}
+{% block cssFiles %}
+  <link rel="stylesheet" href="{% static 'servers/css/moderating-page.css' %}">
+{% endblock cssFiles %}
+{% block jsFiles %}
+
+{% comment %} <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.0.1/chart.js" integrity="sha512-zulXrCFpnkALZBNUHe4E6rTUt7IhNLDUuLTLqTyKb93z7CrEVzFdL8KfPV6VPplL8+b4MZGOdh00+d2nzGiveg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> {% endcomment %}
+<script src="{% static 'servers/js/insights.js' %}"></script>
+{% endblock jsFiles %}
+
+{% block content %}
+<div id="moderation-page-wrapper">
+  <section id="moderator-display">
+    {% comment %} {{post_daily_count}} {% endcomment %}
+    {% comment %} <br>
+    {% for i in post_daily_count %}{{i.dailycount}}{% endfor %}
+    <br><br><br>
+    {{server_follow_daily_count}}
+    <br>
+    {% for i in server_follow_daily_count %}{{i.dailycount}}{% endfor %} {% endcomment %}
+    <div class='wrapper l-wrapper'>
+      <div class="form-title">
+        <h2>نمودار تغییرات</h2>
+      </div>
+      {{tomorrow|date:'Y-m-d'|safe}}
+      <br>
+      {{server.created|date:'Y-m-d'|safe}}
+      <div id='nigga'>
+        <canvas id="moderating-chart"></canvas>
+      </div>
+      <button onclick='updateChart(0)' id='go-back'>سالانه‌</button>
+      <button onclick='updateChart(1)' id='go-forward'>ماهانه</button>
+      <button onclick='updateChart(2)' id='go-forward'>روزانه</button>
+    </div>
+  </section>
+  
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+
+  <script>
+    const ctx = document.getElementById('moderating-chart');
+    var postCountList = [];
+    var postDateList = [];
+    var serverFollowCountList = [];
+    var serverFollowDateList = [];
+    {{post_daily_count|safe}}.forEach((i) => {
+      postCountList.push(i.dailycount)
+      postDateList.push(i.date)
+    });
+    {{server_follow_daily_count|safe}}.forEach((i) => {
+      serverFollowCountList.push(i.dailycount)
+      serverFollowDateList.push(i.date)
+    });
+
+  chart = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: postDateList,
+      datasets: [{ label: 'تعداد پست', data: postCountList, borderColor: '#FF3F18', backgroundColor: '#FF3F18', tension: 0.4}, {label: 'تعداد دنبال کننده',  data: serverFollowCountList,  parsing: {yAxisKey: 'cogs'}, borderColor: '#3B3B3B', backgroundColor: '#3B3B3B', tension: 0.4}]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+              legend: {
+                  labels: {
+                    usePointStyle:true,
+                    pointStyleWidth:20,
+                      font: {
+                          family: 'sans-serif',
+                          size: 14
+                      }
+                  }
+              }
+          },
+          scales: {
+              y: {
+                  beginAtZero : true,
+                  grace: 10
+                },
+              x: {
+                  max: '{{tomorrow|date:'Y-m-d'|safe}}',
+                  min: '',
+                  type: 'time',
+                  time: {
+                      unit: 'day'
+                  }
+              }
+          }
+      }
+      
+  });
+  currentDate = '{{tomorrow|date:'Y-m-d'|safe}}'
+  fromFirst = '{{server.created|date:'Y-m-d'|safe}}'
+  const goForward= document.getElementById('go-forward');
+  const goBack= document.getElementById('go-back');
+  var maxDay = chart.options.scales.x.max[8] + chart.options.scales.x.max[9]
+  var maxMonth = parseInt(chart.options.scales.x.max[5] + chart.options.scales.x.max[6])
+  var maxYear = chart.options.scales.x.max[2] + chart.options.scales.x.max[3]
+
+  var currentDay = currentDate[8] + currentDate[9]
+  var currentMonth = parseInt(currentDate[5] + currentDate[6])
+  var currentYear = currentDate[2] + currentDate[3]
+
+  var fromFirstDay = fromFirst[8] + fromFirst[9]
+  var fromFirstMonth = parseInt(fromFirst[5] + fromFirst[6])
+  var fromFirstYear = fromFirst[2] + fromFirst[3]
+  console.log(maxYear, maxMonth -1, maxDay)
+  console.log(currentYear, currentMonth -1, currentDay)
+  {% comment %} console.log(fromFirstYear, fromFirstMonth -1, fromFirstDay) {% endcomment %}
+  const updateChart =(btn, type)=>{
+    if(btn == 0){
+      chart.options.scales.x.time.unit = 'year'
+      //chart.options.scales.x.min = `20${maxYear}-${maxMonth - 1}-${maxDay}` 
+      //chart.options.scales.x.max = '2022-10-24' 
+      //maxMonth = maxMonth - 1
+      //console.log(chart.options.scales.x.min,chart.options.scales.x.max)
+      //chart.options.scales.x.time.unit = 'day'
+    }else if(btn == 1){
+      chart.options.scales.x.time.unit = 'month'
+      //chart.options.scales.x.min = `20${maxYear}-${maxMonth + 1}-${maxDay}`
+      //maxMonth = maxMonth + 1
+      //console.log(chart.options.scales.x.min,chart.options.scales.x.max)
+      //chart.options.scales.x.time.unit = 'day'
+    }else{
+      chart.options.scales.x.time.unit = 'day'
+      //chart.options.scales.x.min = fromFirst
+      //chart.options.scales.x.max = `20${fromFirstYear}-${fromFirstMonth + 1}-${fromFirstDay}`
+      //chart.options.scales.x.time.unit = 'year'
+    }
+    chart.update()
+  }
+  </script>
+  {% include 'servers/inc/moderator-control-bar.html' %}
+</div>
+{% endblock content %}

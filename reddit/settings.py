@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     # 3rd party apps
     'mptt',
     'colorfield',
+    'chartjs',
 ]
 
 MIDDLEWARE = [

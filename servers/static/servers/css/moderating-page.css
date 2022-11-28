@@ -18,6 +18,12 @@
   width: 100%;
 }
 
+.l-wrapper {
+  width: 100%;
+  height: auto;
+  margin-bottom: 3rem;
+}
+
 .wrapper {
   background: #FFFF;
   border-radius: 0.5rem;
@@ -33,4 +39,8 @@
   background: var(--gray);
   width: 31px;
   height: 31px;
+}
+
+#nigga {
+  width: 500px;
 }

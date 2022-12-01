@@ -38,18 +38,6 @@
       <button id='form_popup_btn' type='submit'>ایجاد تگ</button>
     </form>
   </div>
-{% comment %} 
-  <div class='form-popup' id='delete-rule-tab'>
-    <section id='create-server-tab'>
-      <div class='form-title'>
-        <h2>آیا از حذف این قانون مطمعن هستید؟</h2>
-      </div>
-      <div id='yes-no-btn'>
-        <a href="{% url 'servers:server-rules-delete' rule.server.tag rule.id %}" id='form_popup_btn'>بله مطمعنم</a>
-        <button onclick="createServerTabFunc('delete-rule-tab')" id='form_popup_btn'>خیر</button>
-      </div>
-    </section>
-  </div> {% endcomment %}
 {% endblock form_popup %}
 
 {% block content %}

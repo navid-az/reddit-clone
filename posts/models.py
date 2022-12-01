@@ -82,8 +82,19 @@ class PostSave(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='post_saves')
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user_saves')
     value = models.CharField(choices=VALUE_CHOICES, max_length=8, default='save')
-    updated = models.DateTimeField(auto_now=True)
     created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return f'{self.user} saved {self.post}'
+
+class ReportPost(models.Model):
+    REPORT_REASON_CHOICES =(('sr', 'server_rule'),('c', 'copy_right'),('hr', 'harassment'),('mi', 'misinformation'),('sh', 'self_harm'),('spi', 'sharing_personal_info'))
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='reports')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='reporters')
+    reason = models.CharField(choices=REPORT_REASON_CHOICES, max_length=3, default='sr' )
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+
+    def __str__(self) -> str:
+        return f'u/{self.user} reported post:{self.post.title}'

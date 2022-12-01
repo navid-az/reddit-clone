@@ -143,7 +143,7 @@ class DeletePostView(LoginRequiredMixin ,View):
             post.delete()
             messages.success(request, '!پست با موفقیت حذف شد')
         else:
-            messages.error('شما نمیتوانید پست دیگران را حذف کنید')
+            messages.error(request, 'شما نمیتوانید پست دیگران را حذف کنید')
         return redirect('user:profile', request.user.username)
         
 def savePostAjaxView(request):

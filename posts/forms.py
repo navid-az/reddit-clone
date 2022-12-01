@@ -1,6 +1,6 @@
 from django.forms import ModelForm, Textarea
 from django import forms
-from .models import Post, Comment
+from .models import Post, Comment, ReportPost
 from django.core.exceptions import ValidationError
 
 
@@ -29,4 +29,8 @@ class CreateCommentReplyForm(ModelForm):
         fields = ['body']
         widgets = {'body': Textarea(attrs={'id':'comment-form'})}
 
-    
+class ReportPostForm(ModelForm):
+    class Meta:
+        model = ReportPost
+        fields = ['reason']
+        widgets = {'reason':forms.Select({'id':'report-reason-field'})}

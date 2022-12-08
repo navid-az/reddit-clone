@@ -20,3 +20,20 @@ const openReplyForm = (id) => {
     replyForm.style.display = "block";
   }
 };
+
+// this should be changed
+var buttonCode = localStorage.getItem("BTN");
+console.log(buttonCode);
+
+const reportForm = () => {
+  if (buttonCode == "create-rule") {
+    createServerTabFunc(buttonCode);
+  }
+};
+document.addEventListener("load", reportForm());
+
+// report form
+const reportReasonField = document.getElementById("report-reason-field");
+const changeReasonInputValue = (reason) => {
+  reportReasonField.value = reason;
+};

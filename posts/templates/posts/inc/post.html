@@ -1,57 +1,53 @@
 {% load static %}
 <div class="post">
   <div class="post-header">
-    <form action="{% url 'posts:vote-post' %}" method="post" class='vote-post-form' id='{{post.id}}'>
-              {% csrf_token %}
-              <div class="vote-wrapper">
-                {% if request.user in post.upvotes.all %}
-                  <button class='vote-btn' type="submit" name='upvote'>
-                    <img
-                      src="{% static 'svgs/up-voted.svg' %}"
-                      alt="upvote"
-                    />
-                  </button>
-                  <p id="vote-counter-{{post.id}}">{{post.votes_count}}</p>
-                  <button class='vote-btn' type="submit" name='downvote'>
-                    <img
-                      style='transform:rotate(180deg)'
-                      src="{% static 'svgs/vote.svg' %}"
-                      alt="downvote"
-                    />
-                  </button>
-                {% elif request.user in post.downvotes.all %}
-                  <button class='vote-btn' type="submit" name='upvote'>
-                    <img
-                      src="{% static 'svgs/vote.svg' %}"
-                      alt="upvote"
-                    />
-                  </button>
-                  <p id="vote-counter-{{post.id}}">{{post.votes_count}}</p>
-                  <button class='vote-btn' type="submit" name='downvote'>
-                    <img
-                      style='transform:rotate(180deg)'
-                      src="{% static 'svgs/down-voted.svg' %}"
-                      alt="downvote"
-                    />
-                  </button>
-                {% else %}
-                  <button class='vote-btn' type="submit" name='upvote'>
-                    <img
-                      src="{% static 'svgs/vote.svg' %}"
-                      alt="upvote"
-                    />
-                  </button>
-                  <p id="vote-counter-{{post.id}}">{{post.votes_count}}</p>
-                  <button class='vote-btn' type="submit" name='downvote'>
-                    <img
-                      style='transform:rotate(180deg)'
-                      src="{% static 'svgs/vote.svg' %}"
-                      alt="downvote"
-                    />
-                  </button>
-                {% endif %}
-              </div>
-            </form>
+    <form
+      action="{% url 'posts:vote-post' %}"
+      method="post"
+      class="vote-post-form"
+      id="{{post.id}}"
+    >
+      {% csrf_token %}
+      <div class="vote-wrapper">
+        {% if request.user in post.upvotes.all %}
+        <button class="vote-btn" type="submit" name="upvote">
+          <img src="{% static 'svgs/up-voted.svg' %}" alt="upvote" />
+        </button>
+        <p id="vote-counter-{{post.id}}">{{post.votes_count}}</p>
+        <button class="vote-btn" type="submit" name="downvote">
+          <img
+            style="transform: rotate(180deg)"
+            src="{% static 'svgs/vote.svg' %}"
+            alt="downvote"
+          />
+        </button>
+        {% elif request.user in post.downvotes.all %}
+        <button class="vote-btn" type="submit" name="upvote">
+          <img src="{% static 'svgs/vote.svg' %}" alt="upvote" />
+        </button>
+        <p id="vote-counter-{{post.id}}">{{post.votes_count}}</p>
+        <button class="vote-btn" type="submit" name="downvote">
+          <img
+            style="transform: rotate(180deg)"
+            src="{% static 'svgs/down-voted.svg' %}"
+            alt="downvote"
+          />
+        </button>
+        {% else %}
+        <button class="vote-btn" type="submit" name="upvote">
+          <img src="{% static 'svgs/vote.svg' %}" alt="upvote" />
+        </button>
+        <p id="vote-counter-{{post.id}}">{{post.votes_count}}</p>
+        <button class="vote-btn" type="submit" name="downvote">
+          <img
+            style="transform: rotate(180deg)"
+            src="{% static 'svgs/vote.svg' %}"
+            alt="downvote"
+          />
+        </button>
+        {% endif %}
+      </div>
+    </form>
     <div class="server-info">
       <div class="post-info">
         <section>
@@ -109,37 +105,60 @@
           src="{% static 'posts/svgs/share.svg' %}"
           alt="share button"
       /></a>
-      <form action="{% url 'posts:save-post' %}" method="post" class='save-post-form' id='{{post.id}}'>
-                {% csrf_token %}
-                <input type="hidden" name="{{post.id}}">
-                <button type='submit' id='save-post-btn-{{post.id}}'>
-                  {% if request.user not in post.saved.all %}
-                  <img
-                  id="save-post-btn-img-{{post.id}}"
-                  src="{% static 'posts/svgs/save.svg' %}"
-                  alt="save post button"
-                  />
-                  {% else %}
-                  <img
-                  id="save-post-btn-img-{{post.id}}"
-                  src="{% static 'posts/svgs/saved.svg' %}"
-                  alt="save post button"
-                  />
-                  {% endif %}
-                </button>
-              </form>
+      <form
+        action="{% url 'posts:save-post' %}"
+        method="post"
+        class="save-post-form"
+        id="{{post.id}}"
+      >
+        {% csrf_token %}
+        <input type="hidden" name="{{post.id}}" />
+        <button type="submit" id="save-post-btn-{{post.id}}">
+          {% if request.user not in post.saved.all %}
+          <img
+            id="save-post-btn-img-{{post.id}}"
+            src="{% static 'posts/svgs/save.svg' %}"
+            alt="save post button"
+          />
+          {% else %}
+          <img
+            id="save-post-btn-img-{{post.id}}"
+            src="{% static 'posts/svgs/saved.svg' %}"
+            alt="save post button"
+          />
+          {% endif %}
+        </button>
+      </form>
     </div>
     <div class="post-options">
-      {% if request.user.id == post.creator.id %}
-      <a href="{% url 'posts:delete-post' post.id %}"
-        ><img src="{% static 'posts/svgs/trash.svg' %}" alt=""
-      /></a>
-      <div id="join-btn">
-        <a href="{% url 'posts:update-post' post.id %}">ویرایش</a>
+      <div id="post-more-options-dropdown-{{post.id}}">
+        <div
+          onclick="createServerTabFunc('create-rule')"
+          class="post-more-options"
+        >
+          <p>گزارش خطا</p>
+          <img src="{% static 'svgs/shield-alert.svg' %}" alt="report post" />
+        </div>
+        {% if request.user == post.creator %}
+        <a
+          href="{% url 'posts:update-post' post.id %}"
+          class="post-more-options"
+        >
+          <p>ویرایش پست</p>
+          <img src="{% static 'svgs/pencil.svg' %}" alt="edit post" />
+        </a>
+        <a
+          href="{% url 'posts:delete-post' post.id %}"
+          class="post-more-options"
+        >
+          <p>حذف پست</p>
+          <img src="{% static 'svgs/trash.svg' %}" alt="alert" />
+        </a>
+        {% endif %}
       </div>
-      {% endif %}
-
-      <div id="join-btn"><a href="">عضویت</a></div>
+      <button id="post-more-options-btn-{{post.id}}">
+        <img src="{% static 'svgs/more.svg' %}" alt="post more options" />
+      </button>
     </div>
   </div>
 </div>

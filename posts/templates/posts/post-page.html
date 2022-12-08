@@ -7,7 +7,37 @@
 {% endblock cssFiles %} 
 {% block jsFiles %}
   <script src="{% static 'posts/js/post-page.js' %}"></script>
-{% endblock jsFiles %} 
+  <script src="{% static 'home/js/home.js' %}"></script>
+{% endblock jsFiles %}
+
+{% block form_popup %}
+  <div class='form-popup' id='create-rule'>
+    <form action="" method="post" id='create-server-tab'>
+      {% csrf_token %}
+      <div class='form-title'>
+        <div class="form-title-btns close-btn" onclick="createServerTabFunc('create-rule')">
+          <img src="{% static 'svgs/x.svg' %}" alt="close tab">
+        </div>
+        <h2>نوع خطا را انتخاب نمایید</h2>
+      </div>
+      <section class='form-body'>
+        <!--this is hidden-->
+        {{report_form.reason}}
+
+        <section class='report-reasons-wrapper'>
+          <div class='report-reason' onclick='changeReasonInputValue("sr")'><div class='s-server-img'><img src="{{post.server.image.url}}" alt=""></div><p>r/{{post.server.tag}} نقض قوانین</p></div>
+          <div class='report-reason' onclick='changeReasonInputValue("hr")'><p>آزار و اذیت</p></div>
+          <div class='report-reason' onclick='changeReasonInputValue("c")'><p>حق کپی رایت</p></div>
+          <div class='report-reason' onclick='changeReasonInputValue("sh")'><p>خود آزاری و خود کشی</p></div>
+          <div class='report-reason' onclick='changeReasonInputValue("spi")'><p>اشتراک اطلاعات شخصی</p></div>
+          <div class='report-reason' onclick='changeReasonInputValue("mi")'><p>اطلاعات غلط</p></div>
+        </section>
+      </section>
+      <button id='form_popup_btn' type='submit'>گزارش خطا</button>
+    </form>
+  </div>
+{% endblock form_popup %}
+
 {% block content %}
 <div class="container">
   <div class="row">

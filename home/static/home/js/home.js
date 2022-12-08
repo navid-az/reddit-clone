@@ -70,7 +70,9 @@ const postMoreOptionsBtns = document.querySelectorAll(
 const postMoreOptionsDropdowns = document.querySelectorAll(
   `[id^="post-more-options-dropdown-"]`
 );
+const postReport = document.querySelectorAll(`[id^="report-post-"]`);
 let isOpen = false;
+let report = "";
 
 postMoreOptionsBtns.forEach((btn, index) => {
   const openDropdown = () => {
@@ -83,11 +85,12 @@ postMoreOptionsBtns.forEach((btn, index) => {
     }
   };
   btn.addEventListener("click", openDropdown);
-  // id.style.display = "none";
-  localStorage.setItem("BTN", btn);
+});
+postReport.forEach((btn) => {
+  report = "create-rule";
+  btn.addEventListener("click", localStorage.setItem("BTN", report));
 });
 // window.location.replace(`http://127.0.0.1:8000/posts/${postId}`);
-if (window.location.href == `http://127.0.0.1:8000/posts/${postId}`) {
-  var buttonCode = localStorage.getItem("BTN");
-  changeView(buttonCode);
-}
+
+// if (window.location.href == `http://127.0.0.1:8000/posts/${postId}`) {
+// }

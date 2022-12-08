@@ -181,7 +181,7 @@
               {% endcomment %}
               {% comment %} <div class="post-more-options-wrapper"> {% endcomment %}
                 <div id="post-more-options-dropdown-{{post.id}}">
-                  <a href="{% url 'posts:update-post' post.id %}" class="post-more-options">
+                  <a href="{% url 'posts:post-page' post.id %}" id="report-post-{{post.id}}" class="post-more-options">
                     <p>گزارش خطا</p>
                     <img
                       src="{% static 'svgs/shield-alert.svg' %}"

@@ -1,17 +1,15 @@
-{% extends 'base.html' %} {% load static %}
+{% extends './moderating-page.html' %} {% load static %}
 
-{% block cssFiles %}
-  <link rel="stylesheet" href="{% static 'servers/css/moderating-page.css' %}">
+{% block moderationCssFiles %}
   <link rel="stylesheet" href="{% static 'servers/css/rules.css' %}">
   <link rel="stylesheet" href="{% static 'servers/css/moderator-settings.css' %}">
-{% endblock cssFiles %}
-{% block jsFiles %}
+{% endblock moderationCssFiles %}
+{% block moderationJsFiles %}
   <script src="{% static 'servers/js/moderator-search.js' %}"></script>
-{% endblock jsFiles %}
+{% endblock moderationJsFiles %}
 
 
-{% block content %}
-<div id="moderation-page-wrapper">
+{% block moderatingPage %}
   <section id="moderator-display">
       <div class="wrapper l-wrapper">
         <div class="form-title">
@@ -82,6 +80,4 @@
         </section>
       </div>
   </section>
-  {% include 'servers/inc/moderator-control-bar.html' %}
-</div>
-{% endblock content %}
+{% endblock moderatingPage %}

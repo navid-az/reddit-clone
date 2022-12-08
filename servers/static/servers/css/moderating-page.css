@@ -6,6 +6,10 @@
   display: flex;
 }
 
+#moderating-page-wrapper {
+  display: flex;
+}
+
 #moderator-display {
   display: flex;
   justify-content: space-between;
@@ -41,6 +45,7 @@
   height: 31px;
 }
 
-#nigga {
-  width: 500px;
+#server-chart {
+  width: 80%;
+
 }

@@ -1,11 +1,11 @@
-{% extends 'base.html' %} {% load static %}
-{% block cssFiles %}
-  <link rel="stylesheet" href="{% static 'servers/css/moderating-page.css' %}">
+{% extends './moderating-page.html' %} {% load static %}
+{% block moderationCssFiles %}
   <link rel="stylesheet" href="{% static 'servers/css/tags-flairs.css' %}">
-{% endblock cssFiles %}
-{% block jsFiles %}
+{% endblock moderationCssFiles %}
+{% block moderationJsFiles %}
   <script src="{% static 'servers/js/tags-flairs.js' %}"></script>
-{% endblock jsFiles %}
+{% endblock moderationJsFiles %}
+
 {% block form_popup %}
   <div class='form-popup' id='create-post-tag'>
     <form action="" method="post" id='create-post-tag-form' class='create-tag-form'>
@@ -124,8 +124,7 @@
   </div>
 {% endblock form_popup %}
 
-{% block content %}
-<div id="moderation-page-wrapper">
+{% block moderatingPage %}
   <section id="moderator-display"> 
       <div class="wrapper flairs-wrapper">
         <div class="form-title">
@@ -178,6 +177,4 @@
         </section>
       </div>
   </section>
-  {% include 'servers/inc/moderator-control-bar.html' %}
-</div>
-{% endblock content %}
+{% endblock moderatingPage %}

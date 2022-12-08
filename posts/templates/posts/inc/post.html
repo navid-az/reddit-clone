@@ -1,5 +1,5 @@
 {% load static %}
-<div class="post">
+<div id='{{post.id}}' class="post">
   <div class="post-header">
     <form
       action="{% url 'posts:vote-post' %}"

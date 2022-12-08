@@ -1,13 +1,16 @@
 {% extends 'base.html' %} {% load static %}
 {% block cssFiles %}
   <link rel="stylesheet" href="{% static 'servers/css/moderating-page.css' %}">
+  <link rel="stylesheet" href="{% static 'servers/inc/css/moderator-control-bar.css' %}">
+  {% block moderationCssFiles %}{% endblock moderationCssFiles %}
 {% endblock cssFiles %}
 {% block jsFiles %}
-<script src="{% static 'servers/inc/js/moderator-control-bar' %}"></script>
+  <script src="{% static 'servers/inc/js/moderator-control-bar.js' %}"></script>
+  {% block moderationJsFiles %}{% endblock moderationJsFiles %}
 {% endblock jsFiles %}
 {% block content %}
-<div id="moderation-page-wrapper">
-  <section id="server-tab">fasd</section>
+<div id="moderating-page-wrapper">
+  {% block moderatingPage %}{% endblock moderatingPage %}
   {% include 'servers/inc/moderator-control-bar.html' %}
 </div>
 {% endblock content %}

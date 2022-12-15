@@ -55,7 +55,7 @@
 .form-title {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
     padding-bottom: var(--p14);
     border-bottom: 1px solid #b6b6b64f;
     margin-bottom: var(--p30);
@@ -67,6 +67,16 @@
 
 .form-title>h2 {
     font-size: 1.25rem;
+}
+
+.form-title>p {
+    font-size: 0.75rem;
+    color: #979797;
+}
+
+.form-title-no-border {
+    border-bottom: none;
+    margin-bottom: 0;
 }
 
 .form-title-btns {

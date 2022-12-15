@@ -194,7 +194,6 @@ def votePostAjaxView(request):
             post = Post.objects.get(id=post_id)
             vote, created = PostVote.objects.get_or_create(post=post, user=user)
 
-        
         if vote_for == 'post':
             if not created:
                 if vote.choice == 'up' and vote_type == 'downvote':

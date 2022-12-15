@@ -49,6 +49,7 @@ class Post(models.Model):
     server = models.ForeignKey(Server, on_delete=models.CASCADE, related_name='posts')
     creator = models.ForeignKey(User , on_delete=models.CASCADE, related_name='posts', null=True)
     created = models.DateTimeField(auto_now_add=True)
+    dates = models.DateField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     type = models.CharField(max_length=5, choices=post_type_choices, default='text')
     tag = models.ForeignKey(ServerPostTag, on_delete=models.CASCADE, null=True, blank=True, related_name='post')

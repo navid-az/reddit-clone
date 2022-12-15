@@ -12,7 +12,8 @@ from django.db.models import Q
 import itertools
 from django.db.models import Count
 from django.db.models.functions import TruncDate
-import datetime
+from datetime import timedelta
+from django.utils import timezone
 
 from chartjs.views.lines import BaseLineChartView
 from django.views.generic import TemplateView
@@ -81,16 +82,38 @@ class ServerInsightsView(View):
         server = Server.objects.get(tag=server_tag)
         post_daily_count = server.posts.all().values('created').annotate(dailycount=Count('created')).order_by()
         post_daily_count = list(server.posts.all().annotate(date=TruncDate('created')).values('date').annotate(dailycount=Count('date')).order_by())
-        print(list(post_daily_count))
         server_follow_daily_count = list(server.followers.all().annotate(date=TruncDate('created')).values('date').annotate(dailycount=Count('date')).order_by())
-        today = datetime.date.today()
-        tomorrow = today + datetime.timedelta(days=1)
+        daily_follow_count_icon = ''
+        daily_post_count_icon = ''
+
+        today = timezone.now()
+        last_day = timezone.now() - timedelta(1)
+
+        today_post_count_created = server.posts.filter(created__date=today).count()
+        last_day_post_count_created = server.posts.filter(created__date=last_day).count()
+        today_follow_count = server.followers.filter(created__date=today).count()
+        last_day_follow_count = server.followers.filter(created__date=last_day).count()
+        
+        if today_post_count_created > last_day_post_count_created:
+            daily_post_count_icon = 'higher'
+        elif today_post_count_created < last_day_post_count_created:
+            daily_post_count_icon = 'lower'
+        else:
+            daily_post_count_icon = 'same'
+        
+        if today_follow_count > last_day_follow_count:
+            daily_follow_count_icon = 'higher'
+        elif today_follow_count < last_day_follow_count:
+            daily_follow_count_icon = 'lower'
+        else:
+            daily_follow_count_icon = 'same'
+        
         for value in post_daily_count:
             value['date'] = str(value['date'])
 
         for value in server_follow_daily_count:
             value['date'] = str(value['date']) 
-        return render(request, 'servers/insights.html', {'server':server, 'post_daily_count': post_daily_count, 'server_follow_daily_count':server_follow_daily_count, 'tomorrow':tomorrow})
+        return render(request, 'servers/insights.html', {'server':server, 'post_daily_count': post_daily_count, 'server_follow_daily_count':server_follow_daily_count, 'today_post_count_created':today_post_count_created, 'last_day_post_count_created':last_day_post_count_created, 'today_follow_count':today_follow_count, 'last_day_follow_count':last_day_follow_count, 'daily_post_count_icon':daily_post_count_icon, 'daily_follow_count_icon':daily_follow_count_icon})
 class TagsAndFlairsView(LoginRequiredMixin, View):
     form_class = CreatePostTagForm
     form_class_2 = CreateUserTagForm

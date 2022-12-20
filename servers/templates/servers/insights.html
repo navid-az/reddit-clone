@@ -8,20 +8,10 @@
 
 {% block moderatingPage %}
   <section id="moderator-display">
-    {% comment %} {{post_daily_count}} {% endcomment %}
-    {% comment %} <br>
-    {% for i in post_daily_count %}{{i.dailycount}}{% endfor %}
-    <br><br><br>
-    {{server_follow_daily_count}}
-    <br>
-    {% for i in server_follow_daily_count %}{{i.dailycount}}{% endfor %} {% endcomment %}
     <div class='wrapper' id='chart-wrapper'>
       <div class="form-title">
         <h2>نمودار تغییرات</h2>
       </div>
-      {% comment %} {{tomorrow|date:'Y-m-d'|safe}}
-      <br>
-      {{server.created|date:'Y-m-d'|safe}} {% endcomment %}
       <div id='server-chart'>
         <canvas id="moderating-chart"></canvas>
       </div>
@@ -30,6 +20,7 @@
       <button onclick='updateChart(2)' id='go-forward'>روزانه</button>
     </div>
     <div class="numbers-wrapper">
+      <!--daily follow counter-->
       <div class="wrapper">
         <div class="form-title form-title-no-border" style="flex-direction: column;">
           <h2>دنبال کنندگان امروز</h2>
@@ -37,44 +28,58 @@
         </div>
         {% if daily_follow_count_icon == 'higher' %}
           <div class="today-count">
-            <p style="color:#00CF08">{{today_follow_count}}</p>
+            <p style="color:#00CF08">{{server_numbers.1}}</p>
             <img src="{% static 'servers/svgs/higher.svg' %}" alt="higher than last day">
           </div>
         {% elif daily_follow_count_icon == 'lower' %}
           <div class="today-count">
-            <p style="color:#FF0909">{{today_follow_count}}</p>
+            <p style="color:#FF0909">{{server_numbers.1}}</p>
             <img src="{% static 'servers/svgs/lower.svg' %}" alt="lower than last day">
           </div>
         {% else %}
           <div class="today-count">
-            <p style="color:#EBB700">{{today_follow_count}}</p>
+            <p style="color:#EBB700">{{server_numbers.1}}</p>
             <img src="{% static 'servers/svgs/same.svg' %}" alt="same as last day">
           </div>
         {% endif %}
       </div>
+
+      <!--daily post counter-->
       <div class="wrapper">
-    
         <div class="form-title form-title-no-border" style='flex-direction: column;'>
           <h2>پست های امروز</h2>
           <p>نسبت به روز قبل</p>
         </div>
         {% if daily_post_count_icon == 'higher' %}
           <div class="today-count">
-            <p style="color:#00CF08">{{today_post_count_created}}</p>
+            <p style="color:#00CF08">{{server_numbers.0}}</p>
             <img src="{% static 'servers/svgs/higher.svg' %}" alt="higher than last day">
           </div>
         {% elif daily_post_count_icon == 'lower' %}
           <div class="today-count">
-            <p style="color:#FF0909">{{today_post_count_created}}</p>
+            <p style="color:#FF0909">{{server_numbers.0}}</p>
             <img src="{% static 'servers/svgs/lower.svg' %}" alt="lower than last day">
           </div>
         {% else %}
           <div class="today-count">
-            <p style="color:#EBB700">{{today_post_count_created}}</p>
+            <p style="color:#EBB700">{{server_numbers.0}}</p>
             <img src="{% static 'servers/svgs/same.svg' %}" alt="same as last day">
           </div>
         {% endif %}
       </div>
+    </div>
+    <div class="wrapper l-wrapper reports-wrapper">
+      <div class="form-title">
+        <h2>گزارشات خطا</h2>
+      </div>
+      <section id='list'>
+        {{reports}}
+        <div class='list-item'>
+          <div class="list-item-title-wrapper">
+            <div class="list-item-title">ss</div>
+          </div>
+        </div>
+      </section>
     </div>
   </section>
   

@@ -13,8 +13,24 @@
 #moderator-display {
   display: flex;
   justify-content: space-between;
+  flex-wrap: wrap;
+  overflow-y: scroll;
   width: 80%;
-  margin: 3rem auto;
+  margin: 0 auto;
+  padding-top: 3rem;
+  height: 580px;
+}
+
+#moderator-display {
+  -ms-overflow-style: none;
+  /* Internet Explorer 10+ */
+  scrollbar-width: none;
+  /* Firefox */
+}
+
+#moderator-display::-webkit-scrollbar {
+  display: none;
+  /* Safari and Chrome */
 }
 
 #server-tab {
@@ -48,4 +64,64 @@
 #server-chart {
   width: 80%;
 
+}
+
+/* lists and list items */
+#list {
+  flex-direction: column;
+}
+
+.list-item {
+  margin-bottom: var(--p14);
+}
+
+.list-item-title-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #FFFF;
+  background: var(--gray);
+  padding: var(--p14);
+  border-radius: 5px;
+}
+
+.list-item-body {
+  font-weight: 400;
+  background: var(--light-gray-3);
+  color: var(--gray);
+  font-size: var(--p14);
+  padding: var(--p14);
+  padding-top: 1.1875rem;
+  margin-top: -0.5rem;
+  border-radius: 0.5rem;
+  border: 2px solid #3b3b3b1a;
+  display: none;
+  transition: 0.25s ease-in-out;
+}
+
+.list-item-title,
+.list-item-title-wrapper {
+  display: flex;
+  align-items: center;
+}
+
+.list-item-title>p {
+  margin-right: var(--p14);
+}
+
+.list-item-options {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.list-item-options>button,
+.list-item-options>a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  background: none;
 }

@@ -91,7 +91,8 @@ class PostSave(models.Model):
 
 class ReportPost(models.Model):
     REPORT_REASON_CHOICES =(('sr', 'server_rule'),('c', 'copy_right'),('hr', 'harassment'),('mi', 'misinformation'),('sh', 'self_harm'),('spi', 'sharing_personal_info'))
-    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='reports')
+    server = models.ForeignKey(Server, on_delete=models.CASCADE, related_name='reports', null=True)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='reporters')
     reason = models.CharField(choices=REPORT_REASON_CHOICES, max_length=3, default='sr' )
     created = models.DateTimeField(auto_now_add=True)

@@ -40,6 +40,7 @@ class PostPageView(View):
         elif report_form.is_valid():
             new_report = report_form.save(commit=False)
             new_report.user = request.user
+            new_report.server = self.post_instance.server
             new_report.post = self.post_instance
             new_report.save()
             messages.success(request, 'گزارش شما با موفییت ثبت شد')

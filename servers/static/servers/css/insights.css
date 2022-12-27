@@ -30,3 +30,26 @@ body {
 .reports-wrapper {
   width: 100%;
 }
+
+.report-text {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.report-info {
+  background: var(--orange);
+  border-radius: 20rem;
+  color: #FFFF;
+  font-size: 10px;
+  padding: 0.3rem 0.5rem;
+}
+
+.reporter {
+  color: white;
+  transition: 0.25s ease-in-out;
+}
+
+.reporter:hover {
+  color: var(--orange);
+}

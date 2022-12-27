@@ -80,6 +80,7 @@ class ServerModeratingView(LoginRequiredMixin, View):
 class ServerInsightsView(View):
     def get(self, request, server_tag):
         server = Server.objects.get(tag=server_tag)
+        server_reports = server.reports.all()
 
         today = timezone.now()
         last_day = timezone.now() - timedelta(1)
@@ -114,7 +115,7 @@ class ServerInsightsView(View):
 
         for value in server_follow_daily_count:
             value['date'] = str(value['date']) 
-        return render(request, 'servers/insights.html', {'server':server, 'post_daily_count': post_daily_count, 'server_follow_daily_count':server_follow_daily_count, 'daily_post_count_icon':daily_post_count_icon, 'daily_follow_count_icon':daily_follow_count_icon, 'server_numbers':server_numbers})
+        return render(request, 'servers/insights.html', {'server':server, 'server_reports':server_reports, 'post_daily_count': post_daily_count, 'server_follow_daily_count':server_follow_daily_count, 'daily_post_count_icon':daily_post_count_icon, 'daily_follow_count_icon':daily_follow_count_icon, 'server_numbers':server_numbers})
 
 class TagsAndFlairsView(LoginRequiredMixin, View):
     form_class = CreatePostTagForm

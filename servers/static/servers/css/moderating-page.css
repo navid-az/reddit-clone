@@ -68,11 +68,9 @@
 
 /* lists and list items */
 #list {
+  display: flex;
+  gap: var(--p14);
   flex-direction: column;
-}
-
-.list-item {
-  margin-bottom: var(--p14);
 }
 
 .list-item-title-wrapper {
@@ -83,7 +81,11 @@
   color: #FFFF;
   background: var(--gray);
   padding: var(--p14);
-  border-radius: 5px;
+  border-radius: 0.5rem;
+}
+
+.list-item-title {
+  justify-content: flex-start;
 }
 
 .list-item-body {
@@ -113,7 +115,7 @@
 .list-item-options {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: var(--p14);
 }
 
 .list-item-options>button,

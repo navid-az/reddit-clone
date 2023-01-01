@@ -103,6 +103,7 @@ class ServerModeratorPermission(models.Model):
     allow_create_rule = models.BooleanField(default=False)
     allow_remove_moderator = models.BooleanField(default=False)
     allow_add_moderator = models.BooleanField(default=False)
+    allow_delete_report = models.BooleanField(default=True)
     allow_ban_user = models.BooleanField(default=True)
     allow_remove_user = models.BooleanField(default=False)
     allow_delete_post = models.BooleanField(default=False)

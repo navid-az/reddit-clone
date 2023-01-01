@@ -3,7 +3,6 @@
 <link rel="stylesheet"href="{% static 'servers/css/moderator-permissions.css' %}" />
 {% endblock moderationCssFiles %}
 {% block moderationJsFiles %}
-<script src="{% static 'servers/js/rules.js' %}"></script>
 {% endblock moderationJsFiles %}
 
 {% block moderatingPage %}
@@ -18,7 +17,7 @@
           </a>
         </div>
       </div>
-      <form action="" method="post" id="list" style="direction: ltr">
+      <form method="post" id="moderator-permission-list" style="direction: ltr">
         {% csrf_token %}
         <div class="d-none">{{form.as_p}}</div>
         <div class="form-body-wrapper">
@@ -132,6 +131,17 @@
             </div>
             <section class="checkbox-wrapper">
               <div class="checkbox">
+                <div class="checkbox-label">حذف گزارش خطا</div>
+                <div class="checkbox-btn">
+                  <img
+                    onclick="checkboxForm('id_allow_delete_report')"
+                    style="fill: white"
+                    src="{% static 'servers/svgs/check.svg' %}"
+                    alt="check mark"
+                  />
+                </div>
+              </div>
+              <div class="checkbox">
                 <div class="checkbox-label">محدود سازی کاربر</div>
                 <div class="checkbox-btn">
                   <img
@@ -175,7 +185,7 @@
             </section>
           </section>
         </div>
-        <input type="submit" value="ثبت تغییرات" />
+        <input id="s-submit-btn" type="submit" value="ثبت تغییرات" />
       </form>
     </div>
   </section>

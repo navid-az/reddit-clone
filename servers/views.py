@@ -1,7 +1,7 @@
 from django.shortcuts import redirect, render
 from django.views import View
 from django.contrib.auth.models import User
-from .models import Server, ServerFollow, ServerModeratorPermission, ServerPostTag, ServerRule, ServerUserTag, ServerModerator
+from .models import Server, ServerFollow, ServerPostTag, ServerRule, ServerUserTag, ServerModerator
 from .forms import AddModeratorForm, CreateServerForm, CreatePostTagForm, CreateUserTagForm, CreateRuleForm, UpdateModeratorPermissionsForm
 from posts.models import PostVote
 from django.http import JsonResponse
@@ -116,6 +116,19 @@ class ServerInsightsView(View):
         for value in server_follow_daily_count:
             value['date'] = str(value['date']) 
         return render(request, 'servers/insights.html', {'server':server, 'server_reports':server_reports, 'post_daily_count': post_daily_count, 'server_follow_daily_count':server_follow_daily_count, 'daily_post_count_icon':daily_post_count_icon, 'daily_follow_count_icon':daily_follow_count_icon, 'server_numbers':server_numbers})
+
+class ServerDeleteReportView(LoginRequiredMixin, View):
+    def get(self, request, server_tag, report_id):
+        server = Server.objects.get(tag=server_tag)
+        report = server.reports.filter(id=report_id)
+        moderator = server.moderator_of.get(user=request.user)
+        permission = server.permissions.filter(moderator=moderator, allow_delete_report=True)
+        if permission.exists():
+            report.delete()
+            return redirect('servers:server-insights', server_tag)
+        messages.error(request, 'شما اجازه حذف گزارشات را ندارید.') 
+        return redirect('servers:server-insights', server_tag)
+
 
 class TagsAndFlairsView(LoginRequiredMixin, View):
     form_class = CreatePostTagForm

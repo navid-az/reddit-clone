@@ -57,26 +57,26 @@
                       <p>r/{{i.server.tag}}</p>
                       <p>عضو {{i.server.count}}</p>
                     </div>
-                  </div> 
-                {% endfor %}
+                  </div>
+              {% endfor %}
               </div>
             </div>
             <div class="form-types">
               <button type="button" onclick="postType(0)">
                 <p>متن</p>
-                <img src="{% static 'posts/svgs/file.svg' %}" alt="" />
+                <img src="{% static 'posts/svgs/file.svg' %}" alt="text" />
               </button>
               <button type="button" onclick="postType(1)">
                 <p>عکس</p>
-                <img src="{% static 'posts/svgs/image.svg' %}" alt="" />
+                <img src="{% static 'posts/svgs/image.svg' %}" alt="image" />
               </button>
               <button type="button" onclick="postType(2)">
                 <p>فیلم</p>
-                <img src="{% static 'posts/svgs/video.svg' %}" alt="" />
+                <img src="{% static 'posts/svgs/video.svg' %}" alt="video" />
               </button>
               <button type="button" onclick="postType(2)">
                 <p>لینک</p>
-                <img src="{% static 'posts/svgs/link.svg' %}" alt="" />
+                <img src="{% static 'posts/svgs/link.svg' %}" alt="link" />
               </button>
             </div>
           </section>

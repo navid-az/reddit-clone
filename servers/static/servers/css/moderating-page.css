@@ -15,7 +15,7 @@
   justify-content: space-between;
   flex-wrap: wrap;
   overflow-y: scroll;
-  width: 80%;
+  width: 78%;
   margin: 0 auto;
   padding-top: 3rem;
   height: 580px;
@@ -37,18 +37,21 @@
   width: 100%;
 }
 
-.l-wrapper {
-  width: 100%;
-  height: auto;
-  margin-bottom: 3rem;
-}
 
 .wrapper {
+  display: flex;
+  flex-direction: column;
   background: #FFFF;
   border-radius: 0.5rem;
   padding: var(--p14);
   direction: rtl;
   margin-bottom: 0.875rem;
+}
+
+.l-wrapper {
+  width: 100%;
+  height: auto;
+  /* margin-bottom: 3rem; */
 }
 
 .square-btn {

@@ -5,10 +5,12 @@
   gap: var(--p30);
 }
 
-#list {
+#moderator-permission-list {
   margin-top: -30px;
   display: flex;
+  flex-grow: 1;
   flex-direction: row-reverse;
+  justify-content: space-between;
   gap: 10rem;
 }
 
@@ -24,4 +26,17 @@
   width: 12px;
   height: 12px;
   filter: invert(99%) sepia(1%) saturate(13%) hue-rotate(126deg) brightness(103%) contrast(100%);
+}
+
+#s-submit-btn {
+  height: 31px;
+  width: 100px;
+  align-self: flex-end;
+  border: none;
+  background: #F8F8F8;
+  color: #AAAAAA;
+  border-radius: 0.5rem;
+  font-family: Vmedium;
+  pointer-events: none;
+  transition: 0.25s ease-in-out;
 }

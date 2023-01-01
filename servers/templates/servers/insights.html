@@ -77,8 +77,10 @@
         <div class='list-item'>
           <div class="list-item-title-wrapper">
             <div class="list-item-title">
-              <img src="{% static 'servers/svgs/shield-alert.svg' %}" alt="report icon">
-              <p class="report-text">پست <a href="{% url 'posts:post-page' report.post.id %}" class='report-info'>{{report.post.title}}</a> توسط <a class="reporter" href="{% url 'user:profile' report.user %}">u/{{report.user}}</a> به دلیل <span class='report-info'>{{report.get_reason_display}}</span> گزارش شده.</p></div>
+              <a href="{% url 'servers:server-delete-report' report.server.tag report.id %}">
+                <img src="{% static 'servers/svgs/shield-alert.svg' %}" alt="report icon">
+              </a>
+              <p class="report-text">پست <a href="{% url 'posts:post-page' report.post.id %}" class='report-info'>{{report.post.title|truncatewords:8}}</a> توسط <a class="reporter" href="{% url 'user:profile' report.user %}">u/{{report.user}}</a> به دلیل <span class='report-info'>{{report.get_reason_display}}</span> گزارش شده.</p></div>
           </div>
         </div>
         {% endfor %}

@@ -31,6 +31,21 @@ body {
   width: 100%;
 }
 
+.list-item-title>a>img[alt='report icon'],
+.list-item-title>a>img[alt='delete report'] {
+  width: 24px !important;
+  height: 24px !important;
+}
+
+.list-item-title>a>img[alt='report icon'] {
+  display: flex;
+}
+
+.list-item-title>a>img[alt='delete report'] {
+  display: none;
+  filter: invert(100%) sepia(1%) saturate(761%) hue-rotate(175deg) brightness(114%) contrast(100%);
+}
+
 .report-text {
   display: flex;
   align-items: center;
@@ -57,4 +72,72 @@ body {
 
 .reporter:hover {
   color: var(--orange);
+}
+
+/* user limit duration range slider  */
+.range-slider {
+  position: relative;
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+  height: auto;
+  padding: 1.875rem 0.5rem;
+}
+
+#range-slider-btn {
+  position: absolute;
+  /* starting point (79px is the next one) */
+  left: 0px;
+
+  width: 20px;
+  height: 20px;
+  border-radius: 5px;
+  background: var(--gray);
+  transition: 0.25s ease-in-out;
+}
+
+.range-slider-section {
+  background: red;
+  display: flex;
+  flex-grow: 1;
+  height: 3px;
+}
+
+.range-slider-section:last-of-type {
+  flex-grow: 0;
+}
+
+.range-slider-section-line,
+.range-slider-section-indicator>div {
+  background: #D9D9D9;
+  transition: 0.25s ease-in-out;
+}
+
+.range-slider-section-line {
+  width: 100%;
+  height: 3px;
+}
+
+.range-slider-section-indicator {
+  /* position: absolute; */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 6px;
+  margin-top: -4px;
+  width: 4px;
+  height: 50px;
+}
+
+.range-slider-section-indicator>div {
+  width: 4px;
+  height: 11px;
+  border-radius: 5px;
+}
+
+.range-slider-section-indicator>p {
+  font-size: 12px;
+  color: #D9D9D9;
+  transition: 0.25s ease-in-out;
 }

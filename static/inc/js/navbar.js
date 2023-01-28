@@ -1,7 +1,7 @@
 let tabStatus = true;
 
 // form tab open and close function
-const createServerTabFunc = (formId) => {
+const createServerTabFunc = (formId, var1) => {
   let form = document.getElementById(formId);
 
   if (tabStatus == true) {

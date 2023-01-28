@@ -4,17 +4,6 @@ from django.forms import CharField
 from colorfield.fields import ColorField
 from django.db.models import Q
 
-# class ServerQuerySet(models.QuerySet):
-#     def check_moderator(self, current_user, tag):
-#         moderator = ServerModerator.objects.get(user=current_user)
-#         server = Server.objects.get(tag=tag)
-#         server.moderator_of.get(server=moderator)
-#         self = self.get(Q(tag=tag) & Q(creator=moderator))
-#         return self
-# class ServerQuerySet(models.QuerySet):
-#     def check_moderator(self, tag):
-#         server = Server.objects.get(tag=tag)
-#         return server
 class Server(models.Model):
     SERVER_CHOICES = (
         ('pub', 'عمومی'),
@@ -33,22 +22,16 @@ class Server(models.Model):
     online_count = models.IntegerField(default=0)
     required_karma = models.IntegerField(default=0)
 
-    # objects = ServerQuerySet.as_manager()
-
     def __str__(self):
         return f'r/{self.tag} owned by {self.creator}'   
 
-    # @staticmethod
-    # def moderator_checker(self, current_user):
-    #     moderator = ServerModerator.objects.get(user=current_user)
-    #     server = Server.objects.get(Q(creator=current_user) | Q(moderators=moderator), Q(tag=self.tag))
-    #     return server
 
 class ServerFollow(models.Model):
     server = models.ForeignKey(Server ,on_delete=models.CASCADE, related_name='followers')
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='following_server')
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
+
 
 class ServerPostTag(models.Model):
     server = models.ForeignKey(Server, on_delete=models.CASCADE, related_name='post_tags')
@@ -60,6 +43,7 @@ class ServerPostTag(models.Model):
 
     def __str__(self) -> str:
         return f'{self.name} --> r/{self.server}'
+
 
 class ServerUserTag(models.Model):
     server = models.ForeignKey(Server, on_delete=models.CASCADE, related_name='user_tags')
@@ -73,6 +57,7 @@ class ServerUserTag(models.Model):
     def __str__(self) -> str:
         return f'{self.name} --> r/{self.server}'
 
+
 class ServerRule(models.Model):
     server = models.ForeignKey(Server, on_delete=models.CASCADE, related_name='rules')
     creator = models.ForeignKey(User, on_delete=models.CASCADE, related_name='rules')
@@ -83,6 +68,7 @@ class ServerRule(models.Model):
     def __str__(self) -> str:
         return f'{self.title} | made by {self.creator} for r/{self.server.tag}'
 
+
 class ServerModerator(models.Model):
     server = models.ManyToManyField(Server, related_name='moderator_of', blank=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='moderator_of')
@@ -92,6 +78,7 @@ class ServerModerator(models.Model):
 
     def __str__(self) -> str:
         return f'{self.user.username}'
+
 
 class ServerModeratorPermission(models.Model):
     server = models.ForeignKey(Server, on_delete=models.CASCADE, related_name='permissions', default=0)
@@ -111,3 +98,20 @@ class ServerModeratorPermission(models.Model):
     def __str__(self) -> str:
         return f'{self.moderator} moderator of r/{self.server.tag}'
 
+class ServerUserLimitation(models.Model):
+    LIMITATION_DURATION = (
+        ('1', '۱ روز'),
+        ('2', '۲ روز'),
+        ('7', '۷ روز'),
+        ('14', '۱۴ روز'),
+        ('30', '۳۰ روز'),
+        ('permanent', 'برای همیشه'),
+    )
+    server = models.ForeignKey(Server, on_delete=models.CASCADE, related_name='limited_users')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='limited_from')
+    duration = models.CharField(choices=LIMITATION_DURATION, default='1', max_length=9)
+    info = models.TextField(max_length=400)
+    created = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self) -> str:
+        return f'{self.user} has been limited to post on {self.server} server for the duration of {self.duration}(day/days)'

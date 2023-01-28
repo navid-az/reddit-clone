@@ -1,97 +1,234 @@
-{% extends './moderating-page.html' %} {% load static %}
+{% extends './moderating-page.html' %} {% load static %} 
 {% block moderationCssFiles %}
-  <link rel="stylesheet" href="{% static 'servers/css/insights.css' %}">
-{% endblock moderationCssFiles %}
+<link rel="stylesheet" href="{% static 'servers/css/insights.css' %}" />
+{% endblock moderationCssFiles %} 
 {% block moderationJsFiles %}
 <script src="{% static 'servers/js/insights.js' %}"></script>
-{% endblock moderationJsFiles %}
+{% endblock moderationJsFiles %} 
+
+{% block form_popup %}
+  <div class='form-popup' id='ban-user'>
+    <form action="" method="post" id='create-server-tab'>
+      {% csrf_token %}
+      <div class='form-title'>
+        <div class="form-title-btns close-btn" onclick="createServerTabFunc('ban-user')">
+          <img src="{% static 'svgs/x.svg' %}" alt="close tab">
+        </div>
+        <h2>محدود سازی کاربر</h2>
+      </div>
+      <section class='form-body'>
+        <div class="title">
+          <p>مدت زمان محدودیت</p>
+          <p>مدت زمانی که میخواهید کاربر از دسترسی به سرور منع شود را انتخاب کنید</p>
+        </div>
+        <div class="input">
+
+          <!-- hidden inputs --> 
+          <div style='display:none'>
+            {{limit_user.duration}}
+            {{limit_user.user}}
+          </div>
+          <div class="range-slider">
+            <div id="range-slider-btn"></div>
+            <div class="range-slider-section">
+              <div class="range-slider-section-line"></div>
+              <div class="range-slider-section-indicator">
+                <div></div>
+                <p>1</p>
+              </div>
+            </div>
+            <div class="range-slider-section">
+              <div class="range-slider-section-line"></div>
+              <div class="range-slider-section-indicator">
+                <div></div>
+                <p>2</p>
+              </div>
+            </div>
+            <div class="range-slider-section">
+              <div class="range-slider-section-line"></div>
+              <div class="range-slider-section-indicator">
+                <div></div>
+                <p>7</p>
+              </div>
+            </div>
+            <div class="range-slider-section">
+              <div class="range-slider-section-line"></div>
+              <div class="range-slider-section-indicator">
+                <div></div>
+                <p>14</p>
+              </div>
+            </div>
+            <div class="range-slider-section">
+              <div class="range-slider-section-line"></div>
+              <div class="range-slider-section-indicator">
+                <div></div>
+                <p>30</p>
+              </div>
+            </div>
+            <div class="range-slider-section">
+              <div class="range-slider-section-indicator">
+                <div></div>
+                <p><img src="{% static 'servers/svgs/ban.svg' %}" alt=""></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class='form-body'>
+        <div class="title">
+          <p>توضیحات تکمیلی</p>
+          <p>در رابطه با دلیل این محدودیت توضیح دهید</p>
+        </div>
+        <div class="input">
+          {{limit_user.info}}
+        </div>
+      </section>
+      <button id='form_popup_btn' type='submit'>ثبت محدودیت</button>
+    </form>
+  </div>
+{% endblock form_popup %}
 
 {% block moderatingPage %}
-  <section id="moderator-display">
-    <div class='wrapper' id='chart-wrapper'>
-      <div class="form-title">
-        <h2>نمودار تغییرات</h2>
-      </div>
-      <div id='server-chart'>
-        <canvas id="moderating-chart"></canvas>
-      </div>
-      <button onclick='updateChart(0)' id='go-back'>سالانه‌</button>
-      <button onclick='updateChart(1)' id='go-forward'>ماهانه</button>
-      <button onclick='updateChart(2)' id='go-forward'>روزانه</button>
+<section id="moderator-display">
+  <div class="wrapper" id="chart-wrapper">
+    <div class="form-title">
+      <h2>نمودار تغییرات</h2>
     </div>
-    <div class="numbers-wrapper">
-      <!--daily follow counter-->
-      <div class="wrapper">
-        <div class="form-title form-title-no-border" style="flex-direction: column;">
-          <h2>دنبال کنندگان امروز</h2>
-          <p>نسبت به روز قبل</p>
-        </div>
-        {% if daily_follow_count_icon == 'higher' %}
-          <div class="today-count">
-            <p style="color:#00CF08">{{server_numbers.1}}</p>
-            <img src="{% static 'servers/svgs/higher.svg' %}" alt="higher than last day">
-          </div>
-        {% elif daily_follow_count_icon == 'lower' %}
-          <div class="today-count">
-            <p style="color:#FF0909">{{server_numbers.1}}</p>
-            <img src="{% static 'servers/svgs/lower.svg' %}" alt="lower than last day">
-          </div>
-        {% else %}
-          <div class="today-count">
-            <p style="color:#EBB700">{{server_numbers.1}}</p>
-            <img src="{% static 'servers/svgs/same.svg' %}" alt="same as last day">
-          </div>
-        {% endif %}
+    <div id="server-chart">
+      <canvas id="moderating-chart"></canvas>
+    </div>
+    <button onclick="updateChart(0)" id="go-back">سالانه‌</button>
+    <button onclick="updateChart(1)" id="go-forward">ماهانه</button>
+    <button onclick="updateChart(2)" id="go-forward">روزانه</button>
+  </div>
+  <div class="numbers-wrapper">
+    <!--daily follow counter-->
+    <div class="wrapper">
+      <div
+        class="form-title form-title-no-border"
+        style="flex-direction: column"
+      >
+        <h2>دنبال کنندگان امروز</h2>
+        <p>نسبت به روز قبل</p>
       </div>
+      {% if daily_follow_count_icon == 'higher' %}
+      <div class="today-count">
+        <p style="color: #00cf08">{{server_numbers.1}}</p>
+        <img
+          src="{% static 'servers/svgs/higher.svg' %}"
+          alt="higher than last day"
+        />
+      </div>
+      {% elif daily_follow_count_icon == 'lower' %}
+      <div class="today-count">
+        <p style="color: #ff0909">{{server_numbers.1}}</p>
+        <img
+          src="{% static 'servers/svgs/lower.svg' %}"
+          alt="lower than last day"
+        />
+      </div>
+      {% else %}
+      <div class="today-count">
+        <p style="color: #ebb700">{{server_numbers.1}}</p>
+        <img
+          src="{% static 'servers/svgs/same.svg' %}"
+          alt="same as last day"
+        />
+      </div>
+      {% endif %}
+    </div>
 
-      <!--daily post counter-->
-      <div class="wrapper">
-        <div class="form-title form-title-no-border" style='flex-direction: column;'>
-          <h2>پست های امروز</h2>
-          <p>نسبت به روز قبل</p>
-        </div>
-        {% if daily_post_count_icon == 'higher' %}
-          <div class="today-count">
-            <p style="color:#00CF08">{{server_numbers.0}}</p>
-            <img src="{% static 'servers/svgs/higher.svg' %}" alt="higher than last day">
-          </div>
-        {% elif daily_post_count_icon == 'lower' %}
-          <div class="today-count">
-            <p style="color:#FF0909">{{server_numbers.0}}</p>
-            <img src="{% static 'servers/svgs/lower.svg' %}" alt="lower than last day">
-          </div>
-        {% else %}
-          <div class="today-count">
-            <p style="color:#EBB700">{{server_numbers.0}}</p>
-            <img src="{% static 'servers/svgs/same.svg' %}" alt="same as last day">
-          </div>
-        {% endif %}
+    <!--daily post counter-->
+    <div class="wrapper">
+      <div
+        class="form-title form-title-no-border"
+        style="flex-direction: column"
+      >
+        <h2>پست های امروز</h2>
+        <p>نسبت به روز قبل</p>
       </div>
-    </div>
-    <div class="wrapper l-wrapper reports-wrapper">
-      <div class="form-title">
-        <h2>گزارشات خطا</h2>
+      {% if daily_post_count_icon == 'higher' %}
+      <div class="today-count">
+        <p style="color: #00cf08">{{server_numbers.0}}</p>
+        <img
+          src="{% static 'servers/svgs/higher.svg' %}"
+          alt="higher than last day"
+        />
       </div>
-      <section id='list'>
-        {% for report in server_reports %}
-        <div class='list-item'>
-          <div class="list-item-title-wrapper">
-            <div class="list-item-title">
-              <a href="{% url 'servers:server-delete-report' report.server.tag report.id %}">
-                <img src="{% static 'servers/svgs/shield-alert.svg' %}" alt="report icon">
-              </a>
-              <p class="report-text">پست <a href="{% url 'posts:post-page' report.post.id %}" class='report-info'>{{report.post.title|truncatewords:8}}</a> توسط <a class="reporter" href="{% url 'user:profile' report.user %}">u/{{report.user}}</a> به دلیل <span class='report-info'>{{report.get_reason_display}}</span> گزارش شده.</p></div>
+      {% elif daily_post_count_icon == 'lower' %}
+      <div class="today-count">
+        <p style="color: #ff0909">{{server_numbers.0}}</p>
+        <img
+          src="{% static 'servers/svgs/lower.svg' %}"
+          alt="lower than last day"
+        />
+      </div>
+      {% else %}
+      <div class="today-count">
+        <p style="color: #ebb700">{{server_numbers.0}}</p>
+        <img
+          src="{% static 'servers/svgs/same.svg' %}"
+          alt="same as last day"
+        />
+      </div>
+      {% endif %}
+    </div>
+  </div>
+  <div class="wrapper l-wrapper reports-wrapper">
+    <div class="form-title">
+      <h2>گزارشات خطا</h2>
+    </div>
+    <section id="list">
+      {% for report in server_reports %}
+      <div class="list-item" onclick="changeReportedUser({{report.post.creator.id}})" id='{{report.id}}'>
+        <div class="list-item-title-wrapper">
+          <div class="list-item-title">
+            <a
+              class="delete-report-btn"
+              href="{% url 'servers:server-delete-report' report.server.tag report.id %}"
+              id = "{{ forloop.counter0 }}"
+            >
+              <img
+                src="{% static 'servers/svgs/shield-alert.svg' %}"
+                alt="report icon"
+                id = "{{ forloop.counter0 }}"
+              />
+              <img
+                src="{% static 'svgs/x.svg' %}"
+                alt="delete report"
+                id = "{{ forloop.counter0 }}"
+              />
+            </a>
+            <p class="report-text">
+              پست
+              <a
+                href="{% url 'posts:post-page' report.post.id %}"
+                class="report-info"
+                >{{report.post.title|truncatewords:8}}</a
+              >
+              توسط
+              <a class="reporter" href="{% url 'user:profile' report.user %}"
+                >u/{{report.user}}</a
+              >
+              به دلیل
+              <span class="report-info">{{report.get_reason_display}}</span>
+              گزارش شده.
+            </p>
+          </div>
+          <div class="list-item-options">
+            <img src="{% static 'servers/svgs/hammer.svg' %}" alt="ban user" onclick="createServerTabFunc('ban-user',{{report.post.id}})">
           </div>
         </div>
-        {% endfor %}
-      </section>
-    </div>
-  </section>
-  
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+      </div>
+      {% endfor %}
+    </section>
+  </div>
+</section>
 
-  <script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+
+<script>
     const ctx = document.getElementById('moderating-chart');
     var postCountList = [];
     var postDateList = [];
@@ -142,7 +279,7 @@
               }
           }
       }
-      
+
   });
   currentDate = '{{tomorrow|date:'Y-m-d'|safe}}'
   fromFirst = '{{server.created|date:'Y-m-d'|safe}}'
@@ -171,5 +308,5 @@
     }
     chart.update()
   }
-  </script>
+</script>
 {% endblock moderatingPage %}

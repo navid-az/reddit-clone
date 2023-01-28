@@ -2,7 +2,7 @@ from django.shortcuts import redirect, render
 from django.views import View
 from django.contrib.auth.models import User
 from .models import Server, ServerFollow, ServerPostTag, ServerRule, ServerUserTag, ServerModerator
-from .forms import AddModeratorForm, CreateServerForm, CreatePostTagForm, CreateUserTagForm, CreateRuleForm, UpdateModeratorPermissionsForm
+from .forms import AddModeratorForm, CreateServerForm, CreatePostTagForm, CreateUserTagForm, CreateRuleForm, UpdateModeratorPermissionsForm, LimitUserForm
 from posts.models import PostVote
 from django.http import JsonResponse
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -69,7 +69,7 @@ class CreateServerView(LoginRequiredMixin, View):
         return redirect('home:home')
 
 class ServerModeratingView(LoginRequiredMixin, View):
-    def get(self, request, server_tag):        
+    def get(self, request, server_tag):
         server = Server.objects.get(tag=server_tag)
         moderator = server.moderator_of.filter(user=request.user, server=server)
         if moderator.exists():
@@ -78,7 +78,10 @@ class ServerModeratingView(LoginRequiredMixin, View):
         return redirect('home:home')
 
 class ServerInsightsView(View):
+    form_class = LimitUserForm
+
     def get(self, request, server_tag):
+        limit_user = self.form_class()         
         server = Server.objects.get(tag=server_tag)
         server_reports = server.reports.all()
 
@@ -115,8 +118,22 @@ class ServerInsightsView(View):
 
         for value in server_follow_daily_count:
             value['date'] = str(value['date']) 
-        return render(request, 'servers/insights.html', {'server':server, 'server_reports':server_reports, 'post_daily_count': post_daily_count, 'server_follow_daily_count':server_follow_daily_count, 'daily_post_count_icon':daily_post_count_icon, 'daily_follow_count_icon':daily_follow_count_icon, 'server_numbers':server_numbers})
+        return render(request, 'servers/insights.html', {'limit_user':limit_user, 'server':server, 'server_reports':server_reports, 'post_daily_count': post_daily_count, 'server_follow_daily_count':server_follow_daily_count, 'daily_post_count_icon':daily_post_count_icon, 'daily_follow_count_icon':daily_follow_count_icon, 'server_numbers':server_numbers})
 
+    def post(self, request, server_tag):
+        limit_user = self.form_class(request.POST)
+        server = Server.objects.get(tag=server_tag)
+        user = User.objects.get(id=request.POST['user'])
+        server_limited_users = server.limited_users.filter(user=user)
+
+        if limit_user.is_valid() and not server_limited_users.exists():
+            limit = limit_user.save(commit=False)
+            limit.server = server
+            limit.save()
+        else:
+            messages.error(request, 'این کاربر قبلا از این سرور محدود شده.')
+        return redirect('servers:server-insights', server_tag)
+        
 class ServerDeleteReportView(LoginRequiredMixin, View):
     def get(self, request, server_tag, report_id):
         server = Server.objects.get(tag=server_tag)

@@ -32,6 +32,9 @@ class ServerFollow(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
+    def __str__(self) -> str:
+        return f'u/{self.user} follows r/{self.server.tag}'
+
 
 class ServerPostTag(models.Model):
     server = models.ForeignKey(Server, on_delete=models.CASCADE, related_name='post_tags')

@@ -12,7 +12,7 @@ from django.db.models import Q
 import itertools
 from django.db.models import Count
 from django.db.models.functions import TruncDate
-from datetime import timedelta
+from datetime import timedelta, datetime
 from django.utils import timezone
 
 from chartjs.views.lines import BaseLineChartView
@@ -26,21 +26,20 @@ class ServerView(View):
         posts = server.posts.all()
         post_tags = server.post_tags.all()
         user_tags = server.user_tags.all()
-        if user_tags.filter(user=request.user).exists():
-            current_user_tag = user_tags.get(user=request.user)
-        else:
-            current_user_tag = None
-        upvote = PostVote.objects.filter(choice='up').count()
-        downvote = PostVote.objects.filter(choice='down').count()
-        vote_count = upvote - downvote
-        is_following = False
-        # the following code will make sure to show this page to all users even to those whom haven't logged in yet
-        qs = ServerFollow.objects.filter(server=server)
-        if qs and request.user.is_authenticated:
-            qs = qs.filter(user=request.user)
-            if qs.exists():
-                is_following = True
-        return render(request, 'servers/server.html', {'server':server, 'posts':posts, 'is_following':is_following, 'vote_count':vote_count, 'user_tags':user_tags, 'current_user_tag':current_user_tag, 'post_tags':post_tags})
+        
+        if request.user.is_authenticated:
+            is_limited = server.limited_users.filter(user=request.user)
+            current_date = datetime.today()
+            for x in is_limited:
+                if current_date == x.created + timedelta(days=int(x.duration)):
+                    x.delete()
+            is_following = ServerFollow.objects.filter(server=server, user=request.user)
+            if user_tags.filter(user=request.user).exists():
+                current_user_tag = user_tags.get(user=request.user)
+            else:
+                current_user_tag = None
+            return render(request, 'servers/server.html', {'server':server, 'posts':posts, 'is_following':is_following, 'is_limited':is_limited, 'user_tags':user_tags, 'post_tags':post_tags, 'current_user_tag':current_user_tag})
+        return render(request, 'servers/server.html', {'server':server, 'posts':posts, 'user_tags':user_tags, 'post_tags':post_tags})
 
 class ServerFollowView(LoginRequiredMixin, View):
     def get(self, request, server_tag):
@@ -319,15 +318,10 @@ def ModeratorSearchAjaxView(request):
             response = 'کاربری با این نام یافت نشد'
         return JsonResponse({'data':response})
     return JsonResponse({})
-    
-class UserSettingsView(LoginRequiredMixin, View):
-    def get(self, request):
-        return render(request, 'servers/user-settings.html')
  
 class ChooseServerAjaxView(LoginRequiredMixin, View):
     def get(self, request):
         moderator = ServerModerator.objects.get(user=request.user)
-        # servers = Server.objects.filter(creator=request.user)
         moderator_servers = moderator.server.all()
         user_servers = itertools.chain(moderator_servers)
         data = []
@@ -340,3 +334,7 @@ class ChooseServerAjaxView(LoginRequiredMixin, View):
             }
             data.append(list)
         return JsonResponse({'data':data})
+
+class LimitationDoneAjaxView(LoginRequiredMixin, View):
+    def get(self, request):
+        pass

@@ -56,16 +56,22 @@
 .join-server-btn {
   background: var(--orange);
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
   border-radius: 50rem;
-  padding: 0.09375rem 1.28125rem;
+  padding: 0.09375rem 1rem;
+  gap: 0.3rem;
 }
 
-.join-server-btn>a {
+.join-server-btn>a,
+.join-server-btn>div {
   color: #ffff;
-  font-size: 1.125rem;
+  /* font-size: 1.125rem; */
+}
+
+.join-server-btn>img {
+  width: 20px;
+  height: 20px;
 }
 
 .server-specifications>.server-main-img {

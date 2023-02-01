@@ -1,7 +1,7 @@
 let checkboxBtn = document.querySelectorAll(".checkbox-btn");
 let checkboxInputs = document.querySelectorAll("input[type=checkbox]");
 const formSubmitBtn = document.getElementById("s-submit-btn");
-console.log(formSubmitBtn);
+
 checkboxInputs.forEach((input, index) => {
   if (checkboxInputs[index].checked) {
     checkboxBtn[index].style.background = "#FF3F18";

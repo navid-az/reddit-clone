@@ -12,13 +12,18 @@
     <div class="server-specifications">
       <div class="server-name">
         <div>
-          {% if is_following %}
+          {% if request.user.is_authenticated %}
             <div class="join-server-btn">
-              <a href="{% url 'servers:server-follow' server.tag %}">خروج</a>
-            </div>
-          {% else %}
-            <div class="join-server-btn">
-              <a href="{% url 'servers:server-follow' server.tag %}">عضویت</a>
+            {% if is_following %}
+                <a href="{% url 'servers:server-follow' server.tag %}">خروج</a>
+            {% elif is_limited %}
+                <div id="creation-time" style="display:none">{{is_limited.get.created|date:"Y/m/d H:i:s"|safe}}</div>
+                <div id="limit-duration" style="display:none">{{is_limited.get.duration|safe}}</div>
+                <img src="{% static 'servers/svgs/clock.svg' %}" alt="clock">
+                <div id="limitTimer" href="{% url 'servers:server-follow' server.tag %}"></div>
+            {% else %}
+                <a href="{% url 'servers:server-follow' server.tag %}">عضویت</a>
+            {% endif %}
             </div>
           {% endif %}
           <h2>{{server.name}}</h2>
@@ -78,13 +83,13 @@
             <span>
               <h3>تگ کاربر</h3>
             </span>
-            {% if current_user_tag %}
-              <div class="tag-list">
-                <div class="tag user-tag" style='background:{{current_user_tag.primary_color}}; color:{{current_user_tag.secondary_color}}; border: 3px solid {{current_user_tag.secondary_color}}'>
-                  <p>{{current_user_tag.name}}</p>
+              {% if request.user.is_authenticated and current_user_tag %}
+                <div class="tag-list">
+                  <div class="tag user-tag" style='background:{{current_user_tag.primary_color}}; color:{{current_user_tag.secondary_color}}; border: 3px solid {{current_user_tag.secondary_color}}'>
+                    <p>{{current_user_tag.name}}</p>
+                  </div>
                 </div>
-              </div>
-            {% endif %}
+              {% endif %}
               <div class="user-tag">
                 <img src="{% static 'servers/svgs/user-tag-edit.svg' %}" alt="">
               </div>

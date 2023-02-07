@@ -127,6 +127,11 @@
     margin-left: 0.3rem;
 }
 
+.form-body>.input>textarea {
+    min-height: 150px;
+    resize: vertical;
+}
+
 .input>input,
 .input>textarea {
     position: relative;
@@ -323,12 +328,13 @@ button {
     gap: 0.5rem;
     height: 2.375rem;
     border-radius: 0.5rem;
-    background: var(--gray);
+    background: var(--light-gray-3);
     color: white !important;
     font-size: 1.125rem;
     padding: 0.5rem 0.8rem;
     transition: 0.25s ease-in-out;
-    border-bottom: 2px solid black;
+    border: 1px solid #00000017;
+    /* border-bottom: 2px solid black; */
 }
 
 .search-wrapper,
@@ -371,7 +377,9 @@ button {
 }
 
 #search-input {
+    background: var(--light-gray-3);
     width: 100%;
+    color: var(--dark-gray);
 }
 
 #search-input:focus,

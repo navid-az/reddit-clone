@@ -39,6 +39,11 @@
   justify-content: space-between;
 }
 
+.post-info>form {
+  display: flex;
+  align-items: center;
+}
+
 .post-info>section {
   display: flex;
   flex-direction: column;

@@ -31,7 +31,7 @@ class ServerView(View):
             is_limited = server.limited_users.filter(user=request.user)
             current_date = datetime.today()
             for x in is_limited:
-                if current_date == x.created + timedelta(days=int(x.duration)):
+                if x.duration != 'permanent' and current_date == x.created + timedelta(days=int(x.duration)):
                     x.delete()
             is_following = ServerFollow.objects.filter(server=server, user=request.user)
             if user_tags.filter(user=request.user).exists():
@@ -45,8 +45,12 @@ class ServerFollowView(LoginRequiredMixin, View):
     def get(self, request, server_tag):
         server = Server.objects.get(tag=server_tag)
         relation = server.followers.filter(server=server, user=request.user)
+        limitedUser = server.limited_users.filter(server=server, user=request.user)
+        
         if relation.exists():
             relation.delete()
+        elif limitedUser.exists():
+            messages.error(request,'شما از فعالیت در این سرور محدود شدید')
         else:
             ServerFollow(server=server, user=request.user).save()
         return redirect('servers:server', server.tag)

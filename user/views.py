@@ -4,7 +4,6 @@ from django.views import View
 from django.contrib.auth.models import User
 
 from posts.models import Post, Comment
-# from reddit.posts.models import Save
 from .models import Profile
 from django.contrib import messages
 from .forms import UserProfileSettingsForm
@@ -23,7 +22,7 @@ class UserProfileView(View):
 			comment = comments.aggregate(Sum('votes_count'))
 			post = posts.aggregate(Sum('votes_count'))
 			karma = int((comment["votes_count__sum"]+post["votes_count__sum"])/5)
-			print(type(karma),'%%%%%%%%%%%%%%%%%%%%%%%%%%')
+
 			user.profile.karma = karma
 			user.profile.save()
 		return render(request, 'user/profile.html', {'posts':posts, 'comments':comments, 'user':user})
@@ -31,28 +30,28 @@ class UserProfileView(View):
 class UserProfileSettingsView(View):
 	form_class = UserProfileSettingsForm
 
+	def setup(self, request, *args, **kwargs):
+		self.user = get_object_or_404(User, username=kwargs['username'])
+		self.user_info = get_object_or_404(Profile, user=self.user)
+		return super().setup(request, *args, **kwargs)
+
 	def get(self, request, *args, **kwargs):
-		form = self.form_class(instance=request.user.profile)
+		form = self.form_class(instance=self.user_info)
 		return render(request, 'user/profile_settings.html', {'form':form})
 
 	def post(self, request, *args, **kwargs):
-		form = self.form_class(request.POST, instance=request.user.profile)
+		form = self.form_class(request.POST, request.FILES, instance=self.user_info)
+		print('$$$$$$$$$$$$$$$$$$$$$$$', request.FILES)
 		if form.is_valid():
-			form.save()
+			updated_info = form.save(commit=False)
+			updated_info.user = self.user
+			updated_info.save()
 			messages.success(request, '!پروفایل شما با موفقیت ویرایش شد')
-		return redirect('user:profile', request.user.id)
+			return redirect('user:profile', request.user.username)
+		return render(request, 'user/profile_settings.html', {'form':form})
 
 class UserSavedPostsView(View):
 	def get(self, request, username):
 		user = User.objects.get(username=username)
 		saved_posts = user.user_saves.filter(value='save')
-		# is_saved = Save.objects.filter(post=self.post_instance, user=request.user.id)
 		return render(request, 'user/saved_posts.html', {'saved_posts':saved_posts})
-
-# class UserKarmaCounterView(View):
-# 	def get(self, request):
-# 		user = User.objects.get(id=request.user.id)
-# 		comment = Comment.objects.filter(creator=user).aggregate(Sum('votes_count'))
-# 		post = Post.objects.filter(creator=user).aggregate(Sum('votes_count'))
-# 		karma = int((comment["votes_count__sum"]+post["votes_count__sum"])/5)
-# 		return render(request, 'user/profile.html',{'karma':karma})

@@ -93,7 +93,6 @@ class CreatePostView(LoginRequiredMixin, View):
             saved_form = form.save(commit=False)
             saved_form.creator = request.user
             saved_form.save()
-            # servers.save()
             messages.success(request, 'پست شما باموفقیت ایجاد شد')
             return redirect('home:home')
         return render(request, 'posts/create-post.html', {'form':form, 'following':following})

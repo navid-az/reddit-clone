@@ -1,6 +1,6 @@
 const limitationCreated = document.getElementById("creation-time").innerHTML;
 const limitationDuration = document.getElementById("limit-duration").innerHTML;
-console.log(limitationDuration);
+
 if (limitationDuration == "permanent") {
   document.getElementById("limitTimer").innerHTML = "مجاز نیست";
 } else {

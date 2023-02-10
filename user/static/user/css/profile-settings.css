@@ -14,7 +14,7 @@
   margin-top: 1.875rem;
 }
 
-.filed-title {
+.field-title {
   font-weight: 700;
   font-size: 1rem;
   line-height: 25px;
@@ -102,4 +102,30 @@ input[type='file'] {
   font-family: Vbold;
   font-size: 1.25rem;
   padding-right: 1rem;
+}
+
+#account-settings-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: var(--p30);
+  padding: var(--p30) var(--p14);
+}
+
+.account-settings {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.change-account-settings-btn {
+  background: var(--gray);
+  color: #FFFF;
+  border-radius: 20rem;
+  padding: 2.1px 27px;
+  border: none;
+  transition: var(--normal);
+}
+
+.change-account-settings-btn:hover {
+  background: var(--orange);
 }

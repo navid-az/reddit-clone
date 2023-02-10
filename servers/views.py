@@ -3,17 +3,16 @@ from django.views import View
 from django.contrib.auth.models import User
 from .models import Server, ServerFollow, ServerPostTag, ServerRule, ServerUserTag, ServerModerator
 from .forms import AddModeratorForm, CreateServerForm, CreatePostTagForm, CreateUserTagForm, CreateRuleForm, UpdateModeratorPermissionsForm, LimitUserForm
-from posts.models import PostVote
 from django.http import JsonResponse
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 from django.shortcuts import get_object_or_404
-from django.db.models import Q
 import itertools
 from django.db.models import Count
 from django.db.models.functions import TruncDate
 from datetime import timedelta, datetime
 from django.utils import timezone
+import pytz
 
 from chartjs.views.lines import BaseLineChartView
 from django.views.generic import TemplateView
@@ -28,12 +27,16 @@ class ServerView(View):
         user_tags = server.user_tags.all()
         
         if request.user.is_authenticated:
-            is_limited = server.limited_users.filter(user=request.user)
-            current_date = datetime.today()
-            for x in is_limited:
-                if x.duration != 'permanent' and current_date == x.created + timedelta(days=int(x.duration)):
-                    x.delete()
+            is_limited = server.limited_users.filter(server=server, user=request.user)
             is_following = ServerFollow.objects.filter(server=server, user=request.user)
+            current_date = datetime.now(pytz.utc)
+
+            for x in is_limited:
+                ban_for = timedelta(days=int(x.duration))
+                if x.duration != 'permanent' and current_date >= x.created + ban_for:
+                    x.delete()
+                else:
+                    print('there is still time left','%%%%%%%')
             if user_tags.filter(user=request.user).exists():
                 current_user_tag = user_tags.get(user=request.user)
             else:
@@ -189,7 +192,8 @@ class TagsAndFlairsView(LoginRequiredMixin, View):
                 created_user_tag.creator = request.user
                 created_user_tag.save()
                 return redirect('servers:server-tags-and-flairs', server_tag)
-            return render(request, 'servers/tags-flairs.html', {"server":self.server, "create_post_tag_form":create_post_tag_form, "create_user_tag_form":create_user_tag_form})
+            messages.error(request, 'تگ بدون نام مجاز نیست')
+            return redirect('servers:server-tags-and-flairs', server_tag)
         messages.error(request, 'شما نمیتوانید تگ ایجاد کنید')
         return redirect('servers:server-tags-and-flairs', server_tag)
 class DeleteTagsAndFlairsView(LoginRequiredMixin, View):

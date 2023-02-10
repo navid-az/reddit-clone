@@ -66,7 +66,6 @@
 .join-server-btn>a,
 .join-server-btn>div {
   color: #ffff;
-  /* font-size: 1.125rem; */
 }
 
 .join-server-btn>img {
@@ -90,10 +89,11 @@
 
 /* server details  */
 .server-details {
+  position: sticky;
+  top: 48px;
   direction: rtl;
   display: flex;
   flex-direction: column;
-  /* background: #ffff; */
   gap: var(--p30);
   border-radius: 0.5rem;
   height: auto;

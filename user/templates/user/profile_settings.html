@@ -1,6 +1,76 @@
 {% extends 'base.html' %} {% load static %} {% block cssFiles %}
 <link rel="stylesheet" href="{% static 'user/css/profile-settings.css' %}" />
-{% endblock cssFiles %} {% block content %}
+{% endblock cssFiles %}
+
+{% block form_popup %}
+<div class='form-popup' id='change-pass'>
+  <form action="" method="post" id='create-server-tab'>
+    {% csrf_token %}
+    <div class='form-title'>
+      <div class="form-title-btns close-btn" onclick="createServerTabFunc('change-pass')">
+        <img src="{% static 'svgs/x.svg' %}" alt="close tab">
+      </div>
+      <h2>تغییر رمز عبور</h2>
+    </div>
+    <section class='form-body'>
+      <div class="title">
+        <p>رمز عبور فعلی</p>
+      </div>
+      <div class="input">
+        {{change_pass_form.password}}
+      </div>
+    </section>
+    <section class='form-body'>
+      <div class="title">
+        <p>رمز عبور جدید</p>
+      </div>
+      <div class="input">
+        {{change_pass_form.new_password}}
+      </div>
+    </section>
+    <section class='form-body'>
+      <div class="title">
+        <p>تکرار رمز عبور جدید</p>
+      </div>
+      <div class="input">
+        {{change_pass_form.confirm_new_password}}
+      </div>
+    </section>
+    <button id='form_popup_btn' type='submit' name='change_pass_form'>تغییر رمز عبور</button>
+  </form>
+</div>
+
+<div class='form-popup' id='change-email'>
+  <form action="" method="post" id='create-server-tab'>
+    {% csrf_token %}
+    <div class='form-title'>
+      <div class="form-title-btns close-btn" onclick="createServerTabFunc('change-email')">
+        <img src="{% static 'svgs/x.svg' %}" alt="close tab">
+      </div>
+      <h2>تغییر رمز عبور</h2>
+    </div>
+    <section class='form-body'>
+      <div class="title">
+        <p>رمز عبور</p>
+      </div>
+      <div class="input">
+        {{change_email_form.password}}
+      </div>
+    </section>
+    <section class='form-body'>
+      <div class="title">
+        <p>آدرس ایمیل جدید</p>
+      </div>
+      <div class="input">
+        {{change_email_form.email}}
+      </div>
+    </section>
+    <button id='form_popup_btn' type='submit' name='change_email_form'>تغییر آدرس ایمیل</button>
+  </form>
+</div>
+{% endblock form_popup %}
+
+{% block content %}
 <div class="container">
   <div class="row">
     <div class="col-5">
@@ -12,6 +82,29 @@
           />
           <p>حساب کاربری</p>
         </div>
+        <section id="account-settings-wrapper">
+          <div class="account-settings">
+            <div>
+              <p class="field-title">آدرس ایمیل</p>
+              <p class="field-info">{{request.user.email}}</p>
+            </div>
+            <button onclick="createServerTabFunc('change-email')" class="change-account-settings-btn">تغییر</button>
+          </div>
+          <div class="account-settings">
+            <div>
+              <p class="field-title">رمز عبور</p>
+              <p class="field-info">رمز عبور باید حداقل ۸ کاراکتر باشد</p>
+            </div>
+            <button onclick="createServerTabFunc('change-pass')" class="change-account-settings-btn">تغییر</button>
+          </div>
+          <div class="account-settings">
+            <div>
+              <p class="field-title">جنسیت</p>
+              <p class="field-info">مرد</p>
+            </div>
+            <button class="change-account-settings-btn">تغییر</button>
+          </div>
+        </section>
       </div>
     </div>
     <div class="col-7">
@@ -25,26 +118,26 @@
         </div>
         <form action="" method="post" enctype="multipart/form-data">
           {% csrf_token %}
-          <input type="submit">
+          <input type="submit" type='submit' name='profile_form'>
           <div class="field-wrapper">
-            <p class="filed-title">نام کاربری (دلخواه)</p>
+            <p class="field-title">نام کاربری (دلخواه)</p>
             <p class="field-info">
               اسمی برای نمایش در پروفایل (این اسم نام کاربری را تغییر نمیدهد)
             </p>
-            {{form.name}}
+            {{profile_form.name}}
           </div>
           <div class="field-wrapper">
-            <p class="filed-title">درباره تو (دلخواه)</p>
+            <p class="field-title">درباره تو (دلخواه)</p>
             <p class="field-info">یه توضیح مختصر از خودت بده</p>
-            {{form.bio}}
+            {{profile_form.bio}}
           </div>
           <div class="field-wrapper">
-            <p class="filed-title">عکس ها</p>
+            <p class="field-title">عکس ها</p>
             <p class="field-info">عکس ها باید در فرمت png. یا jpg. باشد</p>
             <div class="row">
               <div class="profile-image col-3">
                 <img src="{{user.profile.image.url}}" alt="user image" />
-                {{form.image}}
+                {{profile_form.image}}
                 <img
                   class="upload-btn-icon"
                   src="{% static 'user/svgs/camera.svg' %}"
@@ -56,7 +149,7 @@
                   src="{{user.profile.header_image.url}}"
                   alt="user header image"
                 />
-                {{form.header_image}}
+                {{profile_form.header_image}}
                 <div class="upload-btn-icon-wrapper">
                   <img
                     class="upload-btn-icon"

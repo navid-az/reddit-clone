@@ -11,6 +11,8 @@
     /* padding/margin */
     --p14: 0.875rem;
     --p30: 1.875rem;
+    /* transitions  */
+    --normal: 0.25s ease-in-out;
 }
 
 /* ~~~~Global Selectors~~~~  */

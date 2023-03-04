@@ -16,6 +16,7 @@ const searched = (word) => {
     },
     success: (response) => {
       const data = response.data;
+
       if (Array.isArray(data)) {
         searchResultTab.style.display = "flex";
         searchResultTab.innerHTML = "";
@@ -41,6 +42,8 @@ const searched = (word) => {
             </a> 
           `;
         });
+
+        // while the data doesn't exist
       } else {
         if (searchInput.value.length > 0) {
           searchResultTab.style.display = "flex";
@@ -52,6 +55,11 @@ const searched = (word) => {
           searchResultTab.style.display = "none";
         }
       }
+
+      // close the result tab if empty
+      if (searchInput.value.length == 0) {
+        searchResultTab.style.display = "none";
+      }
     },
     error: (err) => {
       searchResultTab.style.display = "none";
@@ -62,10 +70,3 @@ const searched = (word) => {
 searchInput.addEventListener("keyup", (e) => {
   searched(e.target.value);
 });
-//  <a href='/r/${server.tag}' id='${server.id}' class='user'>
-//               <img src="${server.image}" alt="">
-//               <div class="server-info">
-//                 <p>u/${server.tag}</p>
-//                 <img src="/static/servers/svgs/plus.svg" alt="add moderator">
-//               </div>
-//             </a>

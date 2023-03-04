@@ -22,6 +22,7 @@ class PostPageView(View):
 
     def get(self, request, *args, **kwargs):
         form = self.form_class()
+        user = User.objects.get(id=request.user.id)
         report_form = self.report_form_class()
         is_saved = PostSave.objects.filter(post=self.post_instance, user=request.user.id)
         comments = self.post_instance.post_comments.filter(is_reply=False)
@@ -45,7 +46,6 @@ class PostPageView(View):
             new_report.save()
             messages.success(request, 'گزارش شما با موفییت ثبت شد')
         return redirect('posts:post-page', self.post_instance.id)
-
 
 class CreateReplyView(LoginRequiredMixin, View):
     form_class = CreateCommentReplyForm
@@ -118,6 +118,15 @@ class CreatePostAjaxView(View):
             'body':j.body,
             }
             data.append(rules)
+        # for z in server:
+        #     serverInfo={
+        #         'tag':z.tag,
+        #         'about':z.about,
+        #         'followers_count': str(z.followers.count()),
+        #         'image':z.image,
+        #         'created':z.created
+        #     }
+        #     data.append(serverInfo)
         return JsonResponse({'data':data})
 class UpdatePostView(LoginRequiredMixin, View):
 

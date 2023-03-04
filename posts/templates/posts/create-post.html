@@ -1,6 +1,7 @@
 {% extends 'base.html' %}{% load static %} 
 {% block title %}create post page{% endblock title %} 
 {% block cssFiles %}
+  <link rel="stylesheet" href="{% static 'servers/css/server.css' %}"/>
   <link rel="stylesheet" href="{% static 'posts/css/create-post.css' %}"/>
 {% endblock cssFiles %} 
 {% block jsFiles %}
@@ -13,7 +14,7 @@
 <div class="container">
   <div class="row">
     <div id="server-wrapper" class='server-details-wrapper col-4'>
-      <div id="server-details">
+      <div id="server-details" class="side-bar">
       </div>
       <div id="server-rules">
         <h3>قوانین سرور</h3>
@@ -26,7 +27,8 @@
         <form id="post-form" action="" method="post" enctype="multipart/form-data" novalidate>
           {% csrf_token %}
           <section class="form-header">
-            <div class="servers">
+            <div class="form-types">
+              <div class="servers">
               <div id="server-search-bar">
                 <img
                   src="{% static 'posts/svgs/search.svg' %}"
@@ -61,7 +63,6 @@
               {% endfor %}
               </div>
             </div>
-            <div class="form-types">
               <button type="button" onclick="postType(0)">
                 <p>متن</p>
                 <img src="{% static 'posts/svgs/file.svg' %}" alt="text" />
@@ -74,18 +75,37 @@
                 <p>فیلم</p>
                 <img src="{% static 'posts/svgs/video.svg' %}" alt="video" />
               </button>
+              <!--
               <button type="button" onclick="postType(2)">
                 <p>لینک</p>
                 <img src="{% static 'posts/svgs/link.svg' %}" alt="link" />
               </button>
+              -->
             </div>
           </section>
           <section class="form-body">
+            <div id="title-field" class='border-hover'>{{form.title}} {{ form.title.errors }}</div>
+            <div class="field border-hover">{{form.text}} {{ form.text.errors }}</div>
+            {{ form.image.errors }}
+            <div class="field upload-file-field">
+              {{form.image}} 
+              <img class='default-icon' src="{% static 'posts/svgs/l-image.svg' %}" alt="image" />
+              <img class='upload-icon' src="{% static 'posts/svgs/upload.svg' %}" alt="upload" />
+              <p>عکس هایتان را اینجا قرار دهید</p>
+              <button class='upload-file-btn'>آپلود</button>
+              <div class="uploaded-files-wrapper"></div>
+            </div>
+            {{ form.video.errors }}
+            <div class="field upload-file-field">
+              {{form.video}}
+              <img class='default-icon' src="{% static 'posts/svgs/l-video.svg' %}" alt="video" />
+              <img class='upload-icon' src="{% static 'posts/svgs/upload.svg' %}" alt="upload" />
+              <p>فیلم را اینجا قرار دهید</p>
+              <button class='upload-file-btn'>آپلود</button>
+              <div class="uploaded-files-wrapper"></div>
+            </div>
             {{ form.non_field_errors }}
-            <div id="title-field">{{form.title}} {{ form.title.errors }}</div>
-            <div class="field">{{form.text}} {{ form.text.errors }}</div>
-            <div class="field">{{form.image}} {{ form.image.errors }}</div>
-            <div class="field">{{form.video}} {{ form.video.errors }}</div>
+              {% comment %} <span class="loader"></span> {% endcomment %}
           </section>
           <div class='form-footer-wrapper'>
             <section id="form-footer">

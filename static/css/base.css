@@ -15,6 +15,28 @@
     --normal: 0.25s ease-in-out;
 }
 
+/* loader  */
+.loader {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    display: inline-block;
+    border-top: 3px solid var(--orange);
+    border-right: 3px solid transparent;
+    box-sizing: border-box;
+    animation: rotation 1s linear infinite;
+}
+
+@keyframes rotation {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
 /* ~~~~Global Selectors~~~~  */
 
 /* popup form  */
@@ -232,6 +254,26 @@ textarea {
     font-family: Vbold;
 }
 
+/* this is new (for input border hover effect):  */
+.border-hover>input,
+.border-hover>textarea {
+    border: 1px solid #00000017;
+    transition: 0.15s ease-in-out;
+    background: #F9F9F9;
+    direction: rtl;
+    border-radius: 0.5rem;
+    padding: 0.875rem;
+    outline: none;
+    /* #116 - create-post.css  */
+}
+
+.border-hover>input:focus,
+.border-hover>textarea:focus {
+    outline: none;
+    border: 2.2px solid var(--orange);
+}
+
+/* done  */
 input[type=text]:hover,
 textarea:hover {
     border: 1px solid #00000031;
@@ -303,10 +345,6 @@ button {
     transition: 0.25s ease-in-out;
 }
 
-/* .tag:hover {
-    transform: scale(1.05);
-} */
-
 .tag-list {
     display: flex;
     flex-wrap: wrap;
@@ -336,7 +374,10 @@ button {
     padding: 0.5rem 0.8rem;
     transition: 0.25s ease-in-out;
     border: 1px solid #00000017;
-    /* border-bottom: 2px solid black; */
+}
+
+#server-search-bar {
+    background: var(--gray);
 }
 
 .search-wrapper,

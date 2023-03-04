@@ -1,7 +1,7 @@
 .control-bar-wrapper {
   background: var(--dark-gray);
   margin-bottom: 3rem;
-  margin-top: -3rem;
+  /* margin-top: -3rem; */
 }
 
 .control-bar {

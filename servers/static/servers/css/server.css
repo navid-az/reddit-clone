@@ -127,9 +127,9 @@
   font-size: 1rem;
 }
 
-.server-details-info {
+/* .server-details-info {
   padding: 0.875rem;
-}
+} */
 
 .server-details-info>.server-info {
   display: flex;

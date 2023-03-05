@@ -23,7 +23,10 @@
           {% csrf_token %}
           <div id="search-bar">
             <input id='search-input' type="text" name='search-bar'>
-          <div id='search-result-tab'></div>
+            <button id="delete-search"><img src="{% static 'svgs/x.svg' %}" alt="delete search"></button>
+            <button id="search-btn"><img src="{% static 'svgs/search.svg' %}" alt="search"></button>
+            <div id='search-result-tab'>
+            </div>
           </div>
         </form>
         

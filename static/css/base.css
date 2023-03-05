@@ -434,6 +434,29 @@ button {
     outline: none;
 }
 
+#delete-search,
+#search-btn {
+    height: 100%;
+    background: none;
+    transition: var(--normal);
+}
+
+#delete-search>img,
+#search-btn>img {
+    height: 100%;
+}
+
+#delete-search {
+    display: none;
+    opacity: 0;
+}
+
+#search-btn {
+    display: flex;
+    opacity: 1;
+}
+
+
 #selected-server-img {
     width: 24px;
     height: 24px;
@@ -455,6 +478,25 @@ button {
     z-index: 1;
     border-radius: 0 0 0.5rem 0.5rem;
 }
+
+#no-result-tab {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    gap: 0.5rem;
+}
+
+#no-result-tab>img {
+    width: 35px;
+}
+
+#no-result-tab>p {
+    font-size: var(--p14);
+    color: var(--light-gray);
+}
+
 
 #search-result-tab::-webkit-scrollbar,
 #servers-tab::-webkit-scrollbar {

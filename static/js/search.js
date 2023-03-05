@@ -6,6 +6,35 @@ let link,
   resultType,
   alt = "";
 
+// search btns
+let deleteSearchBtn = document.getElementById("delete-search");
+let searchBtn = document.getElementById("search-btn");
+
+const deleteSearch = (e) => {
+  e.preventDefault();
+  searchInput.value = "";
+  searchResultTab.style.display = "none";
+  deleteSearchBtn.style.opacity = 0;
+  searchBtn.style.opacity = 1;
+  setTimeout(() => {
+    searchBtn.style.display = "flex";
+    deleteSearchBtn.style.display = "none";
+  }, 250);
+};
+const startSearch = (e) => {
+  e.preventDefault();
+  searchInput.focus();
+  deleteSearchBtn.style.display = "flex";
+  setTimeout(() => {
+    deleteSearchBtn.style.opacity = 1;
+    searchBtn.style.display = "none";
+    searchBtn.style.opacity = 0;
+  }, 250);
+};
+deleteSearchBtn.addEventListener("click", deleteSearch);
+searchBtn.addEventListener("click", startSearch);
+//
+
 const searched = (word) => {
   $.ajax({
     type: "POST",
@@ -16,6 +45,15 @@ const searched = (word) => {
     },
     success: (response) => {
       const data = response.data;
+
+      // search btn & delete search btn animation
+      deleteSearchBtn.style.display = "flex";
+      setTimeout(() => {
+        deleteSearchBtn.style.opacity = 1;
+        searchBtn.style.display = "none";
+        searchBtn.style.opacity = 0;
+      }, 250);
+      //
 
       if (Array.isArray(data)) {
         searchResultTab.style.display = "flex";
@@ -48,9 +86,10 @@ const searched = (word) => {
         if (searchInput.value.length > 0) {
           searchResultTab.style.display = "flex";
           searchResultTab.innerHTML = `
-          <a >
-          ${data}
-          </a>`;
+          <div id="no-result-tab">
+            <img src="/static/svgs/sad-reddit-logo.svg">
+            <p>موردی یافت نشد</p>
+          </div>`;
         } else {
           searchResultTab.style.display = "none";
         }
@@ -59,6 +98,7 @@ const searched = (word) => {
       // close the result tab if empty
       if (searchInput.value.length == 0) {
         searchResultTab.style.display = "none";
+        deleteSearchBtn.style.opacity = 0;
       }
     },
     error: (err) => {

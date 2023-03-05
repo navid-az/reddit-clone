@@ -87,7 +87,7 @@ const showData = (serverTag) => {
       } else {
         serverTags.innerHTML = "";
         tagData.forEach((x) => {
-          serverTags.innerHTML += `<div id='${x.id}' onclick='choosePostTag(${x.id})' class="tags" style='background:${x.primary_color}; border:3.5px solid ${x.secondary_color}; color:${x.secondary_color}'>${x.name}</div> <br>`;
+          serverTags.innerHTML += `<div id='${x.id}' onclick='choosePostTag(${x.id})' class="tags" style='background:${x.primary_color}; border:3.5px solid ${x.secondary_color}; color:${x.secondary_color}'> <img src="/static/servers/svgs/check.svg">${x.name}</div> <br>`;
         });
       }
 
@@ -167,9 +167,26 @@ const showData = (serverTag) => {
 let ruleBody = document.querySelectorAll(".rule-body");
 
 const choosePostTag = (Tag) => {
-  selectedTag = document.getElementById(Tag);
-  // selectedTag.style.background = "red";
-  tagField.value = Tag;
+  let selectedTag = document.getElementById(Tag);
+  let selectedTagCheckmark = selectedTag.querySelector(".tags>img");
+  let TagsCheckmark = document.querySelectorAll(".tags>img");
+
+  // selecting animation
+  TagsCheckmark.forEach((cm) => {
+    cm.style.display = "none";
+    cm.style.opacity = 0;
+  });
+
+  //
+  if (tagField.value == Tag) {
+    selectedTagCheckmark.style.display = "none";
+    selectedTagCheckmark.style.opacity = 0;
+    tagField.value = "";
+  } else {
+    selectedTagCheckmark.style.display = "flex";
+    selectedTagCheckmark.style.opacity = 1;
+    tagField.value = Tag;
+  }
 };
 
 server.forEach((server, i) => {

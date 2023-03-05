@@ -101,6 +101,9 @@
 /* comments */
 
 .user-comment-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     background: #FFFF;
     direction: rtl;
     margin-bottom: var(--p30);

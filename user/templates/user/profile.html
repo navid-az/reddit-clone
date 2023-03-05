@@ -60,7 +60,9 @@
       <section id='user-comments-wrapper' class='d-none'>
         {% for comment in comments %}
           <div class="user-comment-wrapper">
-            <div class="user-comment-info">
+            
+            <div class="comment-info-wrapper">
+              <div class="user-comment-info">
               <p>نظر</p>
               <p>u/{{comment.creator}}</p>
               <p>نسبت به</p>
@@ -75,7 +77,6 @@
               <p>.</p>
               <a href="{% url 'servers:server' comment.post.server.tag %}">r/{{comment.post.server.tag}}</p>
             </div>
-
             <div class="comment">
               <div class="creator-info">
                 <div class="creator-img">
@@ -96,6 +97,60 @@
                 <p>{{comment.body}}</p>
               </div>
             </div>
+            
+
+            </div>
+           <form action="{% url 'posts:vote-post' %}" method="post" class='vote-comment-form' id='{{comment.id}}'>
+              {% csrf_token %}
+              <div class="vote-wrapper">
+                {% if request.user in comment.upvotes.all %}
+                  <button class='vote-btn' type="submit" name='upvote'>
+                    <img
+                      src="{% static 'svgs/up-voted.svg' %}"
+                      alt="upvote"
+                    />
+                  </button>
+                  <p id="vote-counter-{{comment.id}}">{{comment.votes_count}}</p>
+                  <button class='vote-btn' type="submit" name='downvote'>
+                    <img
+                      style='transform:rotate(180deg)'
+                      src="{% static 'svgs/vote.svg' %}"
+                      alt="downvote"
+                    />
+                  </button>
+                {% elif request.user in comment.downvotes.all %}
+                  <button class='vote-btn' type="submit" name='upvote'>
+                    <img
+                      src="{% static 'svgs/vote.svg' %}"
+                      alt="upvote"
+                    />
+                  </button>
+                  <p id="vote-counter-{{comment.id}}">{{comment.votes_count}}</p>
+                  <button class='vote-btn' type="submit" name='downvote'>
+                    <img
+                      style='transform:rotate(180deg)'
+                      src="{% static 'svgs/down-voted.svg' %}"
+                      alt="downvote"
+                    />
+                  </button>
+                {% else %}
+                  <button class='vote-btn' type="submit" name='upvote'>
+                    <img
+                      src="{% static 'svgs/vote.svg' %}"
+                      alt="upvote"
+                    />
+                  </button>
+                  <p id="vote-counter-{{comment.id}}">{{comment.votes_count}}</p>
+                  <button class='vote-btn' type="submit" name='downvote'>
+                    <img
+                      style='transform:rotate(180deg)'
+                      src="{% static 'svgs/vote.svg' %}"
+                      alt="downvote"
+                    />
+                  </button>
+                {% endif %}
+              </div>
+            </form>
           </div>
         {% endfor %}
       </section>  

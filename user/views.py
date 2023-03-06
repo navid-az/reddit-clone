@@ -1,9 +1,6 @@
-from xml.etree.ElementTree import Comment
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views import View
 from django.contrib.auth.models import User
-from django.contrib.auth import authenticate
-
 from posts.models import Post, Comment
 from .models import Profile
 from django.contrib import messages
@@ -17,16 +14,17 @@ class UserProfileView(View):
 		user = get_object_or_404(User, username=username)
 		posts = user.posts.all()
 		comments = user.user_comments.all()
+		comments_vote_count = comments.aggregate(Sum('votes_count'))
+		posts_vote_count = posts.aggregate(Sum('votes_count'))
 
-		comments = Comment.objects.filter(creator=user)
-		posts = Post.objects.filter(creator=user)
-		if comments.exists() or posts.exists():
-			comment = comments.aggregate(Sum('votes_count'))
-			post = posts.aggregate(Sum('votes_count'))
-			karma = int((comment["votes_count__sum"]+post["votes_count__sum"])/5)
-
-			user.profile.karma = karma
-			user.profile.save()
+		if comments.exists():
+			karma = int((comments_vote_count["votes_count__sum"])/5)
+		elif posts.exists():
+			karma = int((posts_vote_count["votes_count__sum"])/5)
+		elif posts.exists() and comments.exists():
+			karma = int((posts_vote_count["votes_count__sum"]+comments_vote_count["votes_count__sum"])/5)
+		user.profile.karma = karma
+		user.profile.save()
 		return render(request, 'user/profile.html', {'posts':posts, 'comments':comments, 'user':user})
 
 class UserProfileSettingsView(LoginRequiredMixin, View):
@@ -45,11 +43,11 @@ class UserProfileSettingsView(LoginRequiredMixin, View):
 		change_email_form = self.user_email_change_form_class()
 		return render(request, 'user/profile_settings.html', {'profile_form':profile_form, 'change_pass_form':change_pass_form, 'change_email_form':change_email_form})
 
-	def post(self, request, *args, **kwargs):
+	def posts_vote_count(self, request, *args, **kwargs):
 		profile_form = self.profile_form_class(request.POST, request.FILES, instance=self.user_info)
 		change_pass_form = UserPassChangeForm(request.POST)
 		change_email_form = UserEmailChangeForm(request.POST)
-		print(('profile_form' in request.POST),'$$$$$$$$$$$$4',('change_pass_form' in request.POST),'%%%%',('change_email_form' in request.POST))
+		# print(('profile_form' in request.POST),'$$$$$$$$$$$$4',('change_pass_form' in request.POST),'%%%%',('change_email_form' in request.POST))
 
 		if ('profile_form' in request.POST) and profile_form.is_valid():
 			updated_info = profile_form.save(commit=False)

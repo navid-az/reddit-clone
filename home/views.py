@@ -1,4 +1,3 @@
-from secrets import choice
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.views import View
@@ -12,34 +11,36 @@ from django.db.models import F
 def is_ajax(request):
     return request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest'
 
-# Create your views here.
 class Home(View):
     def get(self, request):
-        posts = Post.objects.all()
         servers = Server.objects.all()
+        if request.user.is_authenticated:
+            user = User.objects.get(id=request.user.id)
+            user_following_servers = user.following_server.values('server')
+            posts = Post.objects.filter(server__in=user_following_servers)
+        else:
+            posts = Post.objects.all()
         return render(request, 'home/home.html',{'servers':servers, 'posts':posts})
             
 class NewPosts(View):
     def get(self, request):
-        posts = Post.objects.order_by('-created')
+        if request.user.is_authenticated:
+            user = User.objects.get(id=request.user.id)
+            user_following_servers = user.following_server.values('server')
+            posts = Post.objects.filter(server__in=user_following_servers).order_by('-created')
+        else:
+            posts = Post.objects.order_by('-created')
         return render(request, 'home/new.html', {'posts':posts})
-        # data = []
-        # for hot in hot_posts:
-        #     item = {
-        #         'id': hot.id,
-        #         'title': hot.title,
-        #         'created': hot.created,
-        #         'text': hot.text,
-        #         'server': hot.server.name,
-        #         'creator': hot.creator.username,
-        #         'server_image' : hot.server.image.url,
-        #     }
-        #     if hot.image.url is not None:
-        #         item['image'] = hot.image.url
-            
-        #     data.append(item)
-        # return JsonResponse({'data':data})
 
+class HotPosts(View):
+    def get(self, request):
+        if request.user.is_authenticated:
+            user = User.objects.get(id=request.user.id)
+            user_following_servers = user.following_server.values('server')
+            posts = Post.objects.filter(server__in=user_following_servers).order_by('-created').order_by('-votes_count')
+        else:
+            posts = Post.objects.order_by('-created').order_by('-votes_count')
+        return render(request, 'home/hot.html', {'posts':posts})
 
 def SearchAjaxView(request):
     if is_ajax(request=request):

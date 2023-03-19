@@ -62,9 +62,9 @@
                 <a href="{% url 'servers:server-rules-delete' rule.server.tag rule.id %}">
                   <img src="{% static 'servers/svgs/trash.svg' %}" alt="delete rule">
                 </a>
-                <button class='edit-rule-btn'>
+                {% comment %} <button class='edit-rule-btn'>
                   <img src="{% static 'posts/svgs/edit.svg' %}" alt="edit rule">
-                </button>
+                </button> {% endcomment %}
                 <button onclick='openRuleDetails({{ forloop.counter0 }})' class='rule-detail-btn'>
                   <img src="{% static 'svgs/maximize.svg' %}" alt="rule detail">
                 </button>

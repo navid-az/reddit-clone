@@ -43,7 +43,7 @@ class UserProfileSettingsView(LoginRequiredMixin, View):
 		change_email_form = self.user_email_change_form_class()
 		return render(request, 'user/profile_settings.html', {'profile_form':profile_form, 'change_pass_form':change_pass_form, 'change_email_form':change_email_form})
 
-	def posts_vote_count(self, request, *args, **kwargs):
+	def post(self, request, *args, **kwargs):
 		profile_form = self.profile_form_class(request.POST, request.FILES, instance=self.user_info)
 		change_pass_form = UserPassChangeForm(request.POST)
 		change_email_form = UserEmailChangeForm(request.POST)

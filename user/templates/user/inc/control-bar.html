@@ -9,10 +9,11 @@
                     <a href="{% url 'home:home' %}"><img src="{% static 'posts/svgs/go-back-btn.svg' %}" alt="go to home page"></a>
                     <a href="{% url 'user:saved-posts' request.user.username %}"><img src="{% static 'posts/svgs/bookmark.svg' %}" alt="save"></a>
                     {% comment %} <a href="/"><img src="{% static 'posts/svgs/hidden.svg' %}" alt="hidden posts"></a> {% endcomment %}
+                    <span id="user-username">u/{{user.username}}</span>
                 </div>
                 <div class="posts-controls">
-                    <button onclick='changeView(1)' class="show-comments">کامنت ها</button>
-                    <button onclick='changeView(0)' class="show-posts">پست ها</button>
+                    <button onclick="changeView(1)" class="show-comments">کامنت ها</button>
+                    <button onclick="changeView(0)" class="show-posts">پست ها</button>
                 </div>
             </div>
         </div>

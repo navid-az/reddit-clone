@@ -6,7 +6,6 @@
 {% endblock cssFiles %} 
 {% block jsFiles %}
   <script src="{% static 'posts/js/create-post.js' %}" defer></script>
-  <script src="{% static 'user/js/profile.js' %}"></script>
 {% endblock jsFiles %} 
 {% block content %} 
 {% include 'user/inc/control-bar.html' %}
@@ -57,7 +56,7 @@
                     <img src="{{i.server.image.url}}" alt="server image">
                     <div class="server-info">
                       <p>r/{{i.server.tag}}</p>
-                      <p>عضو {{i.server.count}}</p>
+                      <p>عضو {{i.server.followers.count}}</p>
                     </div>
                   </div>
               {% endfor %}
@@ -75,12 +74,6 @@
                 <p>فیلم</p>
                 <img src="{% static 'posts/svgs/video.svg' %}" alt="video" />
               </button>
-              <!--
-              <button type="button" onclick="postType(2)">
-                <p>لینک</p>
-                <img src="{% static 'posts/svgs/link.svg' %}" alt="link" />
-              </button>
-              -->
             </div>
           </section>
           <section class="form-body">

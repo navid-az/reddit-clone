@@ -128,7 +128,6 @@ const showData = (serverTag) => {
           </div>
           <section>
             <span>
-              <img src="{% static 'servers/svgs/gift.svg' %}" alt="" />
               <h3>ساخته شده در تاریخ</h3>
             </span>
             <p>${server.created.slice(0, 10)}</p>

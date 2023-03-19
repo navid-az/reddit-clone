@@ -3,7 +3,6 @@ let tabStatus = true;
 // form tab open and close function
 const createServerTabFunc = (formId, var1) => {
   let form = document.getElementById(formId);
-  console.log(form);
 
   if (tabStatus == true) {
     form.style.display = "flex";

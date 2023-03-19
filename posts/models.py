@@ -9,7 +9,7 @@ from mptt.models import MPTTModel, TreeForeignKey
 # -(comment is a child to the post because of the foreignkey) you need to put Post inside quotation marks to make it work 
 class Comment(MPTTModel):
     body = models.TextField(max_length=800)
-    created = models.DateTimeField(auto_now=True)
+    created = models.DateTimeField(auto_now_add=True)
     parent = TreeForeignKey('self', on_delete=models.CASCADE, related_name='replies', blank=True, null=True)
     post = models.ForeignKey('Post', on_delete=models.CASCADE, default=1, related_name='post_comments')
     creator = models.ForeignKey(User, on_delete=models.CASCADE, default=1, related_name='user_comments')

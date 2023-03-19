@@ -128,8 +128,8 @@ class CreatePostAjaxView(View):
         #     }
         #     data.append(serverInfo)
         return JsonResponse({'data':data})
+    
 class UpdatePostView(LoginRequiredMixin, View):
-
     form_class = UpdatePostForm
 
     def dispatch(self, request, *args, **kwargs):

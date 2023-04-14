@@ -15,7 +15,6 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-
 }
 
 .nav-btns {
@@ -47,6 +46,11 @@
     font-weight: 400;
 }
 
+#search-bar {
+    transition: 0.25s ease-in-out;
+    border: 1px solid #00000017;
+}
+
 #logo {
     display: flex;
     align-items: center;
@@ -61,4 +65,36 @@
 #logo>img {
     width: 100%;
     height: 70%;
+}
+
+.location-indicator {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    gap: 0.25rem;
+    height: 1.5rem;
+    color: var(--light-gray);
+    background: var(--gray);
+    border-radius: 20rem;
+    font-size: 12px;
+    padding: 0.125rem;
+    padding-right: 0.25rem;
+}
+
+.location-indicator>img,
+.location-indicator>a {
+    width: 20px;
+    height: 20px;
+    border-radius: 20rem;
+    object-fit: cover;
+}
+
+.location-indicator>a>img {
+    width: 100%;
+    height: 100%;
+}
+
+.location-indicator>a>img {
+    cursor: pointer;
+    filter: invert(66%) sepia(74%) saturate(7%) hue-rotate(6deg) brightness(98%) contrast(89%);
 }

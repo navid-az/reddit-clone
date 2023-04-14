@@ -18,3 +18,12 @@ const createServerTabFunc = (formId, var1) => {
     tabStatus = true;
   }
 };
+
+UserlocationIndicator = document.getElementById("user-indicator");
+ServerlocationIndicator = document.getElementById("server-indicator");
+
+if (window.location.href.includes("/r/")) {
+  ServerlocationIndicator.style.display = "flex";
+} else if (window.location.href.includes("/u/")) {
+  UserlocationIndicator.style.display = "flex";
+}

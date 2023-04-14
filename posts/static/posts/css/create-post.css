@@ -111,14 +111,14 @@
     justify-content: space-between;
     align-items: center;
     gap: 0.5rem;
-    height: 2.375rem;
+    height: 100%;
     border-radius: 0.5rem;
     background: var(--gray);
     color: white !important;
     font-size: 1.125rem;
     padding: 0.5rem 0.8rem;
     transition: 0.25s ease-in-out;
-    border-bottom: 2px solid black;
+    /* border-bottom: 2px solid black; */
 }
 
 .form-body {

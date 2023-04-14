@@ -22,6 +22,16 @@
         <form style='width:384px' method="post" action="" class="search-wrapper">
           {% csrf_token %}
           <div id="search-bar">
+            <div id='server-indicator' class="location-indicator">
+              <img src="{{server.image.url}}" alt="server-img">
+              <p>r/{{server.tag}}</p>
+              <a href="{% url 'home:home' %}"><img src="{% static 'svgs/x.svg' %}" alt="go to home"></a>
+            </div>
+            <div id='user-indicator' class="location-indicator">
+              <img src="{{user.profile.image.url}}" alt="server-img">
+              <p>u/{{user.username}}</p>
+              <a href="{% url 'home:home' %}"><img src="{% static 'svgs/x.svg' %}" alt="go to home"></a>
+            </div>
             <input id='search-input' type="text" name='search-bar'>
             <button id="delete-search"><img src="{% static 'svgs/x.svg' %}" alt="delete search"></button>
             <button id="search-btn"><img src="{% static 'svgs/search.svg' %}" alt="search"></button>

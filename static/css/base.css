@@ -366,14 +366,12 @@ button {
     justify-content: space-between;
     align-items: center;
     gap: 0.5rem;
-    height: 2.375rem;
+    height: 2.5rem;
     border-radius: 0.5rem;
     background: var(--light-gray-3);
     color: white !important;
     font-size: 1.125rem;
     padding: 0.5rem 0.8rem;
-    transition: 0.25s ease-in-out;
-    border: 1px solid #00000017;
 }
 
 #server-search-bar {
@@ -402,7 +400,7 @@ button {
     align-items: center;
     gap: 0.5rem;
     width: 100%;
-    padding: 0.5rem 0;
+    /* padding: 0.5rem 0; */
 }
 
 

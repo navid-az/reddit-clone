@@ -9,73 +9,71 @@
 
 
 {% block moderatingPage %}
-  <section id="moderator-display">
-      <div class="wrapper l-wrapper">
-        <div class="form-title">
-          <h2>مدیران سرور</h2>
-          <div class="form-title-btns">
-            <form method="post" action="{% url 'servers:server-moderator-settings' server.tag %}" id="moderator-search-wrapper">
-              {% csrf_token %}
-              <div id="moderator-search-bar">
-                <input id='moderator-search-input' type='textarea' value='' autocomplete="off">
-              </div>
-              <div class="d-none">{{form}}</div>
-              <div id="search-results-tab">
-                {% for server in servers %} 
-                  <div id='{{server.id}}' class='server'>
-                    <img src="{{server.image.url}}" alt="">
-                    <div class="server-info">
-                      <p>r/{{server.tag}}</p>
-                      <p>عضو {{server.followers.count}}</p>
-                    </div>
-                  </div> 
-                {% endfor %}
-              </div>
-            </form>
-            <div onclick="createServerTabFunc('create-post-tag')" class='square-btn'>
-              <img src="{% static 'servers/svgs/plus.svg' %}" alt="add flair">
+  <div class="wrapper l-wrapper">
+    <div class="form-title">
+      <h2>مدیران سرور</h2>
+      <div class="form-title-btns">
+        <form method="post" action="{% url 'servers:server-moderator-settings' server.tag %}" id="moderator-search-wrapper">
+          {% csrf_token %}
+          <div id="moderator-search-bar">
+            <input id='moderator-search-input' type='textarea' value='' autocomplete="off">
+          </div>
+          <div class="d-none">{{form}}</div>
+          <div id="search-results-tab">
+            {% for server in servers %} 
+              <div id='{{server.id}}' class='server'>
+                <img src="{{server.image.url}}" alt="">
+                <div class="server-info">
+                  <p>r/{{server.tag}}</p>
+                  <p>عضو {{server.followers.count}}</p>
+                </div>
+              </div> 
+            {% endfor %}
+          </div>
+        </form>
+        <div onclick="createServerTabFunc('create-post-tag')" class='square-btn'>
+          <img src="{% static 'servers/svgs/plus.svg' %}" alt="add flair">
+        </div>
+      </div>
+    </div>
+    <section id='list'>
+      <div class="list-item">
+        <div class="list-item-title-wrapper">
+          <div class="list-item-title">
+            <div class="moderator-img">
+              <img src="{{server.creator.profile.image.url}}" alt="moderator profile image">
             </div>
+            <p>u/{{server.creator}}</p>
+          </div>
+          <div class="list-item-options">
+            <a>
+              <img src="{% static 'servers/svgs/crown.svg' %}" alt="moderator permissions">
+            </a>
           </div>
         </div>
-        <section id='list'>
-          <div class="list-item">
-            <div class="list-item-title-wrapper">
-              <div class="list-item-title">
-                <div class="moderator-img">
-                  <img src="{{server.creator.profile.image.url}}" alt="moderator profile image">
-                </div>
-                <p>u/{{server.creator}}</p>
-              </div>
-              <div class="list-item-options">
-                <a>
-                  <img src="{% static 'servers/svgs/crown.svg' %}" alt="moderator permissions">
-                </a>
-              </div>
-            </div>
-          </div>
-          {% for moderator in moderators %}
-          <div class="list-item">
-            <div class="list-item-title-wrapper">
-              <div class="list-item-title">
-                {{ forloop.counter }}
-                <div class="moderator-img">
-                  <img src="{{moderator.user.profile.image.url}}" alt="moderator profile image">
-                </div>
-                <p>u/{{moderator.user.username}}</p>
-              </div>
-              <div class="list-item-options">
-                {% if request.user != moderator.user %}
-                  <a href="{% url 'servers:server-moderator-permissions' server.tag moderator.user.id %}">
-                    <img src="{% static 'servers/svgs/more.svg' %}" alt="moderator permissions">
-                  </a>
-                {% endif %}
-              </div>
-            </div>
-            <div class="rule-body">
-            </div>
-          </div>
-          {% endfor %}
-        </section>
       </div>
-  </section>
+      {% for moderator in moderators %}
+      <div class="list-item">
+        <div class="list-item-title-wrapper">
+          <div class="list-item-title">
+            {{ forloop.counter }}
+            <div class="moderator-img">
+              <img src="{{moderator.user.profile.image.url}}" alt="moderator profile image">
+            </div>
+            <p>u/{{moderator.user.username}}</p>
+          </div>
+          <div class="list-item-options">
+            {% if request.user != moderator.user %}
+              <a href="{% url 'servers:server-moderator-permissions' server.tag moderator.user.id %}">
+                <img src="{% static 'servers/svgs/more.svg' %}" alt="moderator permissions">
+              </a>
+            {% endif %}
+          </div>
+        </div>
+        <div class="rule-body">
+        </div>
+      </div>
+      {% endfor %}
+    </section>
+  </div>
 {% endblock moderatingPage %}

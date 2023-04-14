@@ -6,22 +6,21 @@
 {% endblock moderationJsFiles %}
 
 {% block moderatingPage %}
-  <section id="moderator-display">
-    <div class="wrapper l-wrapper">
-      <div class="form-title">
-        <h2>تنظیمات مدیر</h2>
-        <h2>u/{{moderator.user}}</h2>
-        <div class="form-title-btns">
-          <a href='{% url 'servers:server-moderator-settings' server.tag %}' class="square-btn">
-            <img src="{% static 'servers/svgs/go-back-btn.svg' %}" alt="go back" />
-          </a>
-        </div>
+  <div class="wrapper l-wrapper">
+    <div class="form-title">
+      <h2>تنظیمات مدیر</h2>
+      <h2>u/{{moderator.user}}</h2>
+      <div class="form-title-btns">
+        <a href='{% url 'servers:server-moderator-settings' server.tag %}' class="square-btn">
+          <img src="{% static 'servers/svgs/go-back-btn.svg' %}" alt="go back" />
+        </a>
       </div>
-      <form method="post" id="moderator-permission-list" style="direction: ltr">
-        {% csrf_token %}
-        <div class="d-none">{{form.as_p}}</div>
-        <div class="form-body-wrapper">
-          <section class="form-body">
+    </div>
+    <form method="post" id="moderator-permission-list" style="direction: ltr">
+      {% csrf_token %}
+      <div class="d-none">{{form.as_p}}</div>
+      <div class="form-body-wrapper">
+        <section class="form-body">
             <div class="title">
               <p>تگ ها و پسوند ها</p>
               <span>دسترسی های مربوط به ایجاد و حذف تگ ها</span>
@@ -50,8 +49,8 @@
                 </div>
               </div>
             </section>
-          </section>
-          <section class="form-body">
+        </section>
+        <section class="form-body">
             <div class="title">
               <p>قوانین و مقررات سرور</p>
               <span>دسترسی های مربوط به قوانین و مقررات</span>
@@ -91,8 +90,8 @@
                 </div>
               </div>
             </section>
-          </section>
-          <section class="form-body">
+        </section>
+        <section class="form-body">
             <div class="title">
               <p>مدیریت</p>
               <span>دسترسی های مربوط به تغییر دسترسی های مدیران</span>
@@ -121,10 +120,10 @@
                 </div>
               </div>
             </section>
-          </section>
-        </div>
-        <div class="form-body-wrapper">
-          <section class="form-body">
+        </section>
+      </div>
+      <div class="form-body-wrapper">
+        <section class="form-body">
             <div class="title">
               <p>کاربران سرور</p>
               <span>دسترسی های مربوط به کابران سرور</span>
@@ -164,8 +163,8 @@
                 </div>
               </div>
             </section>
-          </section>
-          <section class="form-body">
+        </section>
+        <section class="form-body">
             <div class="title">
               <p>پست ها و پیام ها</p>
               <span>دسترسی های مربوط به پست ها و پیام های سرور</span>
@@ -183,10 +182,9 @@
                 </div>
               </div>
             </section>
-          </section>
-        </div>
-        <input id="s-submit-btn" type="submit" value="ثبت تغییرات" />
-      </form>
-    </div>
-  </section>
+        </section>
+      </div>
+      <input id="s-submit-btn" type="submit" value="ثبت تغییرات" />
+    </form>
+  </div>
 {% endblock moderatingPage %}

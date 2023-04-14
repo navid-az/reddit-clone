@@ -40,42 +40,40 @@
 {% endblock form_popup %}
 
 {% block moderatingPage %}
-  <section id="moderator-display">
-      <div class="wrapper l-wrapper">
-        <div class="form-title">
-          <h2>قوانین سرور</h2>
-          <div class="form-title-btns">
-            <div onclick="createServerTabFunc('create-rule')" class="square-btn">
-              <img src="{% static 'servers/svgs/plus.svg' %}" alt="add flair">
-            </div>
+  <div class="wrapper l-wrapper">
+    <div class="form-title">
+      <h2>قوانین سرور</h2>
+      <div class="form-title-btns">
+        <div onclick="createServerTabFunc('create-rule')" class="square-btn">
+          <img src="{% static 'servers/svgs/plus.svg' %}" alt="add flair">
+        </div>
+      </div>
+    </div>
+    <section id='list'>
+      {% for rule in server_rules %}
+      <div class="list-item">
+        <div class="list-item-title-wrapper">
+          <div class="list-item-title">
+            {{ forloop.counter }}
+            <p>{{rule.title}}</p>
+          </div>
+          <div class="list-item-options">
+            <a href="{% url 'servers:server-rules-delete' rule.server.tag rule.id %}">
+              <img src="{% static 'servers/svgs/trash.svg' %}" alt="delete rule">
+            </a>
+            {% comment %} <button class='edit-rule-btn'>
+              <img src="{% static 'posts/svgs/edit.svg' %}" alt="edit rule">
+            </button> {% endcomment %}
+            <button onclick='openRuleDetails({{ forloop.counter0 }})' class='rule-detail-btn'>
+              <img src="{% static 'svgs/maximize.svg' %}" alt="rule detail">
+            </button>
           </div>
         </div>
-        <section id='list'>
-          {% for rule in server_rules %}
-          <div class="list-item">
-            <div class="list-item-title-wrapper">
-              <div class="list-item-title">
-                {{ forloop.counter }}
-                <p>{{rule.title}}</p>
-              </div>
-              <div class="list-item-options">
-                <a href="{% url 'servers:server-rules-delete' rule.server.tag rule.id %}">
-                  <img src="{% static 'servers/svgs/trash.svg' %}" alt="delete rule">
-                </a>
-                {% comment %} <button class='edit-rule-btn'>
-                  <img src="{% static 'posts/svgs/edit.svg' %}" alt="edit rule">
-                </button> {% endcomment %}
-                <button onclick='openRuleDetails({{ forloop.counter0 }})' class='rule-detail-btn'>
-                  <img src="{% static 'svgs/maximize.svg' %}" alt="rule detail">
-                </button>
-              </div>
-            </div>
-            <div class="list-item-body">
-              {{rule.body}}
-            </div>
-          </div>
-          {% endfor %}
-        </section>
+        <div class="list-item-body">
+          {{rule.body}}
+        </div>
       </div>
-  </section>
+      {% endfor %}
+    </section>
+  </div>
 {% endblock moderatingPage %}

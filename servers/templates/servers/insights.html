@@ -89,7 +89,6 @@
 {% endblock form_popup %}
 
 {% block moderatingPage %}
-<section id="moderator-display">
   <div class="wrapper" id="chart-wrapper">
     <div class="form-title">
       <h2>نمودار تغییرات</h2>
@@ -97,9 +96,9 @@
     <div id="server-chart">
       <canvas id="moderating-chart"></canvas>
     </div>
-    <button onclick="updateChart(0)" id="go-back">سالانه‌</button>
+    {% comment %} <button onclick="updateChart(0)" id="go-back">سالانه‌</button>
     <button onclick="updateChart(1)" id="go-forward">ماهانه</button>
-    <button onclick="updateChart(2)" id="go-forward">روزانه</button>
+    <button onclick="updateChart(2)" id="go-forward">روزانه</button> {% endcomment %}
   </div>
   <div class="numbers-wrapper">
     <!--daily follow counter-->
@@ -223,7 +222,6 @@
       {% endfor %}
     </section>
   </div>
-</section>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>

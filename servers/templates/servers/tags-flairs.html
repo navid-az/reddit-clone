@@ -126,56 +126,54 @@
 {% endblock form_popup %}
 
 {% block moderatingPage %}
-  <section id="moderator-display"> 
-      <div class="wrapper flairs-wrapper">
-        <div class="form-title">
-          <h2>تگ پست ها</h2>
-          <div class="form-title-btns">
-            <div onclick="createServerTabFunc('create-post-tag')" class="square-btn">
-              <img src="{% static 'servers/svgs/plus.svg' %}" alt="crate post tag">
+  <div class="wrapper flairs-wrapper">
+    <div class="form-title">
+      <h2>تگ پست ها</h2>
+      <div class="form-title-btns">
+        <div onclick="createServerTabFunc('create-post-tag')" class="square-btn">
+          <img src="{% static 'servers/svgs/plus.svg' %}" alt="crate post tag">
+        </div>
+        <div onclick="deleteTag('post-tag-wrapper','post-tag-delete-btn')" class="square-btn">
+          <img class='trash-icon' src="{% static 'servers/svgs/trash.svg' %}" alt="delete post tag">
+        </div>
+      </div>
+    </div>
+    <section class='list'>
+      {% for tag in server_post_tags  %}
+          <div class="post-tag-wrapper delete-effect">
+            <div class="tag post-tag" style='background:{{tag.primary_color}}; border:3px solid {{tag.secondary_color}}; color:{{tag.secondary_color}}'>
+              {{tag.name}}
             </div>
-            <div onclick="deleteTag('post-tag-wrapper','post-tag-delete-btn')" class="square-btn">
+            <a href='{% url 'servers:server-tag-delete' tag.server.tag tag.id  %}' class='post-tag-delete-btn'>
               <img class='trash-icon' src="{% static 'servers/svgs/trash.svg' %}" alt="delete post tag">
-            </div>
+            </a>
           </div>
+      {% endfor %}
+    </section>
+  </div>
+  <div class="wrapper tags-wrapper">
+    <div class="form-title">
+      <h2>تگ کاربران</h2>
+      <div class="form-title-btns">
+        <div onclick="createServerTabFunc('create-user-tag')" class="square-btn">
+          <img src="{% static 'servers/svgs/plus.svg' %}" alt="craete user tag">
         </div>
-        <section class='list'>
-          {% for tag in server_post_tags  %}
-              <div class="post-tag-wrapper delete-effect">
-                <div class="tag post-tag" style='background:{{tag.primary_color}}; border:3px solid {{tag.secondary_color}}; color:{{tag.secondary_color}}'>
-                  {{tag.name}}
-                </div>
-                <a href='{% url 'servers:server-tag-delete' tag.server.tag tag.id  %}' class='post-tag-delete-btn'>
-                  <img class='trash-icon' src="{% static 'servers/svgs/trash.svg' %}" alt="delete post tag">
-                </a>
-              </div>
-          {% endfor %}
-        </section>
+        <div onclick="deleteTag('user-tag-wrapper','user-tag-delete-btn')" class="square-btn">
+          <img class='trash-icon' src="{% static 'servers/svgs/trash.svg' %}" alt="delete user tag">
+        </div>
       </div>
-      <div class="wrapper tags-wrapper">
-        <div class="form-title">
-          <h2>تگ کاربران</h2>
-          <div class="form-title-btns">
-            <div onclick="createServerTabFunc('create-user-tag')" class="square-btn">
-              <img src="{% static 'servers/svgs/plus.svg' %}" alt="craete user tag">
-            </div>
-            <div onclick="deleteTag('user-tag-wrapper','user-tag-delete-btn')" class="square-btn">
-              <img class='trash-icon' src="{% static 'servers/svgs/trash.svg' %}" alt="delete user tag">
-            </div>
+    </div>
+    <section class='list'>
+      {% for tag in server_user_tags  %}
+        <div class="user-tag-wrapper delete-effect">
+          <div class="tag user-tag" style='background:{{tag.primary_color}}; border:3px solid {{tag.secondary_color}}; color:{{tag.secondary_color}}'>
+            {{tag.name}}
           </div>
+          <a style='border-radius:0.5rem' href='{% url 'servers:server-tag-delete' tag.server.tag tag.id %}' class='user-tag-delete-btn'>
+            <img class='trash-icon' src="{% static 'servers/svgs/trash.svg' %}" alt="delete post tag">
+          </a>
         </div>
-        <section class='list'>
-          {% for tag in server_user_tags  %}
-            <div class="user-tag-wrapper delete-effect">
-              <div class="tag user-tag" style='background:{{tag.primary_color}}; border:3px solid {{tag.secondary_color}}; color:{{tag.secondary_color}}'>
-                {{tag.name}}
-              </div>
-              <a style='border-radius:0.5rem' href='{% url 'servers:server-tag-delete' tag.server.tag tag.id %}' class='user-tag-delete-btn'>
-                <img class='trash-icon' src="{% static 'servers/svgs/trash.svg' %}" alt="delete post tag">
-              </a>
-            </div>
-          {% endfor %}
-        </section>
-      </div>
-  </section>
+      {% endfor %}
+    </section>
+  </div>
 {% endblock moderatingPage %}

@@ -71,7 +71,7 @@ class CreateServerView(LoginRequiredMixin, View):
             saved_form.save()
             messages.success(request, '!سرور با موفقیت ایجاد شد')
             return redirect('home:home')
-        messages.error(request, 'This is wrong')
+        messages.error(request, '!این نام سرور قبلا ثبت شده')
         return redirect('home:home')
 
 class ServerModeratingView(LoginRequiredMixin, View):

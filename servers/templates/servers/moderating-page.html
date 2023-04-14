@@ -10,7 +10,11 @@
 {% endblock jsFiles %}
 {% block content %}
 <div id="moderating-page-wrapper">
-  {% block moderatingPage %}{% endblock moderatingPage %}
+  <section id="moderator-display-wrapper">
+    <div id="moderator-display">
+      {% block moderatingPage %}{% endblock moderatingPage %}
+    </div>
+  </section>
   {% include 'servers/inc/moderator-control-bar.html' %}
 </div>
 {% endblock content %}

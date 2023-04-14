@@ -29,6 +29,7 @@ body {
 
 .reports-wrapper {
   width: 100%;
+  height: 450px;
 }
 
 .list-item-title>a>img[alt='report icon'],

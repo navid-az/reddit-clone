@@ -1,5 +1,6 @@
 #moderator-control-bar {
-  width: 15rem;
+  min-width: 15rem;
+  max-width: 15rem;
   background: var(--gray);
   height: calc(100vh - 5.88rem);
 }

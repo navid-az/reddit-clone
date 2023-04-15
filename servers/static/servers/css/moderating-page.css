@@ -15,8 +15,7 @@
   width: 100%;
   height: 87vh;
   overflow-y: scroll;
-  padding: 1rem;
-  padding-top: 3rem;
+  padding: 3rem;
 }
 
 #moderator-display-wrapper::-webkit-scrollbar {

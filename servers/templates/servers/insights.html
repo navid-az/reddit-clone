@@ -232,6 +232,7 @@
     var postDateList = [];
     var serverFollowCountList = [];
     var serverFollowDateList = [];
+  
     {{post_daily_count|safe}}.forEach((i) => {
       postCountList.push(i.dailycount)
       postDateList.push(i.date)
@@ -268,43 +269,16 @@
                   grace: 10
                 },
               x: {
-                  max: '{{tomorrow|date:'Y-m-d'|safe}}',
-                  min: '',
-                  type: 'time',
-                  time: {
-                      unit: 'day'
+                type: 'time',
+                time: {
+                    max: '{{tomorrow|date:'Y-m-d'|safe}}',
+                    min: '',
+                    unit: 'day'
+
                   }
               }
           }
       }
-
   });
-  currentDate = '{{tomorrow|date:'Y-m-d'|safe}}'
-  fromFirst = '{{server.created|date:'Y-m-d'|safe}}'
-  const goForward= document.getElementById('go-forward');
-  const goBack= document.getElementById('go-back');
-  var maxDay = chart.options.scales.x.max[8] + chart.options.scales.x.max[9]
-  var maxMonth = parseInt(chart.options.scales.x.max[5] + chart.options.scales.x.max[6])
-  var maxYear = chart.options.scales.x.max[2] + chart.options.scales.x.max[3]
-
-  var currentDay = currentDate[8] + currentDate[9]
-  var currentMonth = parseInt(currentDate[5] + currentDate[6])
-  var currentYear = currentDate[2] + currentDate[3]
-
-  var fromFirstDay = fromFirst[8] + fromFirst[9]
-  var fromFirstMonth = parseInt(fromFirst[5] + fromFirst[6])
-  var fromFirstYear = fromFirst[2] + fromFirst[3]
-  console.log(maxYear, maxMonth -1, maxDay)
-  console.log(currentYear, currentMonth -1, currentDay)
-  const updateChart =(btn, type)=>{
-    if(btn == 0){
-      chart.options.scales.x.time.unit = 'year'
-    }else if(btn == 1){
-      chart.options.scales.x.time.unit = 'month'
-    }else{
-      chart.options.scales.x.time.unit = 'day'
-    }
-    chart.update()
-  }
 </script>
 {% endblock moderatingPage %}

@@ -82,7 +82,6 @@ class ServerModeratingView(LoginRequiredMixin, View):
             return render(request, 'servers/moderating-page.html', {"server":server})
         messages.warning(request, 'شما مدیر این سرور نیستید')
         return redirect('home:home')
-
 class ServerInsightsView(View):
     form_class = LimitUserForm
 
@@ -115,9 +114,12 @@ class ServerInsightsView(View):
         else:
             daily_follow_count_icon = 'same'
 
-        # chart 
-        post_daily_count = list(server.posts.all().annotate(date=TruncDate('created')).values('date').annotate(dailycount=Count('date')).order_by())
-        server_follow_daily_count = list(server.followers.all().annotate(date=TruncDate('created')).values('date').annotate(dailycount=Count('date')).order_by())
+        # chart
+        days_ago_30=today-timedelta(days=30)
+        server_posts = server.posts.filter(created__date__range=(days_ago_30.date(),today.date()))
+        server_followers = server.followers.filter(created__date__range=(days_ago_30.date(),today.date()))
+        post_daily_count = list(server_posts.annotate(date=TruncDate('created')).values('date').annotate(dailycount=Count('date')).order_by())
+        server_follow_daily_count = list(server_followers.annotate(date=TruncDate('created')).values('date').annotate(dailycount=Count('date')).order_by())
 
         for value in post_daily_count:
             value['date'] = str(value['date'])
@@ -138,8 +140,7 @@ class ServerInsightsView(View):
             limit.save()
         else:
             messages.error(request, 'این کاربر قبلا از این سرور محدود شده.')
-        return redirect('servers:server-insights', server_tag)
-        
+        return redirect('servers:server-insights', server_tag)       
 class ServerDeleteReportView(LoginRequiredMixin, View):
     def get(self, request, server_tag, report_id):
         server = Server.objects.get(tag=server_tag)
@@ -151,8 +152,6 @@ class ServerDeleteReportView(LoginRequiredMixin, View):
             return redirect('servers:server-insights', server_tag)
         messages.error(request, 'شما اجازه حذف گزارشات را ندارید.') 
         return redirect('servers:server-insights', server_tag)
-
-
 class TagsAndFlairsView(LoginRequiredMixin, View):
     form_class = CreatePostTagForm
     form_class_2 = CreateUserTagForm
@@ -246,7 +245,6 @@ class RulesView(LoginRequiredMixin, View):
             return render(request, 'servers/rules.html', {"server":self.server, "server_rules":server_rules, "create_rule_form":create_rule_form})
         messages.error(request, 'شما نمیتوانید قانون ایجاد کنید')
         return redirect('servers:server-rules', server_tag)
-
 class DeleteRulesView(LoginRequiredMixin, View):
     
     def get(self, request, *args, **kwargs):
@@ -281,7 +279,6 @@ class ModeratorSettingsView(LoginRequiredMixin, View):
         moderator = ServerModerator.objects.get(user=user)
         moderator.server.add(server)
         return render(request, 'servers/moderator-settings.html', {'moderators':moderators, 'server':server, 'form':form})
-
 class ModeratorPermissionsView(LoginRequiredMixin, View):
     form_class = UpdateModeratorPermissionsForm
 
@@ -326,7 +323,6 @@ def ModeratorSearchAjaxView(request):
             response = 'کاربری با این نام یافت نشد'
         return JsonResponse({'data':response})
     return JsonResponse({})
- 
 class ChooseServerAjaxView(LoginRequiredMixin, View):
     def get(self, request):
         moderator = ServerModerator.objects.get(user=request.user)
@@ -342,7 +338,6 @@ class ChooseServerAjaxView(LoginRequiredMixin, View):
             }
             data.append(list)
         return JsonResponse({'data':data})
-
 class LimitationDoneAjaxView(LoginRequiredMixin, View):
     def get(self, request):
         pass

@@ -23,7 +23,7 @@
 }
 
 #moderator-display-wrapper::-webkit-scrollbar-track {
-  border-radius: 0 0 0.5rem 0;
+  border-radius: 0 0 var(--p8) 0;
   background: #181818;
 }
 
@@ -49,7 +49,7 @@
   display: flex;
   flex-direction: column;
   background: #FFFF;
-  border-radius: 0.5rem;
+  border-radius: var(--p8);
   padding: var(--p14);
   direction: rtl;
   /* margin-bottom: 0.875rem; */
@@ -65,7 +65,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  border-radius: 0.5rem;
+  border-radius: var(--p8);
   background: var(--gray);
   width: 31px;
   height: 31px;
@@ -91,7 +91,7 @@
   color: #FFFF;
   background: var(--gray);
   padding: var(--p14);
-  border-radius: 0.5rem;
+  border-radius: var(--p8);
 }
 
 .list-item-title {
@@ -109,8 +109,8 @@
   font-size: var(--p14);
   padding: var(--p14);
   padding-top: 1.1875rem;
-  margin-top: -0.5rem;
-  border-radius: 0.5rem;
+  margin-top: -var(--p8);
+  border-radius: var(--p8);
   border: 2px solid #3b3b3b1a;
   display: none;
   transition: 0.25s ease-in-out;

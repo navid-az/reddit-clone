@@ -8,7 +8,8 @@
     --gray: #3B3B3B;
     --dark-gray: #1e1e20;
     --dark-gray-2: #525252;
-    /* padding/margin */
+    /* rem */
+    --p8: 0.5rem;
     --p14: 0.875rem;
     --p30: 1.875rem;
     /* transitions  */
@@ -56,7 +57,7 @@
     background: var(--orange);
     color: #FFFF;
     width: 100%;
-    border-radius: 0.5rem;
+    border-radius: var(--p8);
     margin-top: var(--p30);
     height: 2.75rem;
     font-size: 1rem;
@@ -66,7 +67,7 @@
 .create-tag-form {
     background: #ffff;
     width: 442px;
-    border-radius: 0.5rem;
+    border-radius: var(--p8);
     padding: var(--p14);
     position: relative;
     top: 0;
@@ -105,7 +106,7 @@
 
 .form-title-btns {
     display: flex;
-    gap: 0.5rem;
+    gap: var(--p8);
 }
 
 .form-title-btns>* {
@@ -166,7 +167,7 @@
     transition: 0.15s ease-in-out;
     outline: none;
     height: 2.5rem;
-    border-radius: 0.5rem;
+    border-radius: var(--p8);
     width: 100%;
 }
 
@@ -178,7 +179,7 @@
 .checkbox {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: var(--p8);
 }
 
 .checkbox-label {
@@ -268,7 +269,7 @@ textarea {
     transition: 0.15s ease-in-out;
     background: #F9F9F9;
     direction: rtl;
-    border-radius: 0.5rem;
+    border-radius: var(--p8);
     padding: 0.875rem;
     outline: none;
     /* #116 - create-post.css  */
@@ -319,7 +320,7 @@ button {
     position: sticky;
     background: #FFFF;
     padding: var(--p14);
-    border-radius: 0.5rem;
+    border-radius: var(--p8);
     box-shadow: 0px 8px 8px 3px rgba(0, 0, 0, 0.04);
 }
 
@@ -355,7 +356,7 @@ button {
 .tag-list {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.5rem;
+    gap: var(--p8);
 }
 
 .post-tag {
@@ -363,7 +364,7 @@ button {
 }
 
 .user-tag {
-    border-radius: 0.5rem;
+    border-radius: var(--p8);
 }
 
 /* search and server list  */
@@ -372,13 +373,13 @@ button {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 0.5rem;
+    gap: var(--p8);
     height: 2.5rem;
-    border-radius: 0.5rem;
+    border-radius: var(--p8);
     background: var(--light-gray-3);
     color: white !important;
     font-size: 1.125rem;
-    padding: 0.5rem 0.8rem;
+    padding: var(--p8) 0.8rem;
 }
 
 #server-search-bar {
@@ -405,9 +406,9 @@ button {
 #selected-server {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: var(--p8);
     width: 100%;
-    /* padding: 0.5rem 0; */
+    /* padding: var(--p8) 0; */
 }
 
 
@@ -481,7 +482,7 @@ button {
     flex-direction: column;
     background: var(--gray);
     z-index: 1;
-    border-radius: 0 0 0.5rem 0.5rem;
+    border-radius: 0 0 var(--p8) var(--p8);
 }
 
 #no-result-tab {
@@ -490,7 +491,7 @@ button {
     justify-content: center;
     align-items: center;
     height: 100%;
-    gap: 0.5rem;
+    gap: var(--p8);
 }
 
 #no-result-tab>img {
@@ -510,7 +511,7 @@ button {
 
 #search-result-tab::-webkit-scrollbar-track,
 #servers-tab::-webkit-scrollbar-track {
-    border-radius: 0 0 0.5rem 0;
+    border-radius: 0 0 var(--p8) 0;
     background: #181818;
 }
 
@@ -526,8 +527,8 @@ button {
     display: flex;
     flex-direction: row;
     align-items: center;
-    gap: 0.5rem;
-    padding: 0.5rem;
+    gap: var(--p8);
+    padding: var(--p8);
     width: 100%;
     height: 3.5rem;
     cursor: pointer;

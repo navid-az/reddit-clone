@@ -37,12 +37,12 @@
     background: var(--orange);
     color: #ffff;
     height: 2.5rem;
-    padding: 0.5rem;
-    border-radius: 0.5rem;
+    padding: var(--p8);
+    border-radius: var(--p8);
 }
 
 #sing-in-btn {
-    padding: 0.5rem 2.06rem;
+    padding: var(--p8) 2.06rem;
     font-weight: 400;
 }
 

@@ -1,7 +1,7 @@
 .comment-section {
   direction: rtl;
   background: #ffff;
-  border-radius: 0.5rem;
+  border-radius: var(--p8);
   padding: var(--p14);
   margin-bottom: 2rem;
 }
@@ -34,7 +34,7 @@
   border: none;
   background: var(--light-gray-3);
   border: 1px solid #00000017;
-  border-radius: 0.5rem;
+  border-radius: var(--p8);
   resize: none;
   padding: 0.875rem;
   transition: 0.25s ease-in-out;
@@ -56,11 +56,11 @@
 #comment-submit-btn,
 .reply-submit-btn {
   position: absolute;
-  bottom: -0.5rem;
-  left: 1.875rem;
+  bottom: 1.3rem;
+  left: var(--p14);
   width: 7.125rem;
   height: 2.375rem;
-  border-radius: 20rem;
+  border-radius: var(--p8);
   background: var(--gray);
   color: #ffff;
   transition: 0.25s ease-in-out;
@@ -87,7 +87,7 @@
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  gap: 0.5rem;
+  gap: var(--p8);
 }
 
 .creator-img {
@@ -113,12 +113,12 @@
 .created-creator>section {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: var(--p8);
 }
 
 .created-creator>section>.user-tag {
   font-size: 10px !important;
-  padding: 0.1rem 0.5rem !important;
+  padding: 0.1rem var(--p8) !important;
 }
 
 .created-creator a {
@@ -151,9 +151,9 @@
 .comment-options {
   display: flex;
   gap: 2rem;
-  margin-top: 0.5rem;
+  margin-top: var(--p8);
   height: 32px;
-  gap: 0.5rem;
+  gap: var(--p8);
 }
 
 .comment-vote,
@@ -161,11 +161,11 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 0.5rem;
+  gap: var(--p8);
   /* width: 5.375rem; */
   height: 2rem;
   border-radius: 2rem;
-  padding: 0.5rem 1rem;
+  padding: var(--p8) 1rem;
   background: var(--light-gray-3);
   color: #AAAAAA;
   transition: 0.25s ease-in-out;

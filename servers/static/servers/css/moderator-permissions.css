@@ -35,7 +35,7 @@
   border: none;
   background: #F8F8F8;
   color: #AAAAAA;
-  border-radius: 0.5rem;
+  border-radius: var(--p8);
   font-family: Vmedium;
   pointer-events: none;
   transition: 0.25s ease-in-out;

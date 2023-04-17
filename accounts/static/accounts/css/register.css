@@ -18,7 +18,7 @@ body {
     top: 0;
     bottom: 0;
     margin: auto;
-    border-radius: 0.5rem;
+    border-radius: var(--p8);
 }
 
 #reddit-logo {
@@ -63,7 +63,7 @@ form {
     width: 100%;
     text-align: end;
     padding-top: 1.09375rem;
-    padding-bottom: 0.5rem;
+    padding-bottom: var(--p8);
 
 }
 
@@ -74,14 +74,13 @@ form {
 form label {
     font-size: 0.875rem;
     color: #848484;
-    /* margin-left: 18.5rem; */
 }
 
 form input {
     background: var(--light-gray-3);
     width: 100%;
     height: 2.8125rem;
-    border-radius: 0.5rem;
+    border-radius: var(--p8);
     border: none;
     box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.04);
     transition: 0.15s ease-in-out;

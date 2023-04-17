@@ -6,7 +6,7 @@
   height: 4.625rem;
   width: 100%;
   background: #ffff;
-  border-radius: 0.5rem;
+  border-radius: var(--p8);
   padding: 0.875rem;
   margin-bottom: 1rem;
 }
@@ -22,15 +22,15 @@
 }
 
 .post-filters {
-  gap: 0.5rem;
+  gap: var(--p8);
 }
 
 .post-filters>a,
 .show-options {
   height: 2.375rem;
-  border-radius: 0.5rem;
+  border-radius: var(--p8);
   background: var(--gray);
-  color: white;
+  color: #ffff;
   font-size: 1.125rem;
   padding: 0.4375rem 1.5625rem;
   transition: 0.25s ease-in-out;

@@ -31,7 +31,7 @@ body {
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  gap: 0.5rem;
+  gap: var(--p8);
   font-size: 2.5rem;
 }
 
@@ -58,7 +58,7 @@ body {
 .report-text {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: var(--p8);
 }
 
 .report-info {
@@ -66,7 +66,7 @@ body {
   border-radius: 20rem;
   color: #FFFF;
   font-size: 10px;
-  padding: 0.3rem 0.5rem;
+  padding: 0.3rem var(--p8);
   transition: 0.25s ease-in-out;
 }
 
@@ -90,7 +90,7 @@ body {
   flex-direction: row-reverse;
   align-items: center;
   height: auto;
-  padding: 1.875rem 0.5rem;
+  padding: 1.875rem var(--p8);
 }
 
 #range-slider-btn {

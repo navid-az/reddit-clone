@@ -7,7 +7,7 @@
 /* post tags & user tags */
 .list {
   display: flex;
-  gap: 0.5rem;
+  gap: var(--p8);
   flex-wrap: wrap;
 }
 
@@ -45,7 +45,7 @@
 }
 
 .user-tag {
-  border-radius: 0.5rem;
+  border-radius: var(--p8);
 }
 
 /* delete tag  */
@@ -121,7 +121,7 @@
 /* form popup  */
 .tag-color-options {
   display: flex;
-  gap: 0.5rem;
+  gap: var(--p8);
 }
 
 .tag-color-option,
@@ -160,7 +160,7 @@
 }
 
 .live-user-tag-overview {
-  border-radius: 0.5rem;
+  border-radius: var(--p8);
 }
 
 /* pick-tag-color */
@@ -169,7 +169,7 @@
   margin-top: var(--p14);
   display: flex;
   justify-content: flex-end;
-  gap: 0.5rem;
+  gap: var(--p8);
   transition: 0.25s ease-in-out;
 }
 
@@ -189,7 +189,7 @@
 .pick-tag-color>section>input::-webkit-color-swatch {
   cursor: pointer;
   border: none;
-  border-radius: 0.5rem;
+  border-radius: var(--p8);
 }
 
 .pick-tag-color>section>label {

@@ -11,7 +11,7 @@
   justify-content: center;
   padding: 3rem 0;
   width: 100%;
-  gap: 0.5rem;
+  gap: var(--p8);
 }
 
 #moderator-control-bar>ul>li {
@@ -22,14 +22,14 @@
 #moderator-control-bar>ul>li>button,
 #moderator-control-bar>ul>li>div,
 .server-list-options {
-  margin: 0 0.5rem;
+  margin: 0 var(--p8);
   justify-content: flex-end;
   width: calc(100% - 0.875rem);
-  border-radius: 0.5rem;
+  border-radius: var(--p8);
   display: flex;
   color: #FFFF;
   list-style: var(--p14);
-  gap: 0.5rem;
+  gap: var(--p8);
   padding: var(--p14);
   cursor: pointer;
   transition: 0.25s ease;
@@ -58,7 +58,7 @@
 }
 
 #server-list::-webkit-scrollbar-track {
-  border-radius: 0 0 0.5rem 0;
+  border-radius: 0 0 var(--p8) 0;
   background: #181818;
 }
 

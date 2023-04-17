@@ -254,6 +254,13 @@ textarea {
     font-family: Vbold;
 }
 
+.empty-message {
+    width: 100%;
+    text-align: center;
+    margin: 6rem 0;
+    color: var(--light-gray);
+}
+
 /* this is new (for input border hover effect):  */
 .border-hover>input,
 .border-hover>textarea {

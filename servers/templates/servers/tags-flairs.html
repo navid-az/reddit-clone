@@ -148,6 +148,8 @@
               <img class='trash-icon' src="{% static 'servers/svgs/trash.svg' %}" alt="delete post tag">
             </a>
           </div>
+      {% empty %}
+        <p class='empty-message'>هیچ تگ پستی ایجاد نشده است</p>
       {% endfor %}
     </section>
   </div>
@@ -173,6 +175,8 @@
             <img class='trash-icon' src="{% static 'servers/svgs/trash.svg' %}" alt="delete post tag">
           </a>
         </div>
+      {% empty %}
+        <p class='empty-message'>هیچ تگ کاربری ایجاد نشده است</p>
       {% endfor %}
     </section>
   </div>

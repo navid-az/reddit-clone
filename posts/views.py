@@ -82,13 +82,13 @@ class CreatePostView(LoginRequiredMixin, View):
         return super().dispatch(request, *args, **kwargs)
 
     def get(self, request, *args, **kwargs):
-        following = ServerFollow.objects.filter(user=request.user)
+        following = ServerFollow.objects.filter(user=request.user).order_by('server')
         form = self.form_class()
         return render(request, 'posts/create-post.html', {'form':form, 'following':following})
 
     def post(self, request, *args, **kwargs):
         form = self.form_class(request.POST, request.FILES)
-        following = ServerFollow.objects.filter(user=request.user)
+        following = ServerFollow.objects.filter(user=request.user).order_by('server')
         if form.is_valid():
             saved_form = form.save(commit=False)
             saved_form.creator = request.user

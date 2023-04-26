@@ -41,6 +41,11 @@
   align-items: center;
 }
 
+#moderator-control-bar>ul>li>a>img {
+  width: 24px;
+  height: 24px;
+}
+
 #moderator-control-bar>ul>li>a:hover {
   background: var(--orange);
 }

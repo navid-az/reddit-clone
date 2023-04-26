@@ -16,7 +16,17 @@
     --normal: 0.25s ease-in-out;
 }
 
+* {
+    -webkit-user-select: none;
+    /* Safari */
+    -ms-user-select: none;
+    /* IE 10 and IE 11 */
+    user-select: none;
+    /* Standard syntax */
+}
+
 /* loader  */
+
 .loader {
     width: 48px;
     height: 48px;

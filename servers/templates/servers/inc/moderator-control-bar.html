@@ -15,7 +15,7 @@
     <li>
       <a onclick="createServerTabFunc('gray-layer')">
         <p>ایجاد سرور جدید</p>
-        <img src="{% static 'servers/svgs/add-server.svg' %}" alt="add server">
+        <img src="{% static 'servers/svgs/add-server-2.svg' %}" alt="add server">
       </a>
     </li>
     <li>
@@ -40,6 +40,12 @@
       <a href="{% url 'servers:server-moderator-settings' server.tag %}">
         <p>تنظیمات مدیریت</p>
         <img src="{% static 'servers/svgs/users.svg' %}" alt="moderator settings">
+      </a>
+    </li>
+    <li>
+      <a href="{% url 'servers:server-settings' server.tag %}">
+        <p>تنظیمات سرور</p>
+        <img src="{% static 'servers/svgs/settings.svg' %}" alt="server settings">
       </a>
     </li>
   </ul>

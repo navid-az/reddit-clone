@@ -341,3 +341,8 @@ class ChooseServerAjaxView(LoginRequiredMixin, View):
 class LimitationDoneAjaxView(LoginRequiredMixin, View):
     def get(self, request):
         pass
+
+class ServerSettingsView(LoginRequiredMixin, View):
+    def get(self, request, *args, **kwargs):
+        server = Server.objects.get(tag=kwargs['server_tag'])
+        return render(request, 'servers/server-settings.html', {"server":server})

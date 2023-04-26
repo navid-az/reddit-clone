@@ -1,6 +1,6 @@
 from django.urls import path
 from .views import (ServerView, ServerFollowView, CreateServerView, ServerInsightsView, ServerDeleteReportView, TagsAndFlairsView, DeleteTagsAndFlairsView, 
-RulesView, DeleteRulesView, LimitationDoneAjaxView, ChooseServerAjaxView, ModeratorSearchAjaxView, ModeratorSettingsView, ModeratorPermissionsView)
+RulesView, DeleteRulesView, LimitationDoneAjaxView, ChooseServerAjaxView, ModeratorSearchAjaxView, ModeratorSettingsView, ModeratorPermissionsView, ServerSettingsView)
 
 app_name= 'servers'
 
@@ -29,4 +29,7 @@ urlpatterns = [
     #moderators settings
     path('<str:server_tag>/moderating-page/moderator-settings', ModeratorSettingsView.as_view(), name='server-moderator-settings'),
     path('<str:server_tag>/moderating-page/moderator-settings/<int:user_id>/permissions', ModeratorPermissionsView.as_view(), name='server-moderator-permissions'),
+
+    #server settings
+    path('<str:server_tag>/moderating-page/server-settings', ServerSettingsView.as_view(), name='server-settings')
 ]

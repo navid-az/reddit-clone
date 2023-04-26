@@ -6,7 +6,7 @@
   height: 10.375rem;
   padding: var(--p14);
   margin-bottom: var(--p14);
-  border-radius: 0.5rem;
+  border-radius: var(--p8);
 }
 
 .saved-post-img {
@@ -16,11 +16,11 @@
   background: var(--gray);
   height: 100%;
   width: 35%;
-  border-radius: 0.5rem;
+  border-radius: var(--p8);
 }
 
 .saved-post-img>img {
-  border-radius: 0.5rem;
+  border-radius: var(--p8);
   object-fit: cover;
 }
 
@@ -30,7 +30,7 @@
 }
 
 .saved-post-info {
-  padding-right: 0.5rem;
+  padding-right: var(--p8);
 }
 
 .post-info {

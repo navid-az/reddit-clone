@@ -1,7 +1,7 @@
 .account,
 .profile {
   background: #ffff;
-  border-radius: 0.5rem;
+  border-radius: var(--p8);
   direction: rtl;
   margin-bottom: 3rem;
 }
@@ -36,7 +36,7 @@
   height: 3.5rem;
   background: #F9F9F9;
   border: 1px solid #E3E3E3;
-  border-radius: 0.5rem;
+  border-radius: var(--p8);
   outline: none;
   transition: 0.15s ease-in-out;
 }
@@ -59,7 +59,7 @@
 .profile-image>img {
   width: 8.25rem;
   height: 8.25rem;
-  border-radius: 0.5rem;
+  border-radius: var(--p8);
   object-fit: cover;
 }
 

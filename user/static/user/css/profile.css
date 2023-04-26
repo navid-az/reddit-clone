@@ -3,7 +3,7 @@
     flex-direction: column;
     background: #ffff;
     margin-bottom: 3rem;
-    border-radius: 0.5rem;
+    border-radius: var(--p8);
     padding: var(--p14);
     height: 486px;
 }
@@ -86,7 +86,7 @@
 .btns>button {
     background: var(--gray);
     color: white;
-    padding: 0.5rem 0;
+    padding: var(--p8) 0;
     width: 48%;
     border-radius: 20rem;
     font-size: 1rem;
@@ -107,7 +107,7 @@
     background: #FFFF;
     direction: rtl;
     margin-bottom: var(--p30);
-    border-radius: 0.5rem;
+    border-radius: var(--p8);
     padding: var(--p14);
 }
 
@@ -115,7 +115,7 @@
 .user-comment-server-info {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: var(--p8);
     font-size: var(--p14);
 }
 
@@ -140,7 +140,7 @@
 }
 
 .user-comment-server-info {
-    margin-top: 0.5rem;
+    margin-top: var(--p8);
 }
 
 .user-comment-server-info>p {
